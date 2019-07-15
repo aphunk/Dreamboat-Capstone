@@ -26,23 +26,13 @@
         tools:targetApi="o" />
 
     <EditText
-        android:id="@+id/post_username_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/post_name"
-        tools:layout_editor_absoluteX="26dp"
-        tools:layout_editor_absoluteY="71dp" />
-
-    <EditText
         android:id="@+id/dream_entry_text"
         android:layout_width="362dp"
         android:layout_height="257dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="88dp"
-        android:autofillHints=""
+        android:autofillHints="@string/dream_entry_hint"
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/dream_entry_hint"
@@ -110,6 +100,7 @@
 
     <EditText
         android:id="@+id/entry_date_text"
+        android:labelFor="@+id/entry_date_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -121,7 +112,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
-        android:autofillHints="" />
+        android:autofillHints="" tools:targetApi="o"/>
 
     <ProgressBar
         android:id="@+id/save_entry_progress"
