@@ -63,7 +63,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
 
 
 //        storageReference = FirebaseStorage.getInstance().getReference();
-        firebaseAuth.getInstance();
+        firebaseAuth = firebaseAuth.getInstance();
         progressBar = findViewById(R.id.save_entry_progress);
         titleEditText = findViewById(R.id.dream_title_text);
         entryEditText = findViewById(R.id.dream_entry_text);
