@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Dreamboat</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_text">Dreamboat</string>
+    <string name="new_entry_text">Sleep to dream.</string>
+    <string name="get_started_text">New Dream Entry</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="login_text">Sign In</string>
+    <string name="create_account_text">Create Account</string>
+    <string name="username_hint">Username</string>
+    <string name="man_logo">Main Logo</string>
+    <string name="interpret_button_text">Interpret</string>
+    <string name="dream_title_text">Dream title</string>
+    <string name="save_button_text">Save</string>
+    <string name="share_button_text">Share</string>
+    <string name="start_typing_text">Start typing...</string>
+    <string name="small_logo">small logo</string>
+    <string name="date_hint">Today</string>
+    <string name="dream_entry_hint">Last night I dreamt...</string>
+    <string name="post_name">Name</string>
+</resources>
