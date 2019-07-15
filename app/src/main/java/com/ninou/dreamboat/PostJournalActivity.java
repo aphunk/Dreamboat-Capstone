@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.StorageReference;
 import com.ninou.dreamboat.util.JournalApi;
 
+import org.w3c.dom.Text;
+
 public class PostJournalActivity extends AppCompatActivity implements View.OnClickListener {
     private Button saveButton;
     private Button shareButton;
@@ -24,7 +27,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
     private ProgressBar progressBar;
     private EditText titleEditText;
     private EditText entryEditText;
-    private TextView currentUserTextView;
+//    private TextView currentUserTextView;
 
 
     private String currentUserId;
@@ -49,7 +52,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         firebaseAuth.getInstance();
         progressBar = findViewById(R.id.save_entry_progress);
         titleEditText = findViewById(R.id.dream_title_text);
-        currentUserTextView = findViewById(R.id.post_username_text);
+//        currentUserTextView = findViewById(R.id.post_username_text);
         entryEditText = findViewById(R.id.dream_entry_text);
 
         saveButton = findViewById(R.id.save_button);
@@ -59,11 +62,13 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         shareButton = findViewById(R.id.share_button);
 //        shareButton = setOnClickListener(this);
 
+        progressBar.setVisibility(View.INVISIBLE);
+
         if (JournalApi.getInstance() != null) {
             currentUserId = JournalApi.getInstance().getUserId();
             currentUserName = JournalApi.getInstance().getUsername();
 
-            currentUserTextView.setText(currentUserName);
+//            currentUserTextView.setText(currentUserName);
         }
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
@@ -84,9 +89,22 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
        switch (view.getId()) {
            case R.id.save_button:
            //saveJournal
+               saveJournal();
                break;
                
        }
+    }
+
+    private void saveJournal() {
+        String title = titleEditText.getText().toString().trim();
+        String entry = entryEditText.getText().toString().trim();
+
+        if (!TextUtils.isEmpty(title) &&
+                !TextUtils.isEmpty(entry)) {
+
+        }else {
+
+        }
     }
 
     @Override

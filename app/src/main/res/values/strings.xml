@@ -19,4 +19,5 @@
     <string name="date_hint">Today</string>
     <string name="dream_entry_hint">Last night I dreamt...</string>
     <string name="post_name">Name</string>
+    <string name="logo_description">dreamboat_logo</string>
 </resources>
