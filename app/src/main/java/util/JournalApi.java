@@ -1,4 +1,4 @@
-package com.ninou.dreamboat.util;
+package util;
 
 import android.app.Application;
 
@@ -30,4 +30,5 @@ public class JournalApi extends Application {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+
 }

@@ -22,13 +22,14 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.ninou.dreamboat.util.JournalApi;
 
 import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import util.JournalApi;
 
 public class CreateAccountActivity extends AppCompatActivity {
     private Button loginButton;
@@ -131,14 +132,14 @@ public class CreateAccountActivity extends AppCompatActivity {
                                                                 if (Objects.requireNonNull(task.getResult().exists())) {
                                                                     progressBar.setVisibility(View.INVISIBLE);
                                                                     String name = task.getResult()
-                                                                            .getString("username");
+                                                                            .getString("userId");
 
                                                                     JournalApi journalApi = JournalApi.getInstance(); //Global API
                                                                     journalApi.setUserId(currentUserId);
                                                                     journalApi.setUsername(name);
 
                                                                     Intent intent = new Intent(CreateAccountActivity.this,
-                                                                            PostJournalActivity.class);
+                                                                            CreateEntryActivity.class);
                                                                     intent.putExtra("username", name);
                                                                     intent.putExtra("userId", currentUserId);
                                                                     startActivity(intent);
