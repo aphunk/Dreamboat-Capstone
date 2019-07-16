@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                                     if (!queryDocumentSnapshots.isEmpty()) {
                                         for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
                                             JournalApi journalApi = JournalApi.getInstance();
-                                            journalApi.setUserId(snapshot.getString(currentUserId));
+                                            journalApi.setUserId(snapshot.getString("userId"));
 //                                            journalApi.setUsername(snapshot.getString("username"));
 
                                             startActivity(new Intent(MainActivity.this,
@@ -109,6 +109,16 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         if (firebaseAuth != null) {
             firebaseAuth.removeAuthStateListener(authStateListener);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (firebaseAuth != null) {
+            currentUser = firebaseAuth.getCurrentUser();
+            firebaseAuth.addAuthStateListener(authStateListener);
+
         }
     }
 }

@@ -11,6 +11,7 @@ package com.ninou.dreamboat;
         import android.text.TextUtils;
         import android.util.Log;
         import android.view.Menu;
+        import android.view.MenuItem;
         import android.view.View;
         import android.widget.Button;
         import android.widget.EditText;
@@ -111,6 +112,37 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         getMenuInflater().inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//
+//        switch (item.getItemId()) {
+//            case R.id.action_add:
+//                //Take users to add Journal
+//                if (user != null && firebaseAuth != null) {
+//                    startActivity(new Intent(PostJournalActivity.this,
+//                            PostJournalActivity.class));
+////                    finish();
+//                }
+//                break;
+//            case R.id.action_signout:
+//                //sign user out
+//                if (user != null && firebaseAuth != null) {
+//                    firebaseAuth.signOut();
+//
+//                    startActivity(new Intent(PostJournalActivity.this,
+//                            MainActivity.class));
+////                    finish();
+//                }
+//                break;
+//            case R.id.action_home:
+//                if (user != null && firebaseAuth != null) {
+//                    startActivity(new Intent(PostJournalActivity.this,
+//                            MainActivity.class));
+//                }
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onClick(View view) {

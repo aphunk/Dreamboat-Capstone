@@ -62,7 +62,7 @@ public class JournalListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(JournalListActivity.this,
                         PostJournalActivity.class));
-                finish();
+//                finish();
             }
         });
 
@@ -103,6 +103,11 @@ public class JournalListActivity extends AppCompatActivity {
 //                    finish();
                 }
                 break;
+            case R.id.action_home:
+                if (user != null && firebaseAuth != null) {
+                    startActivity(new Intent(JournalListActivity.this,
+                            MainActivity.class));
+                }
         }
         return super.onOptionsItemSelected(item);
     }
