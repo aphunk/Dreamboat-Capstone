@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostJournalActivity">
+    tools:context=".PostJournalActivity"
+    android:background="@android:color/transparent">
 
     <EditText
         android:id="@+id/dream_title_text"

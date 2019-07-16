@@ -91,7 +91,6 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         if (JournalApi.getInstance() != null) {
             currentUserId = JournalApi.getInstance().getUserId();
             currentUserName = JournalApi.getInstance().getUsername();
-
         }
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
