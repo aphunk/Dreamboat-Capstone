@@ -10,6 +10,7 @@ package com.ninou.dreamboat;
         import android.speech.RecognizerIntent;
         import android.text.TextUtils;
         import android.util.Log;
+        import android.view.Menu;
         import android.view.View;
         import android.widget.Button;
         import android.widget.EditText;
@@ -104,6 +105,12 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
                 }
             }
         };
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
