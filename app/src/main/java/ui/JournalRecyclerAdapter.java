@@ -43,10 +43,13 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
         viewHolder.title.setText(journal.getTitle());
         viewHolder.entries.setText(journal.getEntry());
 //        viewHolder.name.setText(journal.getUserName());
-        String timeAgo = (String) DateUtils.getRelativeTimeSpanString(journal
-                .getTimeAdded()
-                .getSeconds() * 1000);
-        viewHolder.dateAdded.setText(timeAgo);
+//        String timeAgo = (String) DateUtils.getRelativeTimeSpanString(journal
+//                .getTimeAdded()
+//                .getSeconds() * 1000);
+//        viewHolder.dateAdded.setText(timeAgo);
+        Timestamp timestamp = journal.getTimeAdded();
+        String entryDate = timestamp.toString();
+        viewHolder.dateAdded.setText(entryDate);
     }
 
     @Override
