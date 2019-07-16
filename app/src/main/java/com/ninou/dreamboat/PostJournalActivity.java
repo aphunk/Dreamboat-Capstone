@@ -1,36 +1,34 @@
 package com.ninou.dreamboat;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+        import androidx.annotation.NonNull;
+        import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
+        import android.content.Intent;
+        import android.os.Bundle;
+        import android.text.TextUtils;
+        import android.util.Log;
+        import android.view.View;
+        import android.widget.Button;
+        import android.widget.EditText;
+        import android.widget.ProgressBar;
+        import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+        import com.google.android.gms.tasks.OnFailureListener;
+        import com.google.android.gms.tasks.OnSuccessListener;
+        import com.google.firebase.Timestamp;
+        import com.google.firebase.auth.FirebaseAuth;
+        import com.google.firebase.auth.FirebaseUser;
+        import com.google.firebase.firestore.CollectionReference;
+        import com.google.firebase.firestore.DocumentReference;
+        import com.google.firebase.firestore.FirebaseFirestore;
+//        import com.google.firebase.storage.FirebaseStorage;
+//        import com.google.firebase.storage.StorageReference;
+//
 
-import org.w3c.dom.Text;
+        import java.util.Date;
 
-import java.util.Date;
-
-import model.Journal;
-import util.JournalApi;
+        import model.Journal;
+        import util.JournalApi;
 
 public class PostJournalActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "PostJournalActivity";
@@ -63,7 +61,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
 
 
 //        storageReference = FirebaseStorage.getInstance().getReference();
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.save_entry_progress);
         titleEditText = findViewById(R.id.dream_title_text);
         entryEditText = findViewById(R.id.dream_entry_text);
@@ -98,14 +96,14 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
-       switch (view.getId()) {
-           case R.id.save_button:
-           //saveJournal
-               saveJournal();
-               break;
+        switch (view.getId()) {
+            case R.id.save_button:
+                //saveJournal
+                saveJournal();
+                break;
 
 
-       }
+        }
     }
 
     private void saveJournal() {
@@ -137,7 +135,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(PostJournalActivity.this, "", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PostJournalActivity.this, "Not Workingggg", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "onFailure: " + e.getMessage());
                         }
                     });
@@ -162,3 +160,4 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         }
     }
 }
+

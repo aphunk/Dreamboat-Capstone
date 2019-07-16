@@ -5,14 +5,8 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:padding="16dp"
+    android:orientation="vertical"
     tools:context=".LoginActivity">
-
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/email_login_form"
@@ -59,5 +53,12 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
 </LinearLayout>

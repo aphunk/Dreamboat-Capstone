@@ -20,4 +20,7 @@
     <string name="dream_entry_hint">Last night I dreamt...</string>
     <string name="post_name">Name</string>
     <string name="logo_description">dreamboat_logo</string>
+    <string name="new_dream_header">New Dream</string>
+    <string name="menu_title">Add dream</string>
+    <string name="signout">Signout</string>
 </resources>

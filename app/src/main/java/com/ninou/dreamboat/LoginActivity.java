@@ -26,7 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
+import java.util.Objects;
 
 import javax.annotation.Nullable;
 
@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
+    private ProgressBar progressBar;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference collectionReference = db.collection("Users");
@@ -50,6 +51,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        progressBar = findViewById(R.id.login_progress);
+
+        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -62,12 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         createAcctButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createAcctButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(LoginActivity.this, CreateAccountActivity.class));
-                    }
-                });
+                startActivity(new Intent(LoginActivity.this, CreateAccountActivity.class));
             }
         });
 
@@ -83,8 +82,10 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void loginEmailPasswordUser(String email, String password) {
 
-        if (!TextUtils.isEmpty(password)
-        && !TextUtils.isEmpty(email)) {
+        progressBar.setVisibility(View.VISIBLE);
+
+        if (!TextUtils.isEmpty(email)
+        && !TextUtils.isEmpty(password)) {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -107,13 +108,13 @@ public class LoginActivity extends AppCompatActivity {
                                                 for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
                                                     JournalApi journalApi = JournalApi.getInstance();
                                                     journalApi.setUsername(snapshot.getString("username"));
-                                                    journalApi.setUserId(currentUserId);
+                                                    journalApi.setUserId(snapshot.getString("userId"));
 
                                                     //Go to ListActivity
                                                     startActivity(new Intent(LoginActivity.this,
                                                             PostJournalActivity.class));
                                                 }
-                                                }
+                                            }
 
                                         }
                                     });
@@ -122,10 +123,11 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     });
         }else {
+            progressBar.setVisibility(View.INVISIBLE);
             Toast.makeText(LoginActivity.this, "Enter an email and password",
                     Toast.LENGTH_LONG)
                     .show();
