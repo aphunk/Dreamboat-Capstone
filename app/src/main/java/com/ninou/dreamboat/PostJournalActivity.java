@@ -120,6 +120,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
             journal.setEntry(entry);
             journal.setTimeAdded(new Timestamp(new Date()));
             journal.setUserId(currentUserId);
+//            journal.setUserName(currentUserName);
 
             collectionReference.add(journal)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

@@ -52,6 +52,8 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
+//        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         createAcctButton = findViewById(R.id.create_acct_button);

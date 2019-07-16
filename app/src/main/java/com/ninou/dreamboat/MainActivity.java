@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button getStartedButton;
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getStartedButton = findViewById(R.id.startButton);
+
 
         getStartedButton.setOnClickListener(new View.OnClickListener() {
             @Override

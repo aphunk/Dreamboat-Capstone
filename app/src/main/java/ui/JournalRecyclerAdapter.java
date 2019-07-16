@@ -5,6 +5,7 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -63,6 +64,7 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
                 entries,
                 dateAdded,
                 name;
+        public ImageButton shareButton;
         String userId;
         String username;
 
@@ -74,7 +76,16 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
             title = itemView.findViewById(R.id.journal_title_list);
             entries = itemView.findViewById(R.id.journal_entry_list);
             dateAdded = itemView.findViewById(R.id.journal_timestamp_list);
-//            name = itemView.findViewsWithText(R.id.username_acct);
+//            name = itemView.findViewById(R.id.journal_row_username);
+
+            shareButton = itemView.findViewById(R.id.journal_row_share_button);
+            shareButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+//                    context.startActivity();
+                }
+            });
         }
     }
 }

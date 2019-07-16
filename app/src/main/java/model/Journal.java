@@ -6,6 +6,7 @@ public class Journal {
     private String title;
     private String entry;
     private String userId;
+//    private String userName;
     private Timestamp timeAdded;
 
     public Journal() { //must for Firestore to work
@@ -16,6 +17,7 @@ public class Journal {
         this.title = title;
         this.entry = entry;
         this.userId = userId;
+//        this.userName = userName;
         this.timeAdded = timeAdded;
     }
 
@@ -51,3 +53,12 @@ public class Journal {
         this.timeAdded = timeAdded;
     }
 }
+
+//    public String getUserName() {
+//        return userName;
+//    }
+
+//    public void setUserName(String userName) {
+//        this.userName = userName;
+//    }
+//}
