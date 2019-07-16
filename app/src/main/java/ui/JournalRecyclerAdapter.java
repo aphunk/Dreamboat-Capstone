@@ -48,7 +48,7 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
 //                .getSeconds() * 1000);
 //        viewHolder.dateAdded.setText(timeAgo);
         Timestamp timestamp = journal.getTimeAdded();
-        String entryDate = timestamp.toString();
+        String entryDate = timestamp.toDate().toString();
         viewHolder.dateAdded.setText(entryDate);
     }
 
