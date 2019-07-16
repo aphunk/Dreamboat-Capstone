@@ -1,15 +1,19 @@
 package com.ninou.dreamboat;
 
         import androidx.annotation.NonNull;
+        import androidx.annotation.Nullable;
         import androidx.appcompat.app.AppCompatActivity;
 
+        import android.content.ActivityNotFoundException;
         import android.content.Intent;
         import android.os.Bundle;
+        import android.speech.RecognizerIntent;
         import android.text.TextUtils;
         import android.util.Log;
         import android.view.View;
         import android.widget.Button;
         import android.widget.EditText;
+        import android.widget.ImageButton;
         import android.widget.ProgressBar;
         import android.widget.Toast;
 
@@ -25,16 +29,20 @@ package com.ninou.dreamboat;
 //        import com.google.firebase.storage.StorageReference;
 //
 
+        import java.util.ArrayList;
         import java.util.Date;
+        import java.util.Locale;
 
         import model.Journal;
         import util.JournalApi;
 
 public class PostJournalActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "PostJournalActivity";
+    private static final int REQUEST_CODE_SPEECH_INPUT = 100;
     private Button saveButton;
-    private Button shareButton;
-    private Button interpretButton;
+//    private Button shareButton;
+//    private Button interpretButton;
+    private ImageButton speakButton;
     private ProgressBar progressBar;
     private EditText titleEditText;
     private EditText entryEditText;
@@ -66,12 +74,16 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         titleEditText = findViewById(R.id.dream_title_text);
         entryEditText = findViewById(R.id.dream_entry_text);
 
+
         saveButton = findViewById(R.id.save_button);
-        saveButton.setOnClickListener(this);
-        interpretButton = findViewById(R.id.interpret_button);
+        speakButton = findViewById(R.id.speak_button);
+//        interpretButton = findViewById(R.id.interpret_button);
 //        interpretButton = setOnClickListener(this);
-        shareButton = findViewById(R.id.share_button);
+//        shareButton = findViewById(R.id.share_button);
 //        shareButton = setOnClickListener(this);
+
+        saveButton.setOnClickListener(this);
+        speakButton.setOnClickListener(this);
 
         progressBar.setVisibility(View.INVISIBLE);
 
@@ -101,8 +113,42 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
                 //saveJournal
                 saveJournal();
                 break;
+            case R.id.speak_button:
+                //initialize speech to text
+                promptSpeechInput();
 
+        }
+    }
 
+    private void promptSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                getString(R.string.speech_prompt));
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.speech_not_supported),
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQUEST_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && data != null) {
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    entryEditText.setText(result.get(0));
+                }
+                break;
+            }
         }
     }
 

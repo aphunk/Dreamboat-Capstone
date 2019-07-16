@@ -59,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
                                         return;
                                     }
 
-                                    String name;
+//                                    String name;
 
                                     if (!queryDocumentSnapshots.isEmpty()) {
                                         for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
                                             JournalApi journalApi = JournalApi.getInstance();
-                                            journalApi.setUserId(snapshot.getString("userId"));
+                                            journalApi.setUserId(snapshot.getString(currentUserId));
 //                                            journalApi.setUsername(snapshot.getString("username"));
 
                                             startActivity(new Intent(MainActivity.this,
