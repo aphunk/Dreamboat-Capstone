@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         progressBar = findViewById(R.id.login_progress);
 
-        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
+//        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                                     //Go to ListActivity
                                                     startActivity(new Intent(LoginActivity.this,
-                                                            PostJournalActivity.class));
+                                                            JournalListActivity.class));
                                                 }
                                             }
 

@@ -78,14 +78,14 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
             dateAdded = itemView.findViewById(R.id.journal_timestamp_list);
 //            name = itemView.findViewById(R.id.journal_row_username);
 
-            shareButton = itemView.findViewById(R.id.journal_row_share_button);
-            shareButton.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-//                    context.startActivity();
-                }
-            });
+//            shareButton = itemView.findViewById(R.id.journal_row_share_button);
+//            shareButton.setOnClickListener(new View.OnClickListener() {
+//
+//                @Override
+//                public void onClick(View view) {
+////                    context.startActivity();
+//                }
+//            });
         }
     }
 }

@@ -39,7 +39,8 @@
             android:layout_marginTop="16dp"
             android:hint="@string/password_hint"
             android:inputType="textPassword"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:autofillHints="" />
 
         <Button
             android:id="@+id/email_sign_in_button"
