@@ -17,7 +17,8 @@ import androidx.annotation.NonNull;
         import android.widget.EditText;
         import android.widget.ImageButton;
         import android.widget.ProgressBar;
-        import android.widget.Toast;
+import android.widget.TextView;
+import android.widget.Toast;
 
         import com.google.android.gms.tasks.OnFailureListener;
         import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,8 +32,10 @@ import androidx.annotation.NonNull;
 //        import com.google.firebase.storage.StorageReference;
 //
 
-        import java.util.ArrayList;
-        import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
         import java.util.Locale;
 
         import model.Journal;
@@ -48,10 +51,15 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
     private ProgressBar progressBar;
     private EditText titleEditText;
     private EditText entryEditText;
+    private TextView dateTimeDisplay;
 
 
     private String currentUserId;
     private String currentUserName;
+
+    private String date;
+    private Calendar calendar;
+    private SimpleDateFormat dateFormat;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -75,6 +83,13 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         progressBar = findViewById(R.id.save_entry_progress);
         titleEditText = findViewById(R.id.dream_title_text);
         entryEditText = findViewById(R.id.dream_entry_text);
+        dateTimeDisplay = (TextView)findViewById(R.id.entry_date_text);
+
+        calendar = Calendar.getInstance();
+
+        dateFormat = new SimpleDateFormat("EEE, MMM d, YYYY"  );
+        date = dateFormat.format(calendar.getTime());
+        dateTimeDisplay.setText(date);
 
 
         saveButton = findViewById(R.id.save_button);
