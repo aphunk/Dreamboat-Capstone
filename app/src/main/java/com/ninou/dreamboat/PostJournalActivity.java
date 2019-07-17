@@ -4,7 +4,8 @@ import androidx.annotation.NonNull;
         import androidx.annotation.Nullable;
         import androidx.appcompat.app.AppCompatActivity;
 
-        import android.content.ActivityNotFoundException;
+import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
         import android.content.Intent;
         import android.os.Bundle;
         import android.speech.RecognizerIntent;
@@ -73,6 +74,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
     private CollectionReference collectionReference = db.collection("Journal");
 
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +86,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         progressBar = findViewById(R.id.save_entry_progress);
         titleEditText = findViewById(R.id.dream_title_text);
         entryEditText = findViewById(R.id.dream_entry_text);
-        dateTimeDisplay = (TextView)findViewById(R.id.entry_date_text);
+        dateTimeDisplay = findViewById(R.id.entry_date_text);
 
         calendar = Calendar.getInstance();
 
@@ -123,42 +125,6 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         };
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.action_add:
-                //Take users to add Journal
-                if (currentUser != null && firebaseAuth != null) {
-                    startActivity(new Intent(PostJournalActivity.this,
-                            PostJournalActivity.class));
-//                    finish();
-                }
-                break;
-            case R.id.action_signout:
-                //sign user out
-                if (currentUser != null && firebaseAuth != null) {
-                    firebaseAuth.signOut();
-
-                    startActivity(new Intent(PostJournalActivity.this,
-                            MainActivity.class));
-//                    finish();
-                }
-                break;
-            case R.id.action_home:
-                if (currentUser != null && firebaseAuth != null) {
-                    startActivity(new Intent(PostJournalActivity.this,
-                            MainActivity.class));
-                }
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onClick(View view) {
@@ -221,7 +187,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
             journal.setEntry(entry);
             journal.setDate(date);
             journal.setUserId(currentUserId);
-//            journal.setUserName(currentUserName);
+            journal.setUserName(currentUserName);
 
             collectionReference.add(journal)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -246,6 +212,8 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
             progressBar.setVisibility(View.INVISIBLE);
         }
     }
+
+    // Menu & State stuff
 
     @Override
     protected void onStart() {
@@ -278,6 +246,43 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
             firebaseAuth.addAuthStateListener(authStateListener);
 
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                //Take users to add Journal
+                if (currentUser != null && firebaseAuth != null) {
+                    startActivity(new Intent(PostJournalActivity.this,
+                            PostJournalActivity.class));
+//                    finish();
+                }
+                break;
+            case R.id.action_signout:
+                //sign user out
+                if (currentUser != null && firebaseAuth != null) {
+                    firebaseAuth.signOut();
+
+                    startActivity(new Intent(PostJournalActivity.this,
+                            MainActivity.class));
+//                    finish();
+                }
+                break;
+            case R.id.action_home:
+                if (currentUser != null && firebaseAuth != null) {
+                    startActivity(new Intent(PostJournalActivity.this,
+                            MainActivity.class));
+                }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 

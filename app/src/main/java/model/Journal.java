@@ -1,16 +1,11 @@
 package model;
 
-import com.google.firebase.Timestamp;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 public class Journal {
     private String title;
     private String entry;
     private String userId;
-//    private String userName;
-//    private Timestamp timeAdded;
+    private String userName;
+
 private String date;
 
 
@@ -18,12 +13,11 @@ private String date;
 
     }
 
-    public Journal(String title, String entry, String userId, Timestamp timeAdded) {
+    public Journal(String title, String entry, String userId, String date) {
         this.title = title;
         this.entry = entry;
         this.userId = userId;
-//        this.userName = userName;
-//        this.timeAdded = timeAdded;
+        this.userName = userName;
         this.date = date;
     }
 
@@ -51,6 +45,14 @@ private String date;
         this.userId = userId;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getDate() {
         return date;
     }
@@ -60,11 +62,5 @@ private String date;
     }
 }
 
-//    public String getUserName() {
-//        return userName;
-//    }
 
-//    public void setUserName(String userName) {
-//        this.userName = userName;
-//    }
-//}
+

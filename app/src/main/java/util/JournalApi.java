@@ -5,6 +5,8 @@ import android.app.Application;
 public class JournalApi extends Application {
     private String username;
     private String userId;
+    private String date;
+
     private static JournalApi instance;
 
     public static JournalApi getInstance() {

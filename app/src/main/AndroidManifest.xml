@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ninou.dreamboat">
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
     <application
         android:name="util.JournalApi"
         android:allowBackup="true"
