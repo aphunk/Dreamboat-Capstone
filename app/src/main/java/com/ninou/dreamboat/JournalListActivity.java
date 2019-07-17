@@ -33,7 +33,7 @@ import util.JournalApi;
 public class JournalListActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
-    private FirebaseUser user;
+    private FirebaseUser currentUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private StorageReference storageReference;
     private List<Journal> journalList;
@@ -52,7 +52,7 @@ public class JournalListActivity extends AppCompatActivity {
 //        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        user = firebaseAuth.getCurrentUser();
+        currentUser = firebaseAuth.getCurrentUser();
 
         noJournalEntry = findViewById(R.id.list_no_entries);
         noEntriesButton = findViewById(R.id.list_no_entries_button);
@@ -87,7 +87,7 @@ public class JournalListActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_add:
                 //Take users to add Journal
-                if (user != null && firebaseAuth != null) {
+                if (currentUser != null && firebaseAuth != null) {
                     startActivity(new Intent(JournalListActivity.this,
                             PostJournalActivity.class));
 //                    finish();
@@ -95,7 +95,7 @@ public class JournalListActivity extends AppCompatActivity {
                 break;
             case R.id.action_signout:
                 //sign user out
-                if (user != null && firebaseAuth != null) {
+                if (currentUser != null && firebaseAuth != null) {
                     firebaseAuth.signOut();
 
                     startActivity(new Intent(JournalListActivity.this,
@@ -104,7 +104,7 @@ public class JournalListActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.action_home:
-                if (user != null && firebaseAuth != null) {
+                if (currentUser != null && firebaseAuth != null) {
                     startActivity(new Intent(JournalListActivity.this,
                             MainActivity.class));
                 }
@@ -148,4 +148,22 @@ public class JournalListActivity extends AppCompatActivity {
                     }
                 });
     }
+
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        if (firebaseAuth != null) {
+//            firebaseAuth.removeAuthStateListener(authStateListener);
+//        }
+//    }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if (firebaseAuth != null) {
+//            currentUser = firebaseAuth.getCurrentUser();
+//            firebaseAuth.addAuthStateListener(authStateListener);
+//
+//        }
+//    }
 }

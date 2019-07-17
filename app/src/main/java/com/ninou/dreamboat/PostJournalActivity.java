@@ -1,6 +1,6 @@
 package com.ninou.dreamboat;
 
-        import androidx.annotation.NonNull;
+import androidx.annotation.NonNull;
         import androidx.annotation.Nullable;
         import androidx.appcompat.app.AppCompatActivity;
 
@@ -55,7 +55,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
-    private FirebaseUser user;
+    private FirebaseUser currentUser;
 
     //Connection to Firestore
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -97,8 +97,8 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                user = firebaseAuth.getCurrentUser();
-                if(user != null) {
+                currentUser = firebaseAuth.getCurrentUser();
+                if(currentUser != null) {
 
                 }else {
 
@@ -113,36 +113,36 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         return super.onCreateOptionsMenu(menu);
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//
-//        switch (item.getItemId()) {
-//            case R.id.action_add:
-//                //Take users to add Journal
-//                if (user != null && firebaseAuth != null) {
-//                    startActivity(new Intent(PostJournalActivity.this,
-//                            PostJournalActivity.class));
-////                    finish();
-//                }
-//                break;
-//            case R.id.action_signout:
-//                //sign user out
-//                if (user != null && firebaseAuth != null) {
-//                    firebaseAuth.signOut();
-//
-//                    startActivity(new Intent(PostJournalActivity.this,
-//                            MainActivity.class));
-////                    finish();
-//                }
-//                break;
-//            case R.id.action_home:
-//                if (user != null && firebaseAuth != null) {
-//                    startActivity(new Intent(PostJournalActivity.this,
-//                            MainActivity.class));
-//                }
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                //Take users to add Journal
+                if (currentUser != null && firebaseAuth != null) {
+                    startActivity(new Intent(PostJournalActivity.this,
+                            PostJournalActivity.class));
+//                    finish();
+                }
+                break;
+            case R.id.action_signout:
+                //sign user out
+                if (currentUser != null && firebaseAuth != null) {
+                    firebaseAuth.signOut();
+
+                    startActivity(new Intent(PostJournalActivity.this,
+                            MainActivity.class));
+//                    finish();
+                }
+                break;
+            case R.id.action_home:
+                if (currentUser != null && firebaseAuth != null) {
+                    startActivity(new Intent(PostJournalActivity.this,
+                            MainActivity.class));
+                }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onClick(View view) {
@@ -233,7 +233,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onStart() {
         super.onStart();
-        user = firebaseAuth.getCurrentUser();
+        currentUser = firebaseAuth.getCurrentUser();
         firebaseAuth.addAuthStateListener(authStateListener);
     }
 
@@ -242,6 +242,24 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         super.onStop();
         if (firebaseAuth != null) {
             firebaseAuth.removeAuthStateListener(authStateListener);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (firebaseAuth != null) {
+            firebaseAuth.removeAuthStateListener(authStateListener);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (firebaseAuth != null) {
+            currentUser = firebaseAuth.getCurrentUser();
+            firebaseAuth.addAuthStateListener(authStateListener);
+
         }
     }
 }
