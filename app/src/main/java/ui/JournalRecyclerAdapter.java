@@ -48,9 +48,9 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
 //                .getTimeAdded()
 //                .getSeconds() * 1000);
 //        viewHolder.dateAdded.setText(timeAgo);
-        Timestamp timestamp = journal.getTimeAdded();
-        String entryDate = timestamp.toDate().toString();
-        viewHolder.dateAdded.setText(entryDate);
+//        Timestamp timestamp = journal.getDate();
+//        String entryDate = timestamp.toDate().toString();
+        viewHolder.date.setText(journal.getDate());
     }
 
     @Override
@@ -62,11 +62,11 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
         public TextView
                 title,
                 entries,
-                dateAdded,
+                date,
                 name;
         public ImageButton shareButton;
         String userId;
-        String username;
+        String userName;
 
 
         public ViewHolder(@NonNull View itemView, Context ctx) {
@@ -75,7 +75,7 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
 
             title = itemView.findViewById(R.id.journal_title_list);
             entries = itemView.findViewById(R.id.journal_entry_list);
-            dateAdded = itemView.findViewById(R.id.journal_timestamp_list);
+            date = itemView.findViewById(R.id.journal_timestamp_list);
 //            name = itemView.findViewById(R.id.journal_row_username);
 
 //            shareButton = itemView.findViewById(R.id.journal_row_share_button);

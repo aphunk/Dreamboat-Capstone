@@ -11,11 +11,6 @@
 
         />
 
-    <item android:id="@+id/action_list_entries"
-        android:title="@string/menu_title"
-        app:showAsAction="never"
-        />
-
     <item
         android:id="@+id/action_home"
         android:title="@string/home"

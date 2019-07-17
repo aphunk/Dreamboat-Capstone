@@ -2,12 +2,17 @@ package model;
 
 import com.google.firebase.Timestamp;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class Journal {
     private String title;
     private String entry;
     private String userId;
 //    private String userName;
-    private Timestamp timeAdded;
+//    private Timestamp timeAdded;
+private String date;
+
 
     public Journal() { //must for Firestore to work
 
@@ -18,7 +23,8 @@ public class Journal {
         this.entry = entry;
         this.userId = userId;
 //        this.userName = userName;
-        this.timeAdded = timeAdded;
+//        this.timeAdded = timeAdded;
+        this.date = date;
     }
 
     public String getTitle() {
@@ -45,12 +51,12 @@ public class Journal {
         this.userId = userId;
     }
 
-    public Timestamp getTimeAdded() {
-        return timeAdded;
+    public String getDate() {
+        return date;
     }
 
-    public void setTimeAdded(Timestamp timeAdded) {
-        this.timeAdded = timeAdded;
+    public void setDate(String date) {
+        this.date = date;
     }
 }
 

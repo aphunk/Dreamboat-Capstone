@@ -29,4 +29,5 @@
     <string name="speech_not_supported">Speech to text is not supported on your device</string>
     <string name="home">Home</string>
     <string name="add_entry_prompt">Record your first dream</string>
+    <string name="dream_title_hint">Title</string>
 </resources>

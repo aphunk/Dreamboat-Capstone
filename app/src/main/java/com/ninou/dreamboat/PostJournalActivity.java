@@ -32,6 +32,7 @@ import android.widget.Toast;
 //        import com.google.firebase.storage.StorageReference;
 //
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -208,6 +209,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
     private void saveJournal() {
         String title = titleEditText.getText().toString().trim();
         String entry = entryEditText.getText().toString().trim();
+        String date = dateTimeDisplay.getText().toString();
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -217,7 +219,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
             Journal journal = new Journal();
             journal.setTitle(title);
             journal.setEntry(entry);
-            journal.setTimeAdded(new Timestamp(new Date()));
+            journal.setDate(date);
             journal.setUserId(currentUserId);
 //            journal.setUserName(currentUserName);
 
