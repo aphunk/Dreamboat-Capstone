@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.Timestamp;
 import com.ninou.dreamboat.R;
 
+import java.util.Date;
 import java.util.List;
 
 import model.Journal;
@@ -43,13 +44,10 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
 
         viewHolder.title.setText(journal.getTitle());
         viewHolder.entries.setText(journal.getEntry());
-//        viewHolder.name.setText(journal.getUserName());
-//        String timeAgo = (String) DateUtils.getRelativeTimeSpanString(journal
-//                .getTimeAdded()
-//                .getSeconds() * 1000);
-//        viewHolder.dateAdded.setText(timeAgo);
+//
+        String noDate = "Mystery date";
         Timestamp timestamp = journal.getTimeAdded();
-        String entryDate = timestamp.toDate().toString();
+        String entryDate = timestamp != null ? timestamp.toDate().toString() : noDate;
         viewHolder.dateAdded.setText(entryDate);
     }
 
