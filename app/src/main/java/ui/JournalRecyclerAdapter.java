@@ -46,9 +46,9 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
         viewHolder.entries.setText(journal.getEntry());
 //
         String noDate = "Mystery date";
-        Timestamp timestamp = journal.getTimeAdded();
-        String entryDate = timestamp != null ? timestamp.toDate().toString() : noDate;
-        viewHolder.dateAdded.setText(entryDate);
+//        Timestamp timestamp = journal.getDate();
+//        String entryDate = timestamp != null ? timestamp.toDate().toString() : noDate;
+        viewHolder.date.setText(journal.getDate());
     }
 
     @Override
@@ -60,11 +60,11 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
         public TextView
                 title,
                 entries,
-                dateAdded,
+                date,
                 name;
         public ImageButton shareButton;
         String userId;
-        String username;
+        String userName;
 
 
         public ViewHolder(@NonNull View itemView, Context ctx) {

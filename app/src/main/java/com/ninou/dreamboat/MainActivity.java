@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                                         return;
                                     }
 
-                                    String name;
+//                                    String name;
 
                                     if (!queryDocumentSnapshots.isEmpty()) {
                                         for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
@@ -109,6 +109,16 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         if (firebaseAuth != null) {
             firebaseAuth.removeAuthStateListener(authStateListener);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (firebaseAuth != null) {
+            currentUser = firebaseAuth.getCurrentUser();
+            firebaseAuth.addAuthStateListener(authStateListener);
+
         }
     }
 }

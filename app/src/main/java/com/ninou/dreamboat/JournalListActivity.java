@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,7 +33,7 @@ import util.JournalApi;
 public class JournalListActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
-    private FirebaseUser user;
+    private FirebaseUser currentUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private StorageReference storageReference;
     private List<Journal> journalList;
@@ -41,6 +42,7 @@ public class JournalListActivity extends AppCompatActivity {
 
     private CollectionReference collectionReference = db.collection("Journal");
     private TextView noJournalEntry;
+    private Button noEntriesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,47 +52,25 @@ public class JournalListActivity extends AppCompatActivity {
 //        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        user = firebaseAuth.getCurrentUser();
+        currentUser = firebaseAuth.getCurrentUser();
 
-        noJournalEntry = findViewById(R.id.list_no_thoughts);
+        noJournalEntry = findViewById(R.id.list_no_entries);
+        noEntriesButton = findViewById(R.id.list_no_entries_button);
+
+        noEntriesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(JournalListActivity.this,
+                        PostJournalActivity.class));
+//                finish();
+            }
+        });
 
         journalList = new ArrayList<>();
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.action_add:
-                //Take users to add Journal
-                if (user != null && firebaseAuth != null) {
-                    startActivity(new Intent(JournalListActivity.this,
-                            PostJournalActivity.class));
-//                    finish();
-                }
-                break;
-            case R.id.action_signout:
-                //sign user out
-                if (user != null && firebaseAuth != null) {
-                    firebaseAuth.signOut();
-
-                    startActivity(new Intent(JournalListActivity.this,
-                            MainActivity.class));
-//                    finish();
-                }
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -117,6 +97,7 @@ public class JournalListActivity extends AppCompatActivity {
 
                         }else {
                             noJournalEntry.setVisibility(View.VISIBLE);
+                            noEntriesButton.setVisibility(View.VISIBLE);
 
                         }
                     }
@@ -127,5 +108,42 @@ public class JournalListActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                //Take users to add Journal
+                if (currentUser != null && firebaseAuth != null) {
+                    startActivity(new Intent(JournalListActivity.this,
+                            PostJournalActivity.class));
+//                    finish();
+                }
+                break;
+            case R.id.action_signout:
+                //sign user out
+                if (currentUser != null && firebaseAuth != null) {
+                    firebaseAuth.signOut();
+
+                    startActivity(new Intent(JournalListActivity.this,
+                            MainActivity.class));
+//                    finish();
+                }
+                break;
+            case R.id.action_home:
+                if (currentUser != null && firebaseAuth != null) {
+                    startActivity(new Intent(JournalListActivity.this,
+                            MainActivity.class));
+                }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
