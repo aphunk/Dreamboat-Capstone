@@ -18,8 +18,8 @@
         android:autofillHints=""
         android:hint="@string/dream_title_hint"
         android:inputType="text"
-        android:textColor="@color/colorPink"
-        android:textColorHint="@color/colorAccent"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorPink"
         android:textColorLink="@color/colorPink"
         app:layout_constraintBottom_toTopOf="@+id/entry_date_text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,8 +31,8 @@
 
     <EditText
         android:id="@+id/dream_entry_text"
-        android:layout_width="360dp"
-        android:layout_height="222dp"
+        android:layout_width="361dp"
+        android:layout_height="169dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="328dp"
         android:layout_marginEnd="8dp"
@@ -158,19 +158,19 @@
 
     <ImageButton
         android:id="@+id/speak_button"
-        android:contentDescription="@string/speak_button_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:contentDescription="@string/speak_button_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.748"
+        app:layout_constraintHorizontal_bias="0.744"
         app:layout_constraintStart_toEndOf="@+id/save_button"
         app:layout_constraintTop_toBottomOf="@+id/dream_entry_text"
-        app:layout_constraintVertical_bias="0.412"
+        app:layout_constraintVertical_bias="0.385"
         app:srcCompat="@android:drawable/ic_btn_speak_now" />
 
 
