@@ -23,7 +23,7 @@
     <string name="new_dream_header">New Dream</string>
     <string name="menu_title">Add dream</string>
     <string name="signout">Signout</string>
-    <string name="no_entries_hint">Add a new dream entry by clicking the \"+\" icon</string>
+    <string name="no_entries_hint">Your Dreamboat is empty!</string>
     <string name="speak_button_icon">speakButton</string>
     <string name="speech_prompt">Speak to record your dream</string>
     <string name="speech_not_supported">Speech to text is not supported on your device</string>
