@@ -2,7 +2,6 @@ package com.ninou.dreamboat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +28,7 @@ import java.util.List;
 
 import model.Journal;
 import ui.JournalRecyclerAdapter;
-import util.JournalApi;
+import util.AppController;
 
 import static ui.JournalRecyclerAdapter.*;
 
@@ -81,7 +80,7 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
     protected void onStart() {
         super.onStart(); //get journals from firestore
 
-        collectionReference.whereEqualTo("userId", JournalApi.getInstance()
+        collectionReference.whereEqualTo("userId", AppController.getInstance()
                 .getUserId())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

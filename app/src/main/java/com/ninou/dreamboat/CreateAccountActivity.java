@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import util.JournalApi;
+import util.AppController;
 
 public class CreateAccountActivity extends AppCompatActivity {
     private Button loginButton;
@@ -134,9 +134,9 @@ public class CreateAccountActivity extends AppCompatActivity {
                                                                     String name = task.getResult()
                                                                             .getString("userId");
 
-                                                                    JournalApi journalApi = JournalApi.getInstance(); //Global API
-                                                                    journalApi.setUserId(currentUserId);
-                                                                    journalApi.setUsername(name);
+                                                                    AppController appController = AppController.getInstance(); //Global API
+                                                                    appController.setUserId(currentUserId);
+                                                                    appController.setUsername(name);
 
                                                                     Intent intent = new Intent(CreateAccountActivity.this,
                                                                             PostJournalActivity.class);

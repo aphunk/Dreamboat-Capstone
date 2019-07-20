@@ -17,11 +17,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.Objects;
-
 import javax.annotation.Nullable;
 
-import util.JournalApi;
+import util.AppController;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -62,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
                                     if (!queryDocumentSnapshots.isEmpty()) {
                                         for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
-                                            JournalApi journalApi = JournalApi.getInstance();
-                                            journalApi.setUserId(snapshot.getString("userId"));
-//                                            journalApi.setUsername(snapshot.getString("username"));
+                                            AppController appController = AppController.getInstance();
+                                            appController.setUserId(snapshot.getString("userId"));
+//                                            appController.setUsername(snapshot.getString("username"));
 
                                             startActivity(new Intent(MainActivity.this,
                                                     JournalListActivity.class));

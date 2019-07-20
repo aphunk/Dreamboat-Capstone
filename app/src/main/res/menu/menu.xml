@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/action_my_dreamboat"
-        android:title="@string/home"
+        android:title="@string/your_dreamboat"
         app:showAsAction="never" />
 
     <item android:id="@+id/action_add"

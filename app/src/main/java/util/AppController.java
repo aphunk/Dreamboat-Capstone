@@ -2,22 +2,22 @@ package util;
 
 import android.app.Application;
 
-public class JournalApi extends Application {
+public class AppController extends Application {
     private String username;
     private String userId;
     private String entryBody;
     private String date;
     private String entryId;
 
-    private static JournalApi instance;
+    private static AppController instance;
 
-    public static JournalApi getInstance() {
+    public static AppController getInstance() {
         if (instance == null)
-            instance = new JournalApi();
+            instance = new AppController();
         return instance;
     }
 
-    public JournalApi(){}
+    public AppController(){}
 
     public String getDate() {
         return date;

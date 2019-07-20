@@ -23,8 +23,7 @@ import android.widget.Toast;
 
         import com.google.android.gms.tasks.OnFailureListener;
         import com.google.android.gms.tasks.OnSuccessListener;
-        import com.google.firebase.Timestamp;
-        import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
         import com.google.firebase.firestore.CollectionReference;
         import com.google.firebase.firestore.DocumentReference;
@@ -33,15 +32,13 @@ import android.widget.Toast;
 //        import com.google.firebase.storage.StorageReference;
 //
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-        import java.util.Locale;
+import java.util.Locale;
 
         import model.Journal;
-        import util.JournalApi;
+import util.AppController;
 
 public class PostJournalActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "PostJournalActivity";
@@ -107,9 +104,9 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
 
         progressBar.setVisibility(View.INVISIBLE);
 
-        if (JournalApi.getInstance() != null) {
-            currentUserId = JournalApi.getInstance().getUserId();
-            currentUserName = JournalApi.getInstance().getUsername();
+        if (AppController.getInstance() != null) {
+            currentUserId = AppController.getInstance().getUserId();
+            currentUserName = AppController.getInstance().getUsername();
         }
 
         authStateListener = new FirebaseAuth.AuthStateListener() {

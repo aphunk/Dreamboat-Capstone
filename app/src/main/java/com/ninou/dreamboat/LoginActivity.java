@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -27,11 +26,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.Objects;
-
 import javax.annotation.Nullable;
 
-import util.JournalApi;
+import util.AppController;
 
 public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
@@ -107,9 +104,9 @@ public class LoginActivity extends AppCompatActivity {
                                             if (!queryDocumentSnapshots.isEmpty()) {
 
                                                 for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
-                                                    JournalApi journalApi = JournalApi.getInstance();
-                                                    journalApi.setUsername(snapshot.getString("username"));
-                                                    journalApi.setUserId(snapshot.getString("userId"));
+                                                    AppController appController = AppController.getInstance();
+                                                    appController.setUsername(snapshot.getString("username"));
+                                                    appController.setUserId(snapshot.getString("userId"));
 
                                                     //Go to ListActivity
                                                     startActivity(new Intent(LoginActivity.this,

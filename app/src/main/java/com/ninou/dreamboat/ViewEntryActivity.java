@@ -3,12 +3,10 @@ package com.ninou.dreamboat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.job.JobInfo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -17,7 +15,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import model.Journal;
-import util.JournalApi;
 
 public class ViewEntryActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -65,7 +62,7 @@ public class ViewEntryActivity extends AppCompatActivity {
 //            @Override
 //            public void onClick(View view) {
 //
-//                JournalApi journalApi = JournalApi.getInstance(); //Global API
+//                AppController journalApi = AppController.getInstance(); //Global API
 //                journalApi.setUserId(currentUserId);
 //                Intent intent = new Intent(ViewEntryActivity.this,
 //                        PostJournalActivity.class);
