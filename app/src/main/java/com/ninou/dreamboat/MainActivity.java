@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                                         return;
                                     }
 
-//                                    String name;
 
                                     if (!queryDocumentSnapshots.isEmpty()) {
                                         for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
@@ -96,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -122,15 +120,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-
-
-//        getStartedButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //go to LoginActivity
-//                startActivity(new Intent(MainActivity.this,
-//                        LoginActivity.class));
-//            }
-//        });
-//    }
-//}

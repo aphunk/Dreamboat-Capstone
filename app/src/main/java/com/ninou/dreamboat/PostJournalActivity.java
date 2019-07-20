@@ -276,7 +276,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
 //                    finish();
                 }
                 break;
-            case R.id.action_home:
+            case R.id.action_my_dreamboat:
                 if (currentUser != null && firebaseAuth != null) {
                     startActivity(new Intent(PostJournalActivity.this,
                             MainActivity.class));

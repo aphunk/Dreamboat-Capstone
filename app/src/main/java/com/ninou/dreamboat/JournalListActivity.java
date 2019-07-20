@@ -143,7 +143,7 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
 //                    finish();
                 }
                 break;
-            case R.id.action_home:
+            case R.id.action_my_dreamboat:
                 if (currentUser != null && firebaseAuth != null) {
                     startActivity(new Intent(JournalListActivity.this,
                             MainActivity.class));
@@ -159,7 +159,6 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
         intent.putExtra("TITLE", journalList.get(position).getTitle());
         intent.putExtra("ENTRY_TEXT", journalList.get(position).getEntry());
         intent.putExtra("DATE", journalList.get(position).getDate());
-//        intent.putExtra("journal", String.valueOf(journalList.get(position)));
         startActivity(intent);
     }
 }
