@@ -2,6 +2,7 @@ package com.ninou.dreamboat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +31,9 @@ import model.Journal;
 import ui.JournalRecyclerAdapter;
 import util.JournalApi;
 
-public class JournalListActivity extends AppCompatActivity {
+import static ui.JournalRecyclerAdapter.*;
+
+public class JournalListActivity extends AppCompatActivity implements OnJournalListener {
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
@@ -43,6 +46,7 @@ public class JournalListActivity extends AppCompatActivity {
     private CollectionReference collectionReference = db.collection("Journal");
     private TextView noJournalEntry;
     private Button noEntriesButton;
+    private Journal journal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,11 +95,12 @@ public class JournalListActivity extends AppCompatActivity {
 
                             //Invoke recyclerview
                             journalRecyclerAdapter = new JournalRecyclerAdapter(JournalListActivity.this,
-                                    journalList);
+                                    journalList, JournalListActivity.this);
                             recyclerView.setAdapter(journalRecyclerAdapter);
                             journalRecyclerAdapter.notifyDataSetChanged();
 
-                        }else {
+                        }
+                        else {
                             noJournalEntry.setVisibility(View.VISIBLE);
                             noEntriesButton.setVisibility(View.VISIBLE);
 
@@ -145,5 +150,16 @@ public class JournalListActivity extends AppCompatActivity {
                 }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onJournalClick(int position) {
+        Intent intent = new Intent(JournalListActivity.this, ViewEntryActivity.class);
+        intent.putExtra("TITLE", journalList.get(position).getTitle());
+        intent.putExtra("ENTRY_TEXT", journalList.get(position).getEntry());
+        intent.putExtra("DATE", journalList.get(position).getDate());
+//        intent.putExtra("journal", String.valueOf(journalList.get(position)));
+        startActivity(intent);
     }
 }

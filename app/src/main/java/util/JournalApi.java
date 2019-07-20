@@ -5,7 +5,9 @@ import android.app.Application;
 public class JournalApi extends Application {
     private String username;
     private String userId;
+    private String entryBody;
     private String date;
+    private String entryId;
 
     private static JournalApi instance;
 
@@ -16,6 +18,22 @@ public class JournalApi extends Application {
     }
 
     public JournalApi(){}
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getEntryId() {
+        return entryId;
+    }
+
+    public void setEntryId(String entryId) {
+        this.entryId = entryId;
+    }
 
     public String getUsername() {
         return username;
