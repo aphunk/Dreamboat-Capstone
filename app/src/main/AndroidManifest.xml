@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ViewEntryActivity"></activity>
+        <activity android:name=".ViewEntryActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".PostJournalActivity" />
         <activity android:name=".CreateAccountActivity" />
         <activity android:name=".LoginActivity" />
