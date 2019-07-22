@@ -51,7 +51,7 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
         String noDate = "Mystery date";
 //        Timestamp timestamp = journal.getDate();
 //        String entryDate = timestamp != null ? timestamp.toDate().toString() : noDate;
-        viewHolder.dateAdded.setText(journal.getDate());
+        viewHolder.date.setText(journal.getDate());
     }
 
     @Override
@@ -63,7 +63,7 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
         public TextView
                 title,
                 entries,
-                dateAdded,
+                date,
                 name;
         public ImageButton shareButton;
         String userId;
@@ -78,7 +78,7 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
 
             title = itemView.findViewById(R.id.journal_title_list);
             entries = itemView.findViewById(R.id.journal_entry_list);
-            dateAdded = itemView.findViewById(R.id.journal_timestamp_list);
+            date = itemView.findViewById(R.id.journal_timestamp_list);
 
             itemView.setOnClickListener(this);
         }

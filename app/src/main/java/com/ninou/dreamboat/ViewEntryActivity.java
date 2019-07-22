@@ -79,8 +79,6 @@ public class ViewEntryActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        currentUser = firebaseAuth.getCurrentUser();
-        firebaseAuth.addAuthStateListener(authStateListener);
     }
 
     @Override
@@ -107,43 +105,6 @@ public class ViewEntryActivity extends AppCompatActivity {
             firebaseAuth.addAuthStateListener(authStateListener);
 
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.action_add:
-                //Take users to add Journal
-                if (currentUser != null && firebaseAuth != null) {
-                    startActivity(new Intent(this,
-                            PostJournalActivity.class));
-//                    finish();
-                }
-                break;
-            case R.id.action_signout:
-                //sign user out
-                if (currentUser != null && firebaseAuth != null) {
-                    firebaseAuth.signOut();
-
-                    startActivity(new Intent(this,
-                            MainActivity.class));
-//                    finish();
-                }
-                break;
-            case R.id.action_my_dreamboat:
-                if (currentUser != null && firebaseAuth != null) {
-                    startActivity(new Intent(this,
-                            MainActivity.class));
-                }
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 }
