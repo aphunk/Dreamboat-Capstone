@@ -81,7 +81,6 @@ public class ViewEntryActivity extends AppCompatActivity {
 
 
 
-
     @Override
     protected void onStart() {
         super.onStart();
