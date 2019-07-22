@@ -52,7 +52,6 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_journal_list);
 
-//        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -155,6 +154,7 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
     @Override
     public void onJournalClick(int position) {
         Intent intent = new Intent(JournalListActivity.this, ViewEntryActivity.class);
+        intent.putExtra("CURRENT_USER", currentUser.getUid());
         intent.putExtra("TITLE", journalList.get(position).getTitle());
         intent.putExtra("ENTRY_TEXT", journalList.get(position).getEntry());
         intent.putExtra("DATE", journalList.get(position).getDate());

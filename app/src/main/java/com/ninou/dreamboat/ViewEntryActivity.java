@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import model.Journal;
+import util.AppController;
 
 public class ViewEntryActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -24,10 +26,12 @@ public class ViewEntryActivity extends AppCompatActivity {
     private String title;
     private String entryBody;
     private String date;
+    private String currentUserId;
 
     private TextView entryTitle;
     private TextView entryDate;
     private TextView entryBodyText;
+    private TextView userId;
 
     private Button editButton;
 
@@ -43,11 +47,13 @@ public class ViewEntryActivity extends AppCompatActivity {
         editButton = findViewById(R.id.edit_button);
         entryTitle = findViewById(R.id.entry_title);
         entryDate = findViewById(R.id.entry_date);
+        userId = findViewById(R.id.user_id_text);
         entryBodyText = findViewById(R.id.entry_body_text);
 
 
         Bundle extrasBundle = getIntent().getExtras();
         if (extrasBundle != null) {
+            currentUserId = extrasBundle.getString("CURRENT_USER");
             title = extrasBundle.getString("TITLE");
             entryBody = extrasBundle.getString("ENTRY_TEXT");
             date = extrasBundle.getString("DATE");
@@ -57,20 +63,20 @@ public class ViewEntryActivity extends AppCompatActivity {
         entryTitle.setText(title);
         entryBodyText.setText(entryBody);
         entryDate.setText(date);
+        userId.setText(currentUserId);
 
-//        editButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                AppController journalApi = AppController.getInstance(); //Global API
-//                journalApi.setUserId(currentUserId);
-//                Intent intent = new Intent(ViewEntryActivity.this,
-//                        PostJournalActivity.class);
-//                intent.putExtra("userId", currentUserId);
-//                intent.putExtra()
-//                startActivity(intent);
-//            }
-//        });
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AppController journalApi = AppController.getInstance(); //Global API
+                journalApi.setUserId(currentUserId);
+                Intent intent = new Intent(ViewEntryActivity.this,
+                        PostJournalActivity.class);
+                intent.putExtra("userId", currentUserId);
+                startActivity(intent);
+            }
+        });
     }
 
 

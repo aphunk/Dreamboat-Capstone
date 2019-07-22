@@ -66,7 +66,6 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
 
     //Connection to Firestore
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-//    private StorageReference storageReference;
 
     private CollectionReference collectionReference = db.collection("Journal");
 
@@ -78,7 +77,6 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_post_journal);
 
 
-//        storageReference = FirebaseStorage.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.save_entry_progress);
         titleEditText = findViewById(R.id.dream_title_text);
