@@ -2,6 +2,7 @@ package com.ninou.dreamboat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +34,7 @@ import util.AppController;
 import static ui.JournalRecyclerAdapter.*;
 
 public class JournalListActivity extends AppCompatActivity implements OnJournalListener {
+    private static final String TAG = "JournalListActivity";
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;

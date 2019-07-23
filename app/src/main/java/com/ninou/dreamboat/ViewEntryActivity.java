@@ -29,6 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import util.AppController;
 
@@ -38,7 +39,6 @@ public class ViewEntryActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    //    private CollectionReference collectionReference = db.collection("Terms");
     private Query collectionReference = db.collection("Terms").orderBy("word");
     private DocumentSnapshot documentSnapshot;
     private String title;
@@ -46,7 +46,6 @@ public class ViewEntryActivity extends AppCompatActivity {
     private String date;
     private String currentUserId;
     private String[] words;
-    private String[] foundTerms;
 
     private TextView entryTitle;
     private TextView entryDate;
@@ -54,7 +53,6 @@ public class ViewEntryActivity extends AppCompatActivity {
     private TextView userId;
 
     private Button editButton;
-    private DocumentReference docRef;
 
 
     @Override
@@ -80,13 +78,12 @@ public class ViewEntryActivity extends AppCompatActivity {
 
         final ArrayList<String> termsArray = new ArrayList<>();
 
-
         collectionReference.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (DocumentSnapshot document : task.getResult()) {
+                            for (DocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 termsArray.add(document.getString("word"));
                             }
                         } else {
@@ -96,16 +93,26 @@ public class ViewEntryActivity extends AppCompatActivity {
                     }
                 });
 
-        final SpannableString ss = new SpannableString(entryBody);
+
         final ForegroundColorSpan fcsBlue = new ForegroundColorSpan(Color.CYAN);
         words = entryBody.split(" ");
 
-        for(int i = 0; i<words.length;i++) {
-            int wordLength = words[i].length();
-            final int startIndex = entryBody.indexOf(words[i]);
-            final int endIndex = startIndex + wordLength;
-        }
+        for (String word : words) {
+            SpannableString ss = new SpannableString(entryBody);
+            int wordLength = word.length();
+            int startIndex = entryBody.indexOf(word);
+            int endIndex = startIndex + wordLength;
 
+            if (termsArray.contains(word)) {
+                System.out.println("FOUND" + word);
+                ss.setSpan(fcsBlue, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                entryBodyText.setText(ss);
+            }
+        }
+        entryTitle.setText(title);
+//        entryBodyText.setText(entryBody);
+        entryDate.setText(date);
+        userId.setText(currentUserId);
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,48 +126,7 @@ public class ViewEntryActivity extends AppCompatActivity {
             }
         });
 
-            entryTitle.setText(title);
-            entryBodyText.setText(entryBody);
-            entryDate.setText(date);
-            userId.setText(currentUserId);
-
     }
-
-
-
-
-
-
-// todo -- find a way to keep track of all terms that need to be underlined (set text outside of the loop)
-
-
-//            final ArrayList<String> termsArray = new ArrayList<>();
-
-
-
-//            collectionReference.whereEqualTo("word", words[i])
-//                    .get()
-//                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//
-//                        @Override
-//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                            if (task.isSuccessful()) {
-//                                ss.setSpan(fcsBlue, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-//                                entryBodyText.setText(ss);
-////                                String word = words.toString().substring(startIndex, endIndex);
-////                                System.out.println("*********" + word);
-//                                for (QueryDocumentSnapshot document : task.getResult()) {
-//
-//                                }
-//                            } else {
-//                                Log.d(TAG, "Error getting documents: ", task.getException());
-//                            }
-//                        }
-//                    });
-
-
-
-
 
 
 //        SpannableString ss = new SpannableString(entryBody);
@@ -171,7 +137,6 @@ public class ViewEntryActivity extends AppCompatActivity {
 //        entryBodyText.setText(ss);
 
 
-        // Edit post button
 
 
 
