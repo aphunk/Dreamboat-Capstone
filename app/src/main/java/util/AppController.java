@@ -56,4 +56,5 @@ public class AppController extends Application {
     public void setDreamWords(String[] dreamWords) {
         this.dreamWords = dreamWords;
     }
+
 }

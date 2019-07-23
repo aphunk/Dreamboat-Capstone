@@ -19,11 +19,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.core.Query;
+
+import org.w3c.dom.Document;
+
+import java.util.ArrayList;
 
 import util.AppController;
 
@@ -48,14 +53,16 @@ public class ViewEntryActivity extends AppCompatActivity {
     private TextView userId;
 
     private Button editButton;
-
-
+    private DocumentReference docRef;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_entry);
+
+        final ArrayList<String> termsArray = new ArrayList<>();
+
 
         editButton = findViewById(R.id.edit_button);
         entryTitle = findViewById(R.id.entry_title);
@@ -77,43 +84,58 @@ public class ViewEntryActivity extends AppCompatActivity {
         final ForegroundColorSpan fcsBlue = new ForegroundColorSpan(Color.CYAN);
         words = entryBody.split(" ");
 
-        for (int i = 0; i < words.length; i++){
-            int wordLength = words[i].length();
-            final int startIndex = entryBody.indexOf(words[i]);
-            final int endIndex = startIndex + wordLength;
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-//            System.out.println(startIndex + endIndex);
-//            DocumentReference docRef = collectionReference.document(words[i])
-// todo -- find a way to keep track of all terms that need to be underlined (set text outside of the loop)
-            collectionReference.whereEqualTo("word", words[i])
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                ss.setSpan(fcsBlue, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-                                entryBodyText.setText(ss);
-                                System.out.println("I MADE IT TO THE ON COMPLETE");
-                                for (QueryDocumentSnapshot document: task.getResult()) {
-
-                                }
-                            }else {
-                                Log.d(TAG, "Error getting documents: ", task.getException());
-                            }
-                        }
-                    });
-
-
-
-        }
+                AppController journalApi = AppController.getInstance(); //Global API
+                journalApi.setUserId(currentUserId);
+                Intent intent = new Intent(ViewEntryActivity.this,
+                        PostJournalActivity.class);
+                intent.putExtra("userId", currentUserId);
+                startActivity(intent);
+            }
+        });
 
         entryTitle.setText(title);
         entryBodyText.setText(entryBody);
         entryDate.setText(date);
         userId.setText(currentUserId);
 
+        for (int i = 0; i < words.length; i++) {
+            int wordLength = words[i].length();
+            final int startIndex = entryBody.indexOf(words[i]);
+            final int endIndex = startIndex + wordLength;
 
+// todo -- find a way to keep track of all terms that need to be underlined (set text outside of the loop)
+
+
+            final ArrayList<String> termsArray = new ArrayList<>();
+
+
+
+//            collectionReference.whereEqualTo("word", words[i])
+//                    .get()
+//                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//
+//                        @Override
+//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                            if (task.isSuccessful()) {
+//                                ss.setSpan(fcsBlue, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+//                                entryBodyText.setText(ss);
+////                                String word = words.toString().substring(startIndex, endIndex);
+////                                System.out.println("*********" + word);
+//                                for (QueryDocumentSnapshot document : task.getResult()) {
+//
+//                                }
+//                            } else {
+//                                Log.d(TAG, "Error getting documents: ", task.getException());
+//                            }
+//                        }
+//                    });
+
+            }
+        }
 
 
 
@@ -135,53 +157,57 @@ public class ViewEntryActivity extends AppCompatActivity {
 
 
         // Edit post button
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                AppController journalApi = AppController.getInstance(); //Global API
-                journalApi.setUserId(currentUserId);
-                Intent intent = new Intent(ViewEntryActivity.this,
-                        PostJournalActivity.class);
-                intent.putExtra("userId", currentUserId);
-                startActivity(intent);
+
+//    public void addTermsArray() {
+//        final ArrayList<String> termsArray = new ArrayList<>();
+//        DocumentReference docRef = collectionReference.document("Terms");
+//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    DocumentSnapshot document = task.getResult();
+//                    if (document != null) {
+//                        termsArray.add(document.getString("word"));
+//                        System.out.println("***********I'M A TERMS ARRAY!!" + termsArray);
+//                    }else {
+//                        Log.d("LOGGER", "get failed with ", task.getException());
+//                    }
+//                }
+//            }
+//        });
+//    }
+
+
+        @Override
+        protected void onStart () {
+            super.onStart();
+        }
+
+        @Override
+        protected void onStop () {
+            super.onStop();
+            if (firebaseAuth != null) {
+                firebaseAuth.removeAuthStateListener(authStateListener);
             }
-        });
-    }
-
-
-
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (firebaseAuth != null) {
-            firebaseAuth.removeAuthStateListener(authStateListener);
         }
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (firebaseAuth != null) {
-            firebaseAuth.removeAuthStateListener(authStateListener);
+        @Override
+        protected void onPause () {
+            super.onPause();
+            if (firebaseAuth != null) {
+                firebaseAuth.removeAuthStateListener(authStateListener);
+            }
         }
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (firebaseAuth != null) {
-            currentUser = firebaseAuth.getCurrentUser();
-            firebaseAuth.addAuthStateListener(authStateListener);
+        @Override
+        protected void onResume () {
+            super.onResume();
+            if (firebaseAuth != null) {
+                currentUser = firebaseAuth.getCurrentUser();
+                firebaseAuth.addAuthStateListener(authStateListener);
 
+            }
         }
-    }
 
 }

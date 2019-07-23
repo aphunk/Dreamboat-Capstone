@@ -2,11 +2,14 @@ package model;
 
 import com.google.firebase.Timestamp;
 
+import java.util.List;
+
 public class Journal {
     private String title;
     private String entry;
     private String userId;
     private String userName;
+    List<String> terms;
 
 private String date;
 
@@ -61,6 +64,10 @@ private String date;
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public List<String> getTerms() {
+        return terms;
     }
 }
 
