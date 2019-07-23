@@ -8,6 +8,7 @@ public class AppController extends Application {
     private String entryBody;
     private String date;
     private String entryId;
+    private String[] dreamWords;
 
     private static AppController instance;
 
@@ -51,4 +52,8 @@ public class AppController extends Application {
         this.userId = userId;
     }
 
+
+    public void setDreamWords(String[] dreamWords) {
+        this.dreamWords = dreamWords;
+    }
 }

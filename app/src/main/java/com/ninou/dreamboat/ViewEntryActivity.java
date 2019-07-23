@@ -4,29 +4,43 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.core.Query;
 
-import model.Journal;
 import util.AppController;
 
 public class ViewEntryActivity extends AppCompatActivity {
+    private static final String TAG = "viewEntryActivity";
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference collectionReference = db.collection("Terms");
+    private DocumentSnapshot documentSnapshot;
     private String title;
     private String entryBody;
     private String date;
     private String currentUserId;
+    private String[] words;
+    private String[] foundTerms;
 
     private TextView entryTitle;
     private TextView entryDate;
@@ -35,8 +49,7 @@ public class ViewEntryActivity extends AppCompatActivity {
 
     private Button editButton;
 
-    private Intent intentExtras;
-    private Journal journalEntry;
+
 
 
     @Override
@@ -60,11 +73,68 @@ public class ViewEntryActivity extends AppCompatActivity {
         }
 
 
+        final SpannableString ss = new SpannableString(entryBody);
+        final ForegroundColorSpan fcsBlue = new ForegroundColorSpan(Color.CYAN);
+        words = entryBody.split(" ");
+
+        for (int i = 0; i < words.length; i++){
+            int wordLength = words[i].length();
+            final int startIndex = entryBody.indexOf(words[i]);
+            final int endIndex = startIndex + wordLength;
+
+//            System.out.println(startIndex + endIndex);
+//            DocumentReference docRef = collectionReference.document(words[i])
+
+            collectionReference.whereEqualTo("word", words[i])
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                ss.setSpan(fcsBlue, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                                entryBodyText.setText(ss);
+                                System.out.println("I MADE IT TO THE ON COMPLETE");
+                                for (QueryDocumentSnapshot document: task.getResult()) {
+
+                                }
+                            }else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+
+
+
+        }
+
         entryTitle.setText(title);
         entryBodyText.setText(entryBody);
         entryDate.setText(date);
         userId.setText(currentUserId);
 
+
+
+
+
+//        System.out.println(termsReference);
+
+        // iterate over words in the Entry
+//        for (int i = 0; i < words.length; i++) {
+//            Log.d(TAG, "onCreate: " +termsReference.whereEqualTo("word", words[i]));
+//
+//        }
+
+
+//        SpannableString ss = new SpannableString(entryBody);
+//        ForegroundColorSpan fcsBlue = new ForegroundColorSpan(Color.CYAN);
+//
+//        ss.setSpan(fcsBlue, 7, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//
+//        entryBodyText.setText(ss);
+
+
+        // Edit post button
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +148,8 @@ public class ViewEntryActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 
 

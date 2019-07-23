@@ -185,6 +185,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
             journal.setUserName(currentUserName);
 
             collectionReference.add(journal)
+
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
