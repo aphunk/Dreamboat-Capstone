@@ -22,9 +22,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.core.Query;
 
 import org.w3c.dom.Document;
 
@@ -38,7 +38,8 @@ public class ViewEntryActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference collectionReference = db.collection("Terms");
+    //    private CollectionReference collectionReference = db.collection("Terms");
+    private Query collectionReference = db.collection("Terms").orderBy("word");
     private DocumentSnapshot documentSnapshot;
     private String title;
     private String entryBody;
@@ -61,9 +62,6 @@ public class ViewEntryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_entry);
 
-        final ArrayList<String> termsArray = new ArrayList<>();
-
-
         editButton = findViewById(R.id.edit_button);
         entryTitle = findViewById(R.id.entry_title);
         entryDate = findViewById(R.id.entry_date);
@@ -80,14 +78,38 @@ public class ViewEntryActivity extends AppCompatActivity {
         }
 
 
+        final ArrayList<String> termsArray = new ArrayList<>();
+
+
+        collectionReference.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+                                termsArray.add(document.getString("word"));
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                        Log.d(TAG, "onComplete: " + termsArray);
+                    }
+                });
+
         final SpannableString ss = new SpannableString(entryBody);
         final ForegroundColorSpan fcsBlue = new ForegroundColorSpan(Color.CYAN);
         words = entryBody.split(" ");
 
+        for(int i = 0; i<words.length;i++) {
+            int wordLength = words[i].length();
+            final int startIndex = entryBody.indexOf(words[i]);
+            final int endIndex = startIndex + wordLength;
+        }
+
+
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick (View view) {
                 AppController journalApi = AppController.getInstance(); //Global API
                 journalApi.setUserId(currentUserId);
                 Intent intent = new Intent(ViewEntryActivity.this,
@@ -97,20 +119,22 @@ public class ViewEntryActivity extends AppCompatActivity {
             }
         });
 
-        entryTitle.setText(title);
-        entryBodyText.setText(entryBody);
-        entryDate.setText(date);
-        userId.setText(currentUserId);
+            entryTitle.setText(title);
+            entryBodyText.setText(entryBody);
+            entryDate.setText(date);
+            userId.setText(currentUserId);
 
-        for (int i = 0; i < words.length; i++) {
-            int wordLength = words[i].length();
-            final int startIndex = entryBody.indexOf(words[i]);
-            final int endIndex = startIndex + wordLength;
+    }
+
+
+
+
+
 
 // todo -- find a way to keep track of all terms that need to be underlined (set text outside of the loop)
 
 
-            final ArrayList<String> termsArray = new ArrayList<>();
+//            final ArrayList<String> termsArray = new ArrayList<>();
 
 
 
@@ -134,18 +158,9 @@ public class ViewEntryActivity extends AppCompatActivity {
 //                        }
 //                    });
 
-            }
-        }
 
 
 
-//        System.out.println(termsReference);
-
-        // iterate over words in the Entry
-//        for (int i = 0; i < words.length; i++) {
-//            Log.d(TAG, "onCreate: " +termsReference.whereEqualTo("word", words[i]));
-//
-//        }
 
 
 //        SpannableString ss = new SpannableString(entryBody);
@@ -158,25 +173,6 @@ public class ViewEntryActivity extends AppCompatActivity {
 
         // Edit post button
 
-
-//    public void addTermsArray() {
-//        final ArrayList<String> termsArray = new ArrayList<>();
-//        DocumentReference docRef = collectionReference.document("Terms");
-//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DocumentSnapshot document = task.getResult();
-//                    if (document != null) {
-//                        termsArray.add(document.getString("word"));
-//                        System.out.println("***********I'M A TERMS ARRAY!!" + termsArray);
-//                    }else {
-//                        Log.d("LOGGER", "get failed with ", task.getException());
-//                    }
-//                }
-//            }
-//        });
-//    }
 
 
         @Override
