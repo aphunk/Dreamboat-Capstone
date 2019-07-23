@@ -84,7 +84,7 @@ public class ViewEntryActivity extends AppCompatActivity {
 
 //            System.out.println(startIndex + endIndex);
 //            DocumentReference docRef = collectionReference.document(words[i])
-
+// todo -- find a way to keep track of all terms that need to be underlined (set text outside of the loop)
             collectionReference.whereEqualTo("word", words[i])
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
