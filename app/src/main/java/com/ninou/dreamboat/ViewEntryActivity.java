@@ -4,29 +4,42 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import model.Journal;
 import util.AppController;
 
 public class ViewEntryActivity extends AppCompatActivity {
+    private static final String TAG = "viewEntryActivity";
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference collectionReference = db.collection("Terms");
     private String title;
     private String entryBody;
     private String date;
     private String currentUserId;
+    private String[] words;
 
     private TextView entryTitle;
     private TextView entryDate;
@@ -77,6 +90,38 @@ public class ViewEntryActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        words = entryBody.split("\\W+");
+        final SpannableString ssEntryBody = new SpannableString(entryBody);
+
+        for (final String word : words) {
+            int wordLength = word.length();
+            final int startIndex = entryBody.indexOf(word);
+            final int endIndex = startIndex + wordLength;
+
+            collectionReference.whereEqualTo("word", word)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                    ssEntryBody.setSpan(new ForegroundColorSpan(Color.CYAN), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                    entryBodyText.setText(ssEntryBody);
+                                }
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+
+
+        }
+
+        entryBodyText.setText(ssEntryBody);
+
+
     }
 
 
