@@ -36,10 +36,8 @@ import static ui.JournalRecyclerAdapter.*;
 public class JournalListActivity extends AppCompatActivity implements OnJournalListener {
     private static final String TAG = "JournalListActivity";
     private FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private StorageReference storageReference;
     private List<Journal> journalList;
     private RecyclerView recyclerView;
     private JournalRecyclerAdapter journalRecyclerAdapter;
@@ -47,7 +45,6 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
     private CollectionReference collectionReference = db.collection("Journal");
     private TextView noJournalEntry;
     private Button noEntriesButton;
-    private Journal journal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
