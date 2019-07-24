@@ -28,6 +28,8 @@
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
+            android:gravity="center_horizontal"
             android:hint="@string/email_hint"
             android:inputType="textEmailAddress"
             android:maxLines="1" />
@@ -39,17 +41,18 @@
             android:layout_marginTop="16dp"
             android:hint="@string/password_hint"
             android:inputType="textPassword"
+            android:gravity="center_horizontal"
             android:maxLines="1"
             android:autofillHints="" />
 
         <Button
             android:id="@+id/email_sign_in_button"
+            style="@style/Widget.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:background="@android:color/transparent"
             android:text="@string/login_text"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorWhiteHeader"
             android:textStyle="bold" />
 
 

@@ -1,12 +1,12 @@
 package model;
 
-import com.google.firebase.Timestamp;
 
 public class Journal {
     private String title;
     private String entry;
     private String userId;
     private String userName;
+    private String entryId;
 
 private String date;
 
@@ -15,12 +15,20 @@ private String date;
 
     }
 
-    public Journal(String title, String entry, String userId, String date) {
+    public Journal(String title, String entry, String userId, String date, String entryId) {
         this.title = title;
         this.entry = entry;
         this.userId = userId;
-        this.userName = userName;
         this.date = date;
+        this.entryId = entryId;
+    }
+
+    public String getEntryId() {
+        return entryId;
+    }
+
+    public void setEntryId(String entryId) {
+        this.entryId = entryId;
     }
 
     public String getTitle() {

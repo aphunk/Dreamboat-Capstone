@@ -47,6 +47,7 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
 
         viewHolder.title.setText(journal.getTitle());
         viewHolder.entries.setText(journal.getEntry());
+        viewHolder.date.setText(journal.getDate());
 //
         String noDate = "Mystery date";
 //        Timestamp timestamp = journal.getDate();
@@ -65,6 +66,7 @@ public class JournalRecyclerAdapter extends RecyclerView.Adapter<JournalRecycler
                 entries,
                 date,
                 name;
+
         public ImageButton shareButton;
         String userId;
         String userName;

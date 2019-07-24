@@ -168,16 +168,16 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void saveJournal() {
-        String title = titleEditText.getText().toString().trim();
-        String entry = entryEditText.getText().toString().trim();
-        String date = dateTimeDisplay.getText().toString();
+        final String title = titleEditText.getText().toString().trim();
+        final String entry = entryEditText.getText().toString().trim();
+        final String date = dateTimeDisplay.getText().toString();
 
         progressBar.setVisibility(View.VISIBLE);
 
         if (!TextUtils.isEmpty(title) &&
                 !TextUtils.isEmpty(entry)) {
 
-            Journal journal = new Journal();
+            final Journal journal = new Journal();
             journal.setTitle(title);
             journal.setEntry(entry);
             journal.setDate(date);
@@ -185,13 +185,22 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
             journal.setUserName(currentUserName);
 
             collectionReference.add(journal)
+
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             progressBar.setVisibility(View.INVISIBLE);
 
-                            startActivity(new Intent(PostJournalActivity.this,
-                                    JournalListActivity.class));
+                            Intent intent = new Intent(PostJournalActivity.this,
+                                    ViewEntryActivity.class);
+                                    intent.putExtra("CURRENT_USER", currentUser.getUid());
+                                    intent.putExtra("TITLE", title);
+                                    intent.putExtra("ENTRY_TEXT", entry);
+                                    intent.putExtra("DATE", date);
+                            startActivity(intent);
+
+                            Toast.makeText(PostJournalActivity.this, "Successfully saved to your Dreamboat!", Toast.LENGTH_LONG).show();
+
                             finish();
                         }
                     })

@@ -32,22 +32,25 @@
     <EditText
         android:id="@+id/dream_entry_text"
         android:layout_width="361dp"
-        android:layout_height="169dp"
+        android:layout_height="83dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="328dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:autofillHints="@string/dream_entry_hint"
         android:capitalize="sentences"
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/dream_entry_hint"
         android:inputType="textMultiLine"
+        android:lineSpacingExtra="8sp"
         android:selectAllOnFocus="true"
         android:textColorHint="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         tools:targetApi="o" />
 
     <Button
@@ -170,7 +173,7 @@
         app:layout_constraintHorizontal_bias="0.744"
         app:layout_constraintStart_toEndOf="@+id/save_button"
         app:layout_constraintTop_toBottomOf="@+id/dream_entry_text"
-        app:layout_constraintVertical_bias="0.385"
+        app:layout_constraintVertical_bias="0.458"
         app:srcCompat="@android:drawable/ic_btn_speak_now" />
 
 
