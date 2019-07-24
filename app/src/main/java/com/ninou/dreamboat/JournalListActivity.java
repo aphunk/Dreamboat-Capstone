@@ -88,6 +88,7 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         if (!queryDocumentSnapshots.isEmpty()) {
+                            journalList.clear();
                             for (QueryDocumentSnapshot journals : queryDocumentSnapshots) {
                                 Journal journal = journals.toObject(Journal.class);
                                 journalList.add(journal);

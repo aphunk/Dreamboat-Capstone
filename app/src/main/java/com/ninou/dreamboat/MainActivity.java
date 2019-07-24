@@ -18,15 +18,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
@@ -41,26 +37,12 @@ public class MainActivity extends AppCompatActivity {
     private CollectionReference collectionReference = db.collection("Users");
 
     private static int SPLASH_TIME = 4000;
-    Animation fadeSplash;
-    ImageView splashLogo;
 
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        splashLogo = findViewById(R.id.splash_logo);
-        fadeSplash = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade);
-        splashLogo.startAnimation(fadeSplash);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }, SPLASH_TIME);
 
         firebaseAuth = FirebaseAuth.getInstance();
         authStateListener = new FirebaseAuth.AuthStateListener() {
@@ -82,25 +64,34 @@ public class MainActivity extends AppCompatActivity {
                                     }
 
 
-                                    if (!queryDocumentSnapshots.isEmpty()) {
-                                        for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
-                                            AppController appController = AppController.getInstance();
-                                            appController.setUserId(snapshot.getString("userId"));
+                                    assert queryDocumentSnapshots != null;
+                                    if (queryDocumentSnapshots.isEmpty()) {
+                                        return;
+                                    }
+                                    for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
+                                        AppController appController = AppController.getInstance();
+                                        appController.setUserId(snapshot.getString("userId"));
 //                                            appController.setUsername(snapshot.getString("username"));
 
-                                            startActivity(new Intent(MainActivity.this,
-                                                    JournalListActivity.class));
-                                            finish();
+                                        startActivity(new Intent(MainActivity.this,
+                                                JournalListActivity.class));
+                                        finish();
 
 
-                                        }
                                     }
 
                                 }
                             });
 
                 }else {
-
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(MainActivity.this,
+                                    LoginActivity.class));
+                            finish();
+                        }
+                    }, SPLASH_TIME);
                 }
             }
         };
