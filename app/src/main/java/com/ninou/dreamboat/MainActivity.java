@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,17 +40,27 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db =  FirebaseFirestore.getInstance();
     private CollectionReference collectionReference = db.collection("Users");
 
-    private Button getStartedButton;
+    private static int SPLASH_TIME = 4000;
+    Animation fadeSplash;
+    ImageView splashLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button getStartedButton = findViewById(R.id.startButton);
 
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        getSupportActionBar().setIcon(R.drawable.dreamboat_logo);
 
+        splashLogo = findViewById(R.id.splash_logo);
+        fadeSplash = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade);
+        splashLogo.startAnimation(fadeSplash);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, SPLASH_TIME);
 
         firebaseAuth = FirebaseAuth.getInstance();
         authStateListener = new FirebaseAuth.AuthStateListener() {
@@ -91,16 +105,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-
-        getStartedButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //we go to LoginActivity
-                startActivity(new Intent(MainActivity.this,
-                        LoginActivity.class));
-                finish();
-            }
-        });
     }
 
     @Override

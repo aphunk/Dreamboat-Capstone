@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
@@ -78,28 +79,28 @@ public class ViewEntryActivity extends AppCompatActivity {
         userId.setText(currentUserId);
 
 
-        final ForegroundColorSpan fcsBlue = new ForegroundColorSpan(Color.CYAN);
-        words = entryBody.split(" ");
+//        final ForegroundColorSpan fcsBlue = new ForegroundColorSpan(Color.CYAN);
+        words = entryBody.split("\\W+");
+
+//        references = [];
+
+        final SpannableString ssEntryBody = new SpannableString(entryBody);
 
         for (final String word : words) {
             int wordLength = word.length();
             final int startIndex = entryBody.indexOf(word);
             final int endIndex = startIndex + wordLength;
 
-            final SpannableString ssEntryBody = new SpannableString(entryBody);
             collectionReference.whereEqualTo("word", word)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                SpannableString ssWord = new SpannableString(word);
-                                ssEntryBody.setSpan(fcsBlue, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-                                entryBodyText.setText(ssEntryBody);
-
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                    ssEntryBody.setSpan(new ForegroundColorSpan(Color.CYAN), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                    entryBodyText.setText(ssEntryBody);
                                 }
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
@@ -110,6 +111,7 @@ public class ViewEntryActivity extends AppCompatActivity {
 
         }
 
+        entryBodyText.setText(ssEntryBody);
 
 
 
