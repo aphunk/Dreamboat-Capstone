@@ -19,17 +19,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import org.w3c.dom.Document;
-
-import java.util.ArrayList;
-import java.util.Objects;
+import com.google.firebase.firestore.core.Query;
 
 import util.AppController;
 
@@ -39,13 +33,14 @@ public class ViewEntryActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private Query collectionReference = db.collection("Terms").orderBy("word");
+    private CollectionReference collectionReference = db.collection("Terms");
     private DocumentSnapshot documentSnapshot;
     private String title;
     private String entryBody;
     private String date;
     private String currentUserId;
     private String[] words;
+    private String[] foundTerms;
 
     private TextView entryTitle;
     private TextView entryDate;
@@ -53,6 +48,8 @@ public class ViewEntryActivity extends AppCompatActivity {
     private TextView userId;
 
     private Button editButton;
+
+
 
 
     @Override
@@ -75,58 +72,57 @@ public class ViewEntryActivity extends AppCompatActivity {
             date = extrasBundle.getString("DATE");
         }
 
-
-        final ArrayList<String> termsArray = new ArrayList<>();
-
-        collectionReference.get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (DocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                termsArray.add(document.getString("word"));
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                        Log.d(TAG, "onComplete: " + termsArray);
-                    }
-                });
+        entryTitle.setText(title);
+        entryBodyText.setText(entryBody);
+        entryDate.setText(date);
+        userId.setText(currentUserId);
 
 
         final ForegroundColorSpan fcsBlue = new ForegroundColorSpan(Color.CYAN);
         words = entryBody.split(" ");
 
-        for (String word : words) {
-            SpannableString ss = new SpannableString(entryBody);
+        for (final String word : words) {
             int wordLength = word.length();
-            int startIndex = entryBody.indexOf(word);
-            int endIndex = startIndex + wordLength;
+            final int startIndex = entryBody.indexOf(word);
+            final int endIndex = startIndex + wordLength;
 
-            if (termsArray.contains(word)) {
-                System.out.println("FOUND" + word);
-                ss.setSpan(fcsBlue, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-                entryBodyText.setText(ss);
-            }
+            final SpannableString ssEntryBody = new SpannableString(entryBody);
+            collectionReference.whereEqualTo("word", word)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                SpannableString ssWord = new SpannableString(word);
+                                ssEntryBody.setSpan(fcsBlue, startIndex, endIndex, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                                entryBodyText.setText(ssEntryBody);
+
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                }
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+
+
         }
-        entryTitle.setText(title);
-//        entryBodyText.setText(entryBody);
-        entryDate.setText(date);
-        userId.setText(currentUserId);
 
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick (View view) {
-                AppController journalApi = AppController.getInstance(); //Global API
-                journalApi.setUserId(currentUserId);
-                Intent intent = new Intent(ViewEntryActivity.this,
-                        PostJournalActivity.class);
-                intent.putExtra("userId", currentUserId);
-                startActivity(intent);
-            }
-        });
 
-    }
+
+
+
+
+
+//        System.out.println(termsReference);
+
+        // iterate over words in the Entry
+//        for (int i = 0; i < words.length; i++) {
+//            Log.d(TAG, "onCreate: " +termsReference.whereEqualTo("word", words[i]));
+//
+//        }
 
 
 //        SpannableString ss = new SpannableString(entryBody);
@@ -137,38 +133,52 @@ public class ViewEntryActivity extends AppCompatActivity {
 //        entryBodyText.setText(ss);
 
 
+        // Edit post button
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-
-
-        @Override
-        protected void onStart () {
-            super.onStart();
-        }
-
-        @Override
-        protected void onStop () {
-            super.onStop();
-            if (firebaseAuth != null) {
-                firebaseAuth.removeAuthStateListener(authStateListener);
+                AppController journalApi = AppController.getInstance(); //Global API
+                journalApi.setUserId(currentUserId);
+                Intent intent = new Intent(ViewEntryActivity.this,
+                        PostJournalActivity.class);
+                intent.putExtra("userId", currentUserId);
+                startActivity(intent);
             }
-        }
+        });
+    }
 
-        @Override
-        protected void onPause () {
-            super.onPause();
-            if (firebaseAuth != null) {
-                firebaseAuth.removeAuthStateListener(authStateListener);
-            }
-        }
 
-        @Override
-        protected void onResume () {
-            super.onResume();
-            if (firebaseAuth != null) {
-                currentUser = firebaseAuth.getCurrentUser();
-                firebaseAuth.addAuthStateListener(authStateListener);
 
-            }
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (firebaseAuth != null) {
+            firebaseAuth.removeAuthStateListener(authStateListener);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (firebaseAuth != null) {
+            firebaseAuth.removeAuthStateListener(authStateListener);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (firebaseAuth != null) {
+            currentUser = firebaseAuth.getCurrentUser();
+            firebaseAuth.addAuthStateListener(authStateListener);
+
+        }
+    }
 
 }
