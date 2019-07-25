@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.media.Image;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,7 +21,7 @@ import io.opencensus.stats.Aggregation;
 import model.Meaning;
 import ui.InterpretationRecyclerAdapter;
 
-public class InterpretationListActivity extends AppCompatActivity {
+public class InterpretationViewActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -26,22 +29,31 @@ public class InterpretationListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private InterpretationRecyclerAdapter interpretationRecyclerAdapter;
 
+    private Image mainImage;
+
+
     private CollectionReference collectionReference = db.collection("Terms");
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_interpretation_list);
+        setContentView(R.layout.interpretation_row);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser();
 
-        meaningList = new ArrayList<>();
+        Bundle extrasBundle = getIntent().getExtras();
+        String term = extrasBundle.getString("TERM");
+        String meaning = extrasBundle.getString("MEANING");
 
-        recyclerView = findViewById(R.id.meaningRecyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        ImageView mainImage = findViewById(R.id.term_imageView);
+        TextView titleText = findViewById(R.id.term_title_text);
+        TextView meaningText = findViewById(R.id.meaning_text);
+
+        titleText.setText(term);
+        meaningText.setText(meaning);
+
+
     }
 
     @Override

@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".SplashActivity"></activity>
-        <activity android:name=".InterpretationListActivity" />
+        <activity android:name=".InterpretationViewActivity" />
         <activity android:name=".ViewEntryActivity" />
         <activity android:name=".PostJournalActivity" />
         <activity android:name=".CreateAccountActivity" />

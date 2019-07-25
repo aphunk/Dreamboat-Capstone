@@ -4,16 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.ClickableSpan;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,11 +22,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.model.Document;
 
 import java.util.Objects;
 
-import model.Journal;
 import util.AppController;
 
 public class ViewEntryActivity extends AppCompatActivity {
@@ -48,8 +42,6 @@ public class ViewEntryActivity extends AppCompatActivity {
     private TextView entryBodyText;
 
     private Button editButton;
-
-
 
 
     @Override
@@ -112,7 +104,7 @@ public class ViewEntryActivity extends AppCompatActivity {
                                         public void onClick(View view) {
                                             Log.d(TAG, "onClick: IT WAS CLICKED!" );
                                             Log.d(TAG, "onClick: " + document.getString("meaning"));
-                                            Intent intent = new Intent(ViewEntryActivity.this, InterpretationListActivity.class);
+                                            Intent intent = new Intent(ViewEntryActivity.this, InterpretationViewActivity.class);
                                             intent.putExtra("TERM", document.getString("word"));
                                             intent.putExtra("MEANING", document.getString("meaning"));
                                             startActivity(intent);
@@ -128,32 +120,9 @@ public class ViewEntryActivity extends AppCompatActivity {
                         }
                     });
 
-
         }
-
         entryBodyText.setText(ssEntryBody);
 
-    }
-
-
-    public class SpecialClickableSpan extends ClickableSpan implements View.OnClickListener {
-        QueryDocumentSnapshot document;
-        String text;
-
-        public SpecialClickableSpan(String text, QueryDocumentSnapshot document){
-            super();
-            this.text = text;
-            this.document = document;
-        }
-
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(ViewEntryActivity.this, InterpretationListActivity.class);
-            Log.d(TAG, "onClick: " + document.getString("meaning"));
-            intent.putExtra("TERM", document.getString("word"));
-            intent.putExtra("MEANING", document.getString("meaning"));
-            startActivity(intent);
-        }
     }
 
 
