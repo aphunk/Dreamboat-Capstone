@@ -111,7 +111,11 @@ public class ViewEntryActivity extends AppCompatActivity {
                                         @Override
                                         public void onClick(View view) {
                                             Log.d(TAG, "onClick: IT WAS CLICKED!" );
-                                            startActivity(new Intent(ViewEntryActivity.this, InterpretationListActivity.class));
+                                            Log.d(TAG, "onClick: " + document.getString("meaning"));
+                                            Intent intent = new Intent(ViewEntryActivity.this, InterpretationListActivity.class);
+                                            intent.putExtra("TERM", document.getString("word"));
+                                            intent.putExtra("MEANING", document.getString("meaning"));
+                                            startActivity(intent);
                                         }
                                     };
                                     ssEntryBody.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
