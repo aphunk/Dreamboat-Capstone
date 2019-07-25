@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ClickableSpan;
 import android.util.Log;
@@ -106,8 +107,16 @@ public class ViewEntryActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 for (final QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                     Log.d(TAG, document.getId() + " => " + document.getData());
-                                    ssEntryBody.setSpan(new SpecialClickableSpan(word, document), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                    ClickableSpan clickableSpan = new ClickableSpan() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Log.d(TAG, "onClick: IT WAS CLICKED!" );
+                                            startActivity(new Intent(ViewEntryActivity.this, InterpretationListActivity.class));
+                                        }
+                                    };
+                                    ssEntryBody.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                                     entryBodyText.setText(ssEntryBody);
+                                    entryBodyText.setMovementMethod(LinkMovementMethod.getInstance());
                                 }
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
@@ -124,8 +133,6 @@ public class ViewEntryActivity extends AppCompatActivity {
 
 
     public class SpecialClickableSpan extends ClickableSpan implements View.OnClickListener {
-
-//        private final Object document;
         QueryDocumentSnapshot document;
         String text;
 
