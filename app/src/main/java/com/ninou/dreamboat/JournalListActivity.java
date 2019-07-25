@@ -121,7 +121,6 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.action_add:
                 //Take users to add Journal

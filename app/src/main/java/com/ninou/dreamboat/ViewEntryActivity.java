@@ -25,6 +25,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.model.Document;
+
+import java.util.Objects;
 
 import model.Journal;
 import util.AppController;
@@ -40,17 +43,12 @@ public class ViewEntryActivity extends AppCompatActivity {
     private String entryBody;
     private String date;
     private String currentUserId;
-    private String[] words;
 
-    private TextView entryTitle;
-    private TextView entryDate;
     private TextView entryBodyText;
-    private TextView userId;
 
     private Button editButton;
 
-    private Intent intentExtras;
-    private Journal journalEntry;
+
 
 
     @Override
@@ -59,9 +57,9 @@ public class ViewEntryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_entry);
 
         editButton = findViewById(R.id.edit_button);
-        entryTitle = findViewById(R.id.entry_title);
-        entryDate = findViewById(R.id.entry_date);
-        userId = findViewById(R.id.user_id_text);
+        TextView entryTitle = findViewById(R.id.entry_title);
+        TextView entryDate = findViewById(R.id.entry_date);
+        TextView userId = findViewById(R.id.user_id_text);
         entryBodyText = findViewById(R.id.entry_body_text);
 
 
@@ -92,7 +90,7 @@ public class ViewEntryActivity extends AppCompatActivity {
             }
         });
 
-        words = entryBody.split("\\W+");
+        String[] words = entryBody.split("\\W+");
         final SpannableString ssEntryBody = new SpannableString(entryBody);
 
         for (final String word : words) {
@@ -106,14 +104,9 @@ public class ViewEntryActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                for (final QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                     Log.d(TAG, document.getId() + " => " + document.getData());
-                                    ssEntryBody.setSpan(new ClickableSpan() {
-                                        @Override
-                                        public void onClick(View view) {
-
-                                        }
-                                    }, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                    ssEntryBody.setSpan(new SpecialClickableSpan(word, document), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                                     entryBodyText.setText(ssEntryBody);
                                 }
                             } else {
@@ -127,10 +120,30 @@ public class ViewEntryActivity extends AppCompatActivity {
 
         entryBodyText.setText(ssEntryBody);
 
-
     }
 
 
+    public class SpecialClickableSpan extends ClickableSpan implements View.OnClickListener {
+
+//        private final Object document;
+        QueryDocumentSnapshot document;
+        String text;
+
+        public SpecialClickableSpan(String text, QueryDocumentSnapshot document){
+            super();
+            this.text = text;
+            this.document = document;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(ViewEntryActivity.this, InterpretationListActivity.class);
+            Log.d(TAG, "onClick: " + document.getString("meaning"));
+            intent.putExtra("TERM", document.getString("word"));
+            intent.putExtra("MEANING", document.getString("meaning"));
+            startActivity(intent);
+        }
+    }
 
 
     @Override

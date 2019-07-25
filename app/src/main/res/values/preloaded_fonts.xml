@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/amiri_bold</item>
         <item>@font/cardo</item>
+        <item>@font/chonburi</item>
+        <item>@font/cormorant_garamond_bold</item>
         <item>@font/cousine</item>
+        <item>@font/frank_ruhl_libre_black</item>
         <item>@font/lato</item>
         <item>@font/lato_light</item>
+        <item>@font/montserrat</item>
+        <item>@font/playfair_display_black</item>
+        <item>@font/poppins_light</item>
+        <item>@font/poppins_medium</item>
     </array>
 </resources>
