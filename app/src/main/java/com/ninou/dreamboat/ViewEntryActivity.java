@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.algolia.search.saas.android.BuildConfig;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +32,6 @@ public class ViewEntryActivity extends AppCompatActivity {
     private static final String TAG = "viewEntryActivity";
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
-    private FirebaseUser currentUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference collectionReference = db.collection("Terms");
     private String title;
@@ -151,7 +151,7 @@ public class ViewEntryActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (firebaseAuth != null) {
-            currentUser = firebaseAuth.getCurrentUser();
+            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
             firebaseAuth.addAuthStateListener(authStateListener);
 
         }
