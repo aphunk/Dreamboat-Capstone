@@ -92,10 +92,6 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
 
         saveButton = findViewById(R.id.save_button);
         speakButton = findViewById(R.id.speak_button);
-//        interpretButton = findViewById(R.id.interpret_button);
-//        interpretButton = setOnClickListener(this);
-//        shareButton = findViewById(R.id.share_button);
-//        shareButton = setOnClickListener(this);
 
         saveButton.setOnClickListener(this);
         speakButton.setOnClickListener(this);
