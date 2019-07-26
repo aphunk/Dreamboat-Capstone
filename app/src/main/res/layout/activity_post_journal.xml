@@ -9,43 +9,42 @@
 
     <EditText
         android:id="@+id/dream_title_text"
-        android:layout_width="363dp"
-        android:layout_height="57dp"
+        style="@style/hintStyle"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:autofillHints=""
+        android:fontFamily="@font/work_sans_light"
         android:hint="@string/dream_title_hint"
         android:inputType="text"
         android:textColor="@color/colorPrimaryDark"
-        android:textColorHint="@color/colorPink"
-        android:textColorLink="@color/colorPink"
+        android:textColorLink="#C2C2C2"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/entry_date_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/smLogo"
-        app:layout_constraintVertical_bias="1.0"
         tools:targetApi="o" />
 
     <EditText
         android:id="@+id/dream_entry_text"
-        android:layout_width="361dp"
-        android:layout_height="83dp"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="328dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:autofillHints="@string/dream_entry_hint"
-        android:capitalize="sentences"
         android:ems="10"
+        android:fontFamily="@font/work_sans_light"
         android:gravity="start|top"
         android:hint="@string/dream_entry_hint"
-        android:inputType="textMultiLine"
+        android:inputType="text|textMultiLine"
         android:lineSpacingExtra="8sp"
-        android:selectAllOnFocus="true"
-        android:textColorHint="@color/colorAccent"
+        android:selectAllOnFocus="false"
+        android:textColorHint="#C2C2C2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,15 +54,23 @@
 
     <Button
         android:id="@+id/save_button"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
+        android:fontFamily="@font/work_sans_light"
         android:text="@string/save_button_text"
+        android:textColor="@color/colorWhiteHeader"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.238"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dream_entry_text" />
+        app:layout_constraintTop_toBottomOf="@+id/dream_entry_text"
+        app:layout_constraintVertical_bias="0.198" />
 
     <!--<Button-->
         <!--android:id="@+id/interpret_button"-->
@@ -90,36 +97,24 @@
         <!--app:layout_constraintStart_toEndOf="@+id/interpret_button"-->
         <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-    <ImageView
-        android:id="@+id/smLogo"
-        android:layout_width="244dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:contentDescription="@string/small_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dreamboat_logo" />
-
-    <EditText
+    <TextView
         android:id="@+id/entry_date_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="36dp"
         android:autofillHints=""
+        android:fontFamily="@font/work_sans_light"
         android:inputType="date"
         android:labelFor="@+id/entry_date_text"
         android:shadowColor="@color/colorPrimary"
         android:text="@string/date_hint"
         android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/dream_entry_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.102"
         app:layout_constraintStart_toStartOf="parent"
         tools:targetApi="o" />
 
@@ -137,43 +132,35 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.842" />
+        app:layout_constraintVertical_bias="0.499" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="72dp"
+        android:fontFamily="@font/playfair_display_black"
         android:shadowColor="#0F0C50"
         android:text="@string/new_dream_header"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="24sp"
+        android:textColor="@color/colorBlack"
+        android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/dream_title_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.062"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/smLogo"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/speak_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:contentDescription="@string/speak_button_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.744"
-        app:layout_constraintStart_toEndOf="@+id/save_button"
-        app:layout_constraintTop_toBottomOf="@+id/dream_entry_text"
-        app:layout_constraintVertical_bias="0.458"
         app:srcCompat="@android:drawable/ic_btn_speak_now" />
 
 
