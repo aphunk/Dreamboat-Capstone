@@ -1,8 +1,5 @@
 package com.ninou.dreamboat;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,7 +8,11 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -32,7 +33,7 @@ import util.AppController;
 
 public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
-    private Button createAcctButton;
+    private TextView createAcctButton;
 
     private AutoCompleteTextView emailAddress;
     private EditText password;

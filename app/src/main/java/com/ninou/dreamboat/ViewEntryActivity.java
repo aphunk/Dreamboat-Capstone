@@ -1,8 +1,5 @@
 package com.ninou.dreamboat;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -14,6 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.algolia.search.saas.Client;
+import com.algolia.search.saas.Index;
+import com.algolia.search.saas.android.BuildConfig;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,11 +46,16 @@ public class ViewEntryActivity extends AppCompatActivity {
 
     private Button editButton;
 
+    final String API_KEY = BuildConfig.ALGOLIA_API_KEY;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_entry);
+
+        Client client = new Client("TKKSUFNV4X", API_KEY);
+        Index index = client.getIndex("terms");
 
         editButton = findViewById(R.id.edit_button);
         TextView entryTitle = findViewById(R.id.entry_title);
