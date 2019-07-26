@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     private CollectionReference collectionReference = db.collection("Users");
 
     private static int SPLASH_TIME = 4000;
-    private static final String API_KEY = BuildConfig.ALGOLIA_API_KEY;
 
     
     @Override
@@ -48,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Client client = new Client("TKKSUFNV4X", API_KEY);
-        Index index = client.getIndex("terms");
 
 
         firebaseAuth = FirebaseAuth.getInstance();

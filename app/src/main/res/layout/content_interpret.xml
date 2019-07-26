@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".InterpretActivity"
+    tools:showIn="@layout/activity_interpret">
+
+
+        <ImageView
+            android:id="@+id/term_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="409dp"
+            android:contentDescription="Placeholder Img"
+            android:src="@drawable/placeholder"
+            tools:src="@drawable/placeholder" />
+
+        <TextView
+            android:id="@+id/term_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/playfair_display_black"
+            android:lineSpacingExtra="8sp"
+            android:padding="12dp"
+            android:scaleType="fitXY"
+            android:text="Elephant"
+            android:textColor="@color/colorBlack"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/meaning_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+
+            android:paddingStart="16dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="12dp"
+            android:text="Meaning"
+            android:textColor="#65111111"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
