@@ -3,6 +3,7 @@ package com.ninou.dreamboat;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -41,7 +42,7 @@ public class InterpretActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_interpret);
 
-        TextView termTextView = findViewById(R.id.term_title_text);
+        EditText searchTextView = findViewById(R.id.term_title_text);
         TextView meaningTextView = findViewById(R.id.meaning_text);
         final ListView listView = findViewById(R.id.list_view);
 
@@ -63,7 +64,7 @@ public class InterpretActivity extends AppCompatActivity {
                             for (DocumentSnapshot document : task.getResult()) {
                                 list.add(document.getString("word"));
                             }
-                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(InterpretActivity.this, android.R.layout.simple_list_item_1, list);
+                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(InterpretActivity.this, android.R.layout.simple_list_item_1, list);
                             listView.setAdapter(arrayAdapter);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -74,7 +75,7 @@ public class InterpretActivity extends AppCompatActivity {
 
 
         Client client = new Client("TKKSUFNV4X", API_KEY);
-        Index index = client.getIndex("terms");
+        final Index index = client.getIndex("terms");
 
         Query query = new Query("license plate")
                 .setAttributesToRetrieve("word", "meaning")
@@ -88,7 +89,38 @@ public class InterpretActivity extends AppCompatActivity {
             }
         });
 
-
+//        searchTextView.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                Query query = new Query(editable.toString())
+//                        .setAttributesToRetrieve("word")
+//                        .setHitsPerPage(50);
+//                index.searchAsync(query, new CompletionHandler() {
+//                    @Override
+//                    public void requestCompleted(JSONObject content, AlgoliaException error) {
+//                        try {
+//                            JSONArray hits = content.getJSONArray("hits");
+//                            List<String> list = new ArrayList<>();
+//                            for (int i = 0; i < hits.length(); i++) {
+//                                JSONObject jsonObject = hits.getJSONObject(i);
+//                                String productName = jsonObject.getString("productName");
+//                                list.add(productName);
+//                            }
+//                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(InterpretActivity.this, android.R.layout.simple_list_item_1, list);
+//                            listView.setAdapter(arrayAdapter);
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//            }
+//        });
 
     }
 }

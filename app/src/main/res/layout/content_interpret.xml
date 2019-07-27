@@ -18,36 +18,36 @@
             <!--android:src="@drawable/placeholder"-->
             <!--tools:src="@drawable/placeholder" />-->
 
+    <EditText
+        android:id="@+id/term_title_text"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/playfair_display_black"
+        android:hint="Search..."
+        android:lineSpacingExtra="8sp"
+        android:padding="12dp"
+        android:scaleType="fitXY"
+        android:textColor="@color/colorBlack"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="442dp" />
 
-    <TextView
-            android:id="@+id/term_title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/playfair_display_black"
-            android:lineSpacingExtra="8sp"
-            android:padding="12dp"
-            android:scaleType="fitXY"
-            android:text="Elephant"
-            android:textColor="@color/colorBlack"
-            android:textSize="36sp"
-            android:textStyle="bold" />
+    <!--<TextView-->
+            <!--android:id="@+id/meaning_text"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:fontFamily="sans-serif-light"-->
 
-    <TextView
-            android:id="@+id/meaning_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-
-            android:paddingStart="16dp"
-            android:paddingTop="6dp"
-            android:paddingBottom="12dp"
-            android:text="Meaning"
-            android:textColor="#65111111"
-            android:textSize="16sp" />
+            <!--android:paddingStart="16dp"-->
+            <!--android:paddingTop="6dp"-->
+            <!--android:paddingBottom="12dp"-->
+            <!--android:text="Meaning"-->
+            <!--android:textColor="#65111111"-->
+            <!--android:textSize="16sp" />-->
 
 
 </LinearLayout>
