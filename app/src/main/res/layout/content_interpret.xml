@@ -10,15 +10,20 @@
     tools:showIn="@layout/activity_interpret">
 
 
-        <ImageView
-            android:id="@+id/term_imageView"
-            android:layout_width="match_parent"
-            android:layout_height="409dp"
-            android:contentDescription="Placeholder Img"
-            android:src="@drawable/placeholder"
-            tools:src="@drawable/placeholder" />
+        <!--<ImageView-->
+            <!--android:id="@+id/term_imageView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="409dp"-->
+            <!--android:contentDescription="Placeholder Img"-->
+            <!--android:src="@drawable/placeholder"-->
+            <!--tools:src="@drawable/placeholder" />-->
 
-        <TextView
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="442dp" />
+
+    <TextView
             android:id="@+id/term_title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +36,7 @@
             android:textSize="36sp"
             android:textStyle="bold" />
 
-        <TextView
+    <TextView
             android:id="@+id/meaning_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,4 +50,4 @@
             android:textSize="16sp" />
 
 
-    </LinearLayout>
+</LinearLayout>
