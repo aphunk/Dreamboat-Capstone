@@ -57,7 +57,7 @@ public class InterpretationRecyclerAdapter extends RecyclerView.Adapter<Interpre
             context = ctx;
 
             word = itemView.findViewById(R.id.term_title_text);
-            meaning = itemView.findViewById(R.id.meaning_text);
+            meaning = itemView.findViewById(R.id.entry_body_textView);
 
         }
     }

@@ -1,5 +1,8 @@
 package com.ninou.dreamboat;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -11,11 +14,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.algolia.search.saas.AlgoliaException;
 import com.algolia.search.saas.Client;
+import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
+import com.algolia.search.saas.Query;
 import com.algolia.search.saas.android.BuildConfig;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,6 +29,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONObject;
+
 import java.util.Objects;
 
 import util.AppController;
@@ -34,7 +39,6 @@ public class ViewEntryActivity extends AppCompatActivity {
     private static final String TAG = "viewEntryActivity";
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
-    private FirebaseUser currentUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference collectionReference = db.collection("Terms");
     private String title;
@@ -45,8 +49,8 @@ public class ViewEntryActivity extends AppCompatActivity {
     private TextView entryBodyText;
 
     private Button editButton;
+    private Button interpretButton;
 
-    final String API_KEY = BuildConfig.ALGOLIA_API_KEY;
 
 
     @Override
@@ -54,14 +58,12 @@ public class ViewEntryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_entry);
 
-        Client client = new Client("TKKSUFNV4X", API_KEY);
-        Index index = client.getIndex("terms");
-
         editButton = findViewById(R.id.edit_button);
         TextView entryTitle = findViewById(R.id.entry_title);
         TextView entryDate = findViewById(R.id.entry_date);
         TextView userId = findViewById(R.id.user_id_text);
         entryBodyText = findViewById(R.id.entry_body_text);
+        interpretButton = findViewById(R.id.interpret_button);
 
 
         Bundle extrasBundle = getIntent().getExtras();
@@ -78,6 +80,17 @@ public class ViewEntryActivity extends AppCompatActivity {
         entryDate.setText(date);
         userId.setText(currentUserId);
 
+
+        interpretButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ViewEntryActivity.this, InterpretActivity.class);
+                intent.putExtra("ENTRY_TEXT", entryBody);
+                startActivity(intent);
+            }
+        });
+
+
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,45 +104,45 @@ public class ViewEntryActivity extends AppCompatActivity {
             }
         });
 
-        String[] words = entryBody.split("\\W+");
-        final SpannableString ssEntryBody = new SpannableString(entryBody);
-
-        for (final String word : words) {
-            int wordLength = word.length();
-            final int startIndex = entryBody.indexOf(word);
-            final int endIndex = startIndex + wordLength;
-
-            collectionReference.whereEqualTo("word", word)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (final QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                    Log.d(TAG, document.getId() + " => " + document.getData());
-                                    ClickableSpan clickableSpan = new ClickableSpan() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            Log.d(TAG, "onClick: IT WAS CLICKED!" );
-                                            Log.d(TAG, "onClick: " + document.getString("meaning"));
-                                            Intent intent = new Intent(ViewEntryActivity.this, InterpretationViewActivity.class);
-                                            intent.putExtra("TERM", document.getString("word"));
-                                            intent.putExtra("MEANING", document.getString("meaning"));
-                                            startActivity(intent);
-                                        }
-                                    };
-                                    ssEntryBody.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                                    entryBodyText.setText(ssEntryBody);
-                                    entryBodyText.setMovementMethod(LinkMovementMethod.getInstance());
-                                }
-                            } else {
-                                Log.d(TAG, "Error getting documents: ", task.getException());
-                            }
-                        }
-                    });
-
-        }
-        entryBodyText.setText(ssEntryBody);
+//        String[] words = entryBody.split("\\W+");
+//        final SpannableString ssEntryBody = new SpannableString(entryBody);
+//
+//        for (final String word : words) {
+//            int wordLength = word.length();
+//            final int startIndex = entryBody.indexOf(word);
+//            final int endIndex = startIndex + wordLength;
+//
+//            collectionReference.whereEqualTo("word", word)
+//                    .get()
+//                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                            if (task.isSuccessful()) {
+//                                for (final QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+//                                    Log.d(TAG, document.getId() + " => " + document.getData());
+//                                    ClickableSpan clickableSpan = new ClickableSpan() {
+//                                        @Override
+//                                        public void onClick(View view) {
+//                                            Log.d(TAG, "onClick: IT WAS CLICKED!" );
+//                                            Log.d(TAG, "onClick: " + document.getString("meaning"));
+//                                            Intent intent = new Intent(ViewEntryActivity.this, InterpretationViewActivity.class);
+//                                            intent.putExtra("TERM", document.getString("word"));
+//                                            intent.putExtra("MEANING", document.getString("meaning"));
+//                                            startActivity(intent);
+//                                        }
+//                                    };
+//                                    ssEntryBody.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                                    entryBodyText.setText(ssEntryBody);
+//                                    entryBodyText.setMovementMethod(LinkMovementMethod.getInstance());
+//                                }
+//                            } else {
+//                                Log.d(TAG, "Error getting documents: ", task.getException());
+//                            }
+//                        }
+//                    });
+//
+//        }
+//        entryBodyText.setText(ssEntryBody);
 
     }
 
@@ -159,7 +172,7 @@ public class ViewEntryActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (firebaseAuth != null) {
-            currentUser = firebaseAuth.getCurrentUser();
+            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
             firebaseAuth.addAuthStateListener(authStateListener);
 
         }

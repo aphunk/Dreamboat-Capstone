@@ -29,7 +29,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/meaning_text"
+        android:id="@+id/entry_body_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"

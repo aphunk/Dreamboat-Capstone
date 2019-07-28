@@ -31,6 +31,8 @@ import javax.annotation.Nullable;
 
 import util.AppController;
 
+import static com.google.firebase.auth.FirebaseAuth.*;
+
 public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private TextView createAcctButton;
@@ -39,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
 
     private FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
+    private AuthStateListener authStateListener;
     private FirebaseUser currentUser;
     private ProgressBar progressBar;
 
@@ -54,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
 //        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth = getInstance();
 
         emailAddress = findViewById(R.id.email);
         password = findViewById(R.id.password);
@@ -89,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            FirebaseUser user = getInstance().getCurrentUser();
                             assert user != null;
                             final String currentUserId = user.getUid();
 

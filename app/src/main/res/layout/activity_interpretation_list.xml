@@ -6,16 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".InterpretationViewActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/meaningRecyclerView"
-        android:layout_width="395dp"
-        android:layout_height="715dp"
+    <ListView
+        android:id="@+id/addtl_hits_listView"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="9dp"
+        android:background="#3BEECDCD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/top_hit_meaning_textView"
+        app:layout_constraintVertical_bias="0.026" />
+
+    <TextView
+        android:id="@+id/top_hit_word_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="289dp"
+        android:layout_marginBottom="22dp"
+        android:fontFamily="@font/playfair_display_black"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/top_hit_meaning_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.32999998" />
+
+    <TextView
+        android:id="@+id/top_hit_meaning_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/work_sans_light"
+        android:lineSpacingExtra="8sp"
+        android:text="TextView"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_hit_word_textView"
+        tools:text="Top hit's meaning goes here..." />
 </androidx.constraintlayout.widget.ConstraintLayout>

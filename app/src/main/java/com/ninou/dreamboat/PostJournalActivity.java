@@ -21,7 +21,13 @@ import android.content.ActivityNotFoundException;
 import android.widget.TextView;
 import android.widget.Toast;
 
-        import com.google.android.gms.tasks.OnFailureListener;
+import com.algolia.search.saas.AlgoliaException;
+import com.algolia.search.saas.Client;
+import com.algolia.search.saas.CompletionHandler;
+import com.algolia.search.saas.Index;
+import com.algolia.search.saas.Query;
+import com.algolia.search.saas.android.BuildConfig;
+import com.google.android.gms.tasks.OnFailureListener;
         import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
@@ -32,6 +38,8 @@ import com.google.firebase.auth.FirebaseAuth;
 //        import com.google.firebase.storage.StorageReference;
 //
 
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,8 +48,10 @@ import java.util.Locale;
         import model.Journal;
 import util.AppController;
 
+import static com.google.firebase.auth.FirebaseAuth.*;
+
 public class PostJournalActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String TAG = "PostJournalActivity";
+    private static final String TAG = "ALGOLIA";
     private static final int REQUEST_CODE_SPEECH_INPUT = 100;
     private Button saveButton;
 //    private Button shareButton;
@@ -61,7 +71,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
     private SimpleDateFormat dateFormat;
 
     private FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
+    private AuthStateListener authStateListener;
     private FirebaseUser currentUser;
 
     //Connection to Firestore
@@ -77,7 +87,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_post_journal);
 
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth = getInstance();
         progressBar = findViewById(R.id.save_entry_progress);
         titleEditText = findViewById(R.id.dream_title_text);
         entryEditText = findViewById(R.id.dream_entry_text);
@@ -89,25 +99,22 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         date = dateFormat.format(calendar.getTime());
         dateTimeDisplay.setText(date);
 
-
         saveButton = findViewById(R.id.save_button);
         speakButton = findViewById(R.id.speak_button);
-//        interpretButton = findViewById(R.id.interpret_button);
-//        interpretButton = setOnClickListener(this);
-//        shareButton = findViewById(R.id.share_button);
-//        shareButton = setOnClickListener(this);
-
         saveButton.setOnClickListener(this);
         speakButton.setOnClickListener(this);
-
         progressBar.setVisibility(View.INVISIBLE);
 
-        if (AppController.getInstance() != null) {
-            currentUserId = AppController.getInstance().getUserId();
+
+
+        if (getInstance() == null) {
+            startActivity(new Intent(PostJournalActivity.this, LoginActivity.class));
+        }else {
+            currentUserId = getInstance().getCurrentUser().getUid();
             currentUserName = AppController.getInstance().getUsername();
         }
 
-        authStateListener = new FirebaseAuth.AuthStateListener() {
+        authStateListener = new AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 currentUser = firebaseAuth.getCurrentUser();
@@ -125,6 +132,10 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.save_button:
+                //get text & perform search
+//                String entryBodyText = entryEditText.getText().toString();
+//
+//                performSearch(entryBodyText);
                 //saveJournal
                 saveJournal();
                 break;
@@ -134,6 +145,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
 
         }
     }
+
 
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -167,10 +179,13 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+
+
     private void saveJournal() {
         final String title = titleEditText.getText().toString().trim();
         final String entry = entryEditText.getText().toString().trim();
         final String date = dateTimeDisplay.getText().toString();
+
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -182,24 +197,21 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
             journal.setEntry(entry);
             journal.setDate(date);
             journal.setUserId(currentUserId);
-            journal.setUserName(currentUserName);
 
             collectionReference.add(journal)
-
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             progressBar.setVisibility(View.INVISIBLE);
 
+
                             Intent intent = new Intent(PostJournalActivity.this,
                                     ViewEntryActivity.class);
-                                    intent.putExtra("CURRENT_USER", currentUser.getUid());
+                                    intent.putExtra("CURRENT_USER", currentUserId);
                                     intent.putExtra("TITLE", title);
                                     intent.putExtra("ENTRY_TEXT", entry);
                                     intent.putExtra("DATE", date);
                             startActivity(intent);
-
-                            Toast.makeText(PostJournalActivity.this, "Successfully saved to your Dreamboat!", Toast.LENGTH_LONG).show();
 
                             finish();
                         }
@@ -222,8 +234,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onStart() {
         super.onStart();
-        currentUser = firebaseAuth.getCurrentUser();
-        firebaseAuth.addAuthStateListener(authStateListener);
+
     }
 
     @Override

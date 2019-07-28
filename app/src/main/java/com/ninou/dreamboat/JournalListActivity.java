@@ -78,8 +78,8 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
     protected void onStart() {
         super.onStart(); //get journals from firestore
 
-        collectionReference.whereEqualTo("userId", AppController.getInstance()
-                .getUserId())
+        collectionReference.whereEqualTo("userId", FirebaseAuth.getInstance()
+                .getUid())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
