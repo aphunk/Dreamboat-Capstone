@@ -124,16 +124,6 @@ public class ViewEntryActivity extends AppCompatActivity {
         userId.setText(currentUserId);
 
 
-        interpretButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ViewEntryActivity.this, InterpretActivity.class);
-                intent.putExtra("ENTRY_TEXT", entryBody);
-                startActivity(intent);
-            }
-        });
-
-
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

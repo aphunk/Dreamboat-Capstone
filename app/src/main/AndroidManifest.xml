@@ -14,10 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity
-            android:name=".InterpretActivity"
-            android:label="@string/title_activity_interpret"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+
         <activity android:name=".SplashActivity" />
         <activity android:name=".InterpretationViewActivity" />
         <activity android:name=".ViewEntryActivity" />
