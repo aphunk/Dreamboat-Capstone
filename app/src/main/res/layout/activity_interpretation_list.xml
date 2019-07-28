@@ -8,8 +8,8 @@
 
     <ListView
         android:id="@+id/addtl_hits_listView"
-        android:layout_width="399dp"
-        android:layout_height="605dp"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="9dp"
@@ -17,7 +17,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_hit_meaning_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/top_hit_meaning_textView"
+        app:layout_constraintVertical_bias="0.026" />
 
     <TextView
         android:id="@+id/top_hit_word_textView"
@@ -45,7 +46,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="23dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="112dp"
+        android:fontFamily="@font/work_sans_light"
+        android:lineSpacingExtra="8sp"
         android:text="TextView"
         android:textAlignment="viewStart"
         android:textSize="16sp"

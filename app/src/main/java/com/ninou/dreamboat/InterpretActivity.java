@@ -25,7 +25,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 
 public class InterpretActivity extends AppCompatActivity {
@@ -59,13 +58,11 @@ public class InterpretActivity extends AppCompatActivity {
 
         String[] words = entryBody.split("\\W+");
         final SpannableString ssEntryBody = new SpannableString(entryBody);
-        final ArrayList<String> matchedWords = new ArrayList<>();
 
         for (final String word : words) {
             int wordLength = word.length();
             final int startIndex = entryBody.indexOf(word);
             final int endIndex = startIndex + wordLength;
-
 
             Query query = new Query(word)
                     .setAttributesToRetrieve("word", "meaning")
@@ -81,12 +78,7 @@ public class InterpretActivity extends AppCompatActivity {
                             final String topHitWord = jsonObject.getString("word");
                             final String topHitMeaning = jsonObject.getString("meaning");
 
-                            final ArrayList list = new ArrayList<>();
-                            for(int i=1; i<hits.length(); i++) {
-                                JSONObject hit = hits.getJSONObject(i);
-                                String addlWord = jsonObject.getString("word");
-                                list.add(addlWord);
-                            }
+//                            intent.putParcelableArrayListExtra("ADDL_HITS", list);
 
                             ClickableSpan clickableSpan = new ClickableSpan() {
                                         @Override
@@ -94,11 +86,9 @@ public class InterpretActivity extends AppCompatActivity {
                                             Intent intent = new Intent(InterpretActivity.this, InterpretationViewActivity.class);
                                             intent.putExtra("WORD", topHitWord);
                                             intent.putExtra("MEANING", topHitMeaning);
-                                            intent.putParcelableArrayListExtra("ADDL_HITS", list);
                                             startActivity(intent);
                                         }
                                     };
-
                                     ssEntryBody.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                                     entryBodyTextView.setText(ssEntryBody);
                                     entryBodyTextView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -107,14 +97,10 @@ public class InterpretActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-//                    matchedWords.add(content.toString());
-//                    Log.d(TAG, "onCreate: FOUND WORDS =>" + matchedWords.toArray()[0]);
-//                    Log.d(TAG, "requestCompleted: " + content);
                 }
             });
 
         }
-
         entryBodyTextView.setText(entryBody);
 
 
