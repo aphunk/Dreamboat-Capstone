@@ -37,7 +37,7 @@
         android:paddingStart="16dp"
         android:paddingTop="6dp"
         android:paddingBottom="12dp"
-        android:text="@string/meaning"
+        android:text="meaning"
         android:textColor="#65111111"
         android:textSize="16sp" />
 
