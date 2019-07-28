@@ -2,12 +2,10 @@ package com.ninou.dreamboat;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.algolia.search.saas.AlgoliaException;
@@ -15,18 +13,12 @@ import com.algolia.search.saas.Client;
 import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
 public class InterpretActivity extends AppCompatActivity {
     private static final String TAG = "InterpretTAG";
@@ -49,37 +41,37 @@ public class InterpretActivity extends AppCompatActivity {
         final ListView listView = findViewById(R.id.list_view);
 
 
-//        Bundle extrasBundle = getIntent().getExtras();
-//        if (extrasBundle != null) {
-//            entryBody = extrasBundle.getString("ENTRY_TEXT");
-//        }
+        Bundle extrasBundle = getIntent().getExtras();
+        if (extrasBundle != null) {
+            entryBody = extrasBundle.getString("ENTRY_TEXT");
+            Log.d(TAG, "onCreate: " + entryBody);
+        }
 
 
 
 
-        collectionReference.get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "onComplete: GET REQUEST TO COLLECTION REF COMPLETED");
-                            List<String> list = new ArrayList<>();
-                            for (DocumentSnapshot document : task.getResult()) {
-                                list.add(document.getString("word"));
-                            }
-                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(InterpretActivity.this, android.R.layout.simple_list_item_1, list);
-                            listView.setAdapter(arrayAdapter);
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-
-                });
+//        collectionReference.get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            Log.d(TAG, "onComplete: GET REQUEST TO COLLECTION REF COMPLETED");
+//                            List<String> list = new ArrayList<>();
+//                            for (DocumentSnapshot document : task.getResult()) {
+//                                list.add(document.getString("word"));
+//                            }
+//                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(InterpretActivity.this, android.R.layout.simple_list_item_1, list);
+//                            listView.setAdapter(arrayAdapter);
+//                        } else {
+//                            Log.d(TAG, "Error getting documents: ", task.getException());
+//                        }
+//                    }
+//
+//                });
 
 
         Client client = new Client("TKKSUFNV4X", API_KEY);
         final Index index = client.getIndex("terms");
-//
         Query query = new Query("confiding")
                 .setAttributesToRetrieve("word", "meaning")
                 .setHitsPerPage(50);
@@ -91,44 +83,6 @@ public class InterpretActivity extends AppCompatActivity {
                 Log.d(TAG, "requestCompleted: " + content);
             }
         });
-
-//        searchTextView.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//
-//                Query query = new Query(editable.toString())
-//                        .setAttributesToRetrieve("word")
-//                        .setHitsPerPage(50);
-//                index.searchAsync(query, new CompletionHandler() {
-//                    @Override
-//                    public void requestCompleted(JSONObject content, AlgoliaException error) {
-//                        try {
-//                            Log.d(TAG, "requestCompleted: " + content);
-//                            JSONArray hits = content.getJSONArray("hits");
-//                            List<String> list = new ArrayList<>();
-//                            for (int i = 0; i < hits.length(); i++) {
-//                                JSONObject jsonObject = hits.getJSONObject(i);
-//                                String term = jsonObject.getString("word");
-//                                String meaning = jsonObject.getString("meaning");
-//                                list.add(term);
-//                                list.add(meaning);
-//                            }
-//                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
-//                                    InterpretActivity.this, android.R.layout.simple_list_item_1, list);
-//                            listView.setAdapter(arrayAdapter);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//            }
-//        });
 
     }
 
