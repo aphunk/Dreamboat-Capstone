@@ -1,12 +1,12 @@
 package com.ninou.dreamboat;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.media.Image;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,17 +35,17 @@ public class InterpretationViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.interpretation_row);
+        setContentView(R.layout.activity_interpretation_list);
 
 
         Bundle extrasBundle = getIntent().getExtras();
-        String term = extrasBundle.getString("TERM");
+        String term = extrasBundle.getString("WORD");
         String meaning = extrasBundle.getString("MEANING");
 
 
         ImageView mainImage = findViewById(R.id.term_imageView);
-        TextView titleText = findViewById(R.id.term_title_text);
-        TextView meaningText = findViewById(R.id.entry_body_textView);
+        TextView titleText = findViewById(R.id.top_hit_word_textView);
+        TextView meaningText = findViewById(R.id.top_hit_meaning_textView);
 
         titleText.setText(term);
         meaningText.setText(meaning);

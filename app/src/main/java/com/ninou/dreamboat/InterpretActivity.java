@@ -68,7 +68,7 @@ public class InterpretActivity extends AppCompatActivity {
 
 
             Query query = new Query(word)
-                    .setAttributesToRetrieve("word")
+                    .setAttributesToRetrieve("word", "meaning")
                     .setHitsPerPage(2);
             index.searchAsync(query, new CompletionHandler() {
                 @Override
@@ -76,11 +76,16 @@ public class InterpretActivity extends AppCompatActivity {
                     try {
                         JSONArray hits = content.getJSONArray("hits");
                         if (hits.length() > 0) {
+                            JSONObject jsonObject = hits.getJSONObject(0);
+                            final String topHitWord = jsonObject.getString("word");
+                            final String topHitMeaning = jsonObject.getString("meaning");
                             ClickableSpan clickableSpan = new ClickableSpan() {
                                         @Override
                                         public void onClick(View view) {
                                             Log.d(TAG, "onClick: IT WAS CLICKED!" );
                                             Intent intent = new Intent(InterpretActivity.this, InterpretationViewActivity.class);
+                                            intent.putExtra("WORD", topHitWord);
+                                            intent.putExtra("MEANING", topHitMeaning);
                                             startActivity(intent);
                                         }
                                     };
