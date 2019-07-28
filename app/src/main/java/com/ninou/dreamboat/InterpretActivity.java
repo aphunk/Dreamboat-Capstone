@@ -1,6 +1,7 @@
 package com.ninou.dreamboat;
 
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -16,8 +17,11 @@ import com.algolia.search.saas.Query;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class InterpretActivity extends AppCompatActivity {
@@ -28,8 +32,10 @@ public class InterpretActivity extends AppCompatActivity {
 
     private String term;
     private String meaning;
-//    String api_key = BuildConfig.ApiKey;
     String API_KEY = com.ninou.dreamboat.BuildConfig.ApiKey;
+
+    Client client = new Client("TKKSUFNV4X", API_KEY);
+    final Index index = client.getIndex("terms");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,38 @@ public class InterpretActivity extends AppCompatActivity {
             entryBody = extrasBundle.getString("ENTRY_TEXT");
             Log.d(TAG, "onCreate: " + entryBody);
         }
+
+        String[] words = entryBody.split("\\W+");
+        final SpannableString ssEntryBody = new SpannableString(entryBody);
+        final ArrayList<String> matchedWords = new ArrayList<>();
+
+        for (final String word : words) {
+            int wordLength = word.length();
+            final int startIndex = entryBody.indexOf(word);
+            final int endIndex = startIndex + wordLength;
+
+
+            Query query = new Query(word)
+                    .setAttributesToRetrieve("word")
+                    .setHitsPerPage(1);
+            index.searchAsync(query, new CompletionHandler() {
+                @Override
+                public void requestCompleted(JSONObject content, AlgoliaException error) {
+                    try {
+                        JSONArray hits = content.getJSONArray("hits");
+//                        Log.d(TAG, "requestCompleted: " + hits);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    matchedWords.add(content.toString());
+                    Log.d(TAG, "onCreate: FOUND WORDS =>" + matchedWords);
+//                    Log.d(TAG, "requestCompleted: " + content);
+                }
+            });
+
+        }
+
+
 
 
 
@@ -69,20 +107,6 @@ public class InterpretActivity extends AppCompatActivity {
 //
 //                });
 
-
-        Client client = new Client("TKKSUFNV4X", API_KEY);
-        final Index index = client.getIndex("terms");
-        Query query = new Query("confiding")
-                .setAttributesToRetrieve("word", "meaning")
-                .setHitsPerPage(50);
-        index.searchAsync(query, new CompletionHandler() {
-            @Override
-            public void requestCompleted(JSONObject content, AlgoliaException error) {
-                String TAG = "INTERPRET";
-
-                Log.d(TAG, "requestCompleted: " + content);
-            }
-        });
 
     }
 
