@@ -1,10 +1,14 @@
 package com.ninou.dreamboat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,8 +47,8 @@ public class InterpretActivity extends AppCompatActivity {
         setContentView(R.layout.content_interpret);
 
         EditText searchTextView = findViewById(R.id.term_title_text);
-        TextView meaningTextView = findViewById(R.id.meaning_text);
-        final ListView listView = findViewById(R.id.list_view);
+        final TextView entryBodyTextView = findViewById(R.id.entry_body_textView);
+//        final ListView listView = findViewById(R.id.list_view);
 
 
         Bundle extrasBundle = getIntent().getExtras();
@@ -65,25 +69,38 @@ public class InterpretActivity extends AppCompatActivity {
 
             Query query = new Query(word)
                     .setAttributesToRetrieve("word")
-                    .setHitsPerPage(1);
+                    .setHitsPerPage(2);
             index.searchAsync(query, new CompletionHandler() {
                 @Override
                 public void requestCompleted(JSONObject content, AlgoliaException error) {
                     try {
                         JSONArray hits = content.getJSONArray("hits");
-//                        Log.d(TAG, "requestCompleted: " + hits);
+                        if (hits.length() > 0) {
+                            ClickableSpan clickableSpan = new ClickableSpan() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Log.d(TAG, "onClick: IT WAS CLICKED!" );
+                                            Intent intent = new Intent(InterpretActivity.this, InterpretationViewActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    };
+                                    ssEntryBody.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                    entryBodyTextView.setText(ssEntryBody);
+                                    entryBodyTextView.setMovementMethod(LinkMovementMethod.getInstance());
+                        }
+                        Log.d(TAG, "requestCompleted: " + hits.length());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     matchedWords.add(content.toString());
-                    Log.d(TAG, "onCreate: FOUND WORDS =>" + matchedWords);
+                    Log.d(TAG, "onCreate: FOUND WORDS =>" + matchedWords.toArray()[0]);
 //                    Log.d(TAG, "requestCompleted: " + content);
                 }
             });
 
         }
 
-
+        entryBodyTextView.setText(entryBody);
 
 
 

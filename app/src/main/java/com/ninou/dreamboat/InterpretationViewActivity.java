@@ -1,7 +1,6 @@
 package com.ninou.dreamboat;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.media.Image;
@@ -14,10 +13,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import io.opencensus.stats.Aggregation;
 import model.Meaning;
 import ui.InterpretationRecyclerAdapter;
 
@@ -48,7 +45,7 @@ public class InterpretationViewActivity extends AppCompatActivity {
 
         ImageView mainImage = findViewById(R.id.term_imageView);
         TextView titleText = findViewById(R.id.term_title_text);
-        TextView meaningText = findViewById(R.id.meaning_text);
+        TextView meaningText = findViewById(R.id.entry_body_textView);
 
         titleText.setText(term);
         meaningText.setText(meaning);
