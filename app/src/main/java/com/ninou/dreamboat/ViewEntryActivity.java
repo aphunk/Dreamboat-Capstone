@@ -1,8 +1,5 @@
 package com.ninou.dreamboat;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -14,24 +11,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.algolia.search.saas.AlgoliaException;
 import com.algolia.search.saas.Client;
 import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
-import com.algolia.search.saas.android.BuildConfig;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Objects;
 
 import util.AppController;
 
@@ -50,6 +44,10 @@ public class ViewEntryActivity extends AppCompatActivity {
 
     private Button editButton;
     private Button interpretButton;
+    String API_KEY = com.ninou.dreamboat.BuildConfig.ApiKey;
+
+    Client client = new Client("TKKSUFNV4X", API_KEY);
+    final Index index = client.getIndex("terms");
 
 
 
@@ -74,6 +72,51 @@ public class ViewEntryActivity extends AppCompatActivity {
             date = extrasBundle.getString("DATE");
         }
 
+        String[] words = entryBody.split("\\W+");
+        final SpannableString ssEntryBody = new SpannableString(entryBody);
+
+        for (final String word : words) {
+            int wordLength = word.length();
+            final int startIndex = entryBody.indexOf(word);
+            final int endIndex = startIndex + wordLength;
+
+            Query query = new Query(word)
+                    .setAttributesToRetrieve("word", "meaning")
+                    .setHitsPerPage(3);
+            index.searchAsync(query, new CompletionHandler() {
+                @Override
+                public void requestCompleted(JSONObject content, AlgoliaException error) {
+                    try {
+                        JSONArray hits = content.getJSONArray("hits");
+
+                        if (hits.length() > 0) {
+                            JSONObject jsonObject = hits.getJSONObject(0);
+                            final String topHitWord = jsonObject.getString("word");
+                            final String topHitMeaning = jsonObject.getString("meaning");
+
+//                            intent.putParcelableArrayListExtra("ADDL_HITS", list);
+
+                            ClickableSpan clickableSpan = new ClickableSpan() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(ViewEntryActivity.this, InterpretationViewActivity.class);
+                                    intent.putExtra("WORD", topHitWord);
+                                    intent.putExtra("MEANING", topHitMeaning);
+                                    startActivity(intent);
+                                }
+                            };
+                            ssEntryBody.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            entryBodyText.setText(ssEntryBody);
+                            entryBodyText.setMovementMethod(LinkMovementMethod.getInstance());
+                        }
+                        Log.d(TAG, "requestCompleted: " + hits.length());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        }
 
         entryTitle.setText(title);
         entryBodyText.setText(entryBody);

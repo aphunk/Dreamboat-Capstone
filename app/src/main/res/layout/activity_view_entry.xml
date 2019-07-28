@@ -22,7 +22,7 @@
         android:fontFamily="@font/playfair_display_black"
         android:text="Title"
         android:textColor="#000000"
-        android:textSize="32sp"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
