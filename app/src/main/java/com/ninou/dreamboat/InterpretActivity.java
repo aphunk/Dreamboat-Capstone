@@ -69,26 +69,36 @@ public class InterpretActivity extends AppCompatActivity {
 
             Query query = new Query(word)
                     .setAttributesToRetrieve("word", "meaning")
-                    .setHitsPerPage(2);
+                    .setHitsPerPage(3);
             index.searchAsync(query, new CompletionHandler() {
                 @Override
                 public void requestCompleted(JSONObject content, AlgoliaException error) {
                     try {
                         JSONArray hits = content.getJSONArray("hits");
+
                         if (hits.length() > 0) {
                             JSONObject jsonObject = hits.getJSONObject(0);
                             final String topHitWord = jsonObject.getString("word");
                             final String topHitMeaning = jsonObject.getString("meaning");
+
+                            final ArrayList list = new ArrayList<>();
+                            for(int i=1; i<hits.length(); i++) {
+                                JSONObject hit = hits.getJSONObject(i);
+                                String addlWord = jsonObject.getString("word");
+                                list.add(addlWord);
+                            }
+
                             ClickableSpan clickableSpan = new ClickableSpan() {
                                         @Override
                                         public void onClick(View view) {
-                                            Log.d(TAG, "onClick: IT WAS CLICKED!" );
                                             Intent intent = new Intent(InterpretActivity.this, InterpretationViewActivity.class);
                                             intent.putExtra("WORD", topHitWord);
                                             intent.putExtra("MEANING", topHitMeaning);
+                                            intent.putParcelableArrayListExtra("ADDL_HITS", list);
                                             startActivity(intent);
                                         }
                                     };
+
                                     ssEntryBody.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                                     entryBodyTextView.setText(ssEntryBody);
                                     entryBodyTextView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -97,8 +107,8 @@ public class InterpretActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    matchedWords.add(content.toString());
-                    Log.d(TAG, "onCreate: FOUND WORDS =>" + matchedWords.toArray()[0]);
+//                    matchedWords.add(content.toString());
+//                    Log.d(TAG, "onCreate: FOUND WORDS =>" + matchedWords.toArray()[0]);
 //                    Log.d(TAG, "requestCompleted: " + content);
                 }
             });
