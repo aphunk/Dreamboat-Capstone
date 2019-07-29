@@ -76,24 +76,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.393">
 
-        <TextView
-            android:id="@+id/entry_date_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:fontFamily="@font/work_sans_light"
-            android:includeFontPadding="true"
-            android:inputType="date"
-            android:labelFor="@+id/entry_date_text"
-            android:paddingLeft="6dp"
-            android:shadowColor="@color/colorWhiteHeader"
-            android:text="@string/date_hint"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="20sp"
-            tools:targetApi="o" />
-
         <EditText
             android:id="@+id/dream_title_text"
             style="@style/hintStyle"
@@ -108,6 +90,24 @@
             android:textColorLink="#C2C2C2"
             android:textSize="24sp"
             android:textStyle="bold"
+            tools:targetApi="o" />
+
+        <TextView
+            android:id="@+id/entry_date_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:fontFamily="@font/work_sans_light"
+            android:includeFontPadding="true"
+            android:inputType="date"
+            android:labelFor="@+id/entry_date_text"
+            android:paddingLeft="6dp"
+            android:shadowColor="@color/colorWhiteHeader"
+            android:text="@string/date_hint"
+            android:textAlignment="textStart"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
             tools:targetApi="o" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -151,7 +151,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/linearLayout2"
         app:layout_constraintVertical_bias="0.891"
-        app:srcCompat="@android:drawable/ic_btn_speak_now" />
+        app:srcCompat="@drawable/ic_mic_white_32dp" />
 
     <Button
         android:id="@+id/save_button"
