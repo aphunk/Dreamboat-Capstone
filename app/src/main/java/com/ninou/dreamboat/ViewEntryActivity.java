@@ -66,7 +66,7 @@ public class ViewEntryActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         supportActionBar.show();
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.nav_view);
+        BottomNavigationView navigation = findViewById(R.id.nav_view);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -97,6 +97,7 @@ public class ViewEntryActivity extends AppCompatActivity {
                 return false;
             }
         });
+
 
         editButton = findViewById(R.id.edit_button);
         TextView entryTitle = findViewById(R.id.entry_title);

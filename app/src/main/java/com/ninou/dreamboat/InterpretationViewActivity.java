@@ -66,6 +66,39 @@ public class InterpretationViewActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         supportActionBar.show();
 
+        BottomNavigationView navigation = findViewById(R.id.nav_view);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_my_dreamboat:
+                        if (currentUser != null && firebaseAuth != null) {
+                            Intent a = new Intent(InterpretationViewActivity.this, JournalListActivity.class);
+                            startActivity(a);
+                            finish();
+                        }
+                        break;
+                    case R.id.action_add:
+                        if (currentUser != null && firebaseAuth != null) {
+                            Intent b = new Intent(InterpretationViewActivity.this, PostJournalActivity.class);
+                            startActivity(b);
+                        }
+                        break;
+                    case R.id.action_signout:
+                        if (currentUser != null && firebaseAuth != null) {
+                            firebaseAuth.signOut();
+
+                            Intent c = new Intent(InterpretationViewActivity.this,
+                                    LoginActivity.class);
+                            startActivity(c);
+                            break;
+                        }
+                }
+                return false;
+            }
+        });
+
+
         ImageView mainImage = findViewById(R.id.term_imageView);
         TextView titleText = findViewById(R.id.top_hit_word_textView);
         TextView meaningText = findViewById(R.id.top_hit_meaning_textView);
@@ -99,7 +132,7 @@ public class InterpretationViewActivity extends AppCompatActivity {
                         }
                         ArrayAdapter arrayAdapter =
                                 new ArrayAdapter<>(InterpretationViewActivity.this,
-                                        android.R.layout.simple_expandable_list_item_1, list);
+                                        android.R.layout.simple_list_item_1, list);
                         addlHitsListView.setAdapter(arrayAdapter);
 
                         additionalHitsLayout.setVisibility(View.VISIBLE);
@@ -107,39 +140,6 @@ public class InterpretationViewActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-        });
-
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.nav_view);
-        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_my_dreamboat:
-                        if (currentUser != null && firebaseAuth != null) {
-                            Intent a = new Intent(InterpretationViewActivity.this, JournalListActivity.class);
-                            startActivity(a);
-                            finish();
-                        }
-                        break;
-                    case R.id.action_add:
-                        if (currentUser != null && firebaseAuth != null) {
-                            Intent b = new Intent(InterpretationViewActivity.this, PostJournalActivity.class);
-                            startActivity(b);
-                        }
-                        break;
-                    case R.id.action_signout:
-                        if (currentUser != null && firebaseAuth != null) {
-                            firebaseAuth.signOut();
-
-                            Intent c = new Intent(InterpretationViewActivity.this,
-                                    LoginActivity.class);
-                            startActivity(c);
-                            break;
-                        }
-                }
-                return false;
             }
         });
 

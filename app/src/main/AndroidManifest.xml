@@ -21,7 +21,7 @@
         <activity android:name=".ViewEntryActivity"
             android:theme="@style/AppTheme.ActionBar.Logo"/>
         <activity android:name=".PostJournalActivity"
-            android:theme="@style/AppTheme.ActionBar.Logo"/>
+            android:theme="@style/AppTheme.ActionBar.Transparent"/>
         <activity android:name=".CreateAccountActivity"
             android:theme="@style/AppTheme.ActionBar.Logo"/>
         <activity

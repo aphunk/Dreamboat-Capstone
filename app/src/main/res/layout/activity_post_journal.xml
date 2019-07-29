@@ -1,100 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostJournalActivity"
-    android:background="@android:color/transparent">
+    android:background="@color/colorWhiteHeader"
+    tools:context=".PostJournalActivity">
 
-    <EditText
-        android:id="@+id/dream_title_text"
-        style="@style/hintStyle"
-        android:layout_width="340dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:autofillHints=""
-        android:fontFamily="@font/work_sans_light"
-        android:hint="@string/dream_title_hint"
-        android:inputType="text"
-        android:textColor="@color/colorPrimaryDark"
-        android:textColorLink="#C2C2C2"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/entry_date_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.531"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:targetApi="o" />
+    <!--<EditText-->
+    <!--android:id="@+id/dream_entry_text"-->
+    <!--android:layout_width="340dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginStart="8dp"-->
+    <!--android:layout_marginTop="328dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:autofillHints="@string/dream_entry_hint"-->
+    <!--android:ems="10"-->
+    <!--android:fontFamily="@font/work_sans_light"-->
+    <!--android:gravity="start|top"-->
+    <!--android:hint="@string/dream_entry_hint"-->
+    <!--android:inputType="text|textMultiLine"-->
+    <!--android:lineSpacingExtra="8sp"-->
+    <!--android:selectAllOnFocus="false"-->
+    <!--android:textColorHint="#C2C2C2"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--app:layout_constraintVertical_bias="0.0"-->
+    <!--tools:targetApi="o" />-->
 
-    <EditText
-        android:id="@+id/dream_entry_text"
-        android:layout_width="340dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="328dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:autofillHints="@string/dream_entry_hint"
-        android:ems="10"
-        android:fontFamily="@font/work_sans_light"
-        android:gravity="start|top"
-        android:hint="@string/dream_entry_hint"
-        android:inputType="text|textMultiLine"
-        android:lineSpacingExtra="8sp"
-        android:selectAllOnFocus="false"
-        android:textColorHint="#C2C2C2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:targetApi="o" />
-
-
-    <Button
-        android:id="@+id/save_button"
-        android:layout_width="300dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
-        android:fontFamily="@font/work_sans_light"
-        android:text="@string/save_button_text"
-        android:textColor="@color/colorWhiteHeader"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dream_entry_text"
-        app:layout_constraintVertical_bias="0.198" />
-
-
-    <TextView
-        android:id="@+id/entry_date_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="36dp"
-        android:autofillHints=""
-        android:fontFamily="@font/work_sans_light"
-        android:inputType="date"
-        android:labelFor="@+id/entry_date_text"
-        android:shadowColor="@color/colorPrimary"
-        android:text="@string/date_hint"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/dream_entry_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.102"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:targetApi="o" />
 
     <ProgressBar
         android:id="@+id/save_entry_progress"
@@ -102,52 +38,153 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="129dp"
+        android:layout_marginEnd="184dp"
+        android:layout_marginBottom="77dp"
+        app:layout_constraintBottom_toTopOf="@+id/speak_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.994"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="340dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="72dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/playfair_display_black"
         android:shadowColor="#0F0C50"
         android:text="@string/new_dream_header"
         android:textAlignment="center"
         android:textColor="@color/colorBlack"
         android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@+id/dream_title_text"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="25dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.393">
+
+        <TextView
+            android:id="@+id/entry_date_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:fontFamily="@font/work_sans_light"
+            android:includeFontPadding="true"
+            android:inputType="date"
+            android:labelFor="@+id/entry_date_text"
+            android:paddingLeft="6dp"
+            android:shadowColor="@color/colorWhiteHeader"
+            android:text="@string/date_hint"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            tools:targetApi="o" />
+
+        <EditText
+            android:id="@+id/dream_title_text"
+            style="@style/hintStyle"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:autofillHints=""
+            android:fontFamily="@font/work_sans_light"
+            android:hint="@string/dream_title_hint"
+            android:inputType="text"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorLink="#C2C2C2"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:targetApi="o" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dream_entry_text_layout"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#00FFD2D2"
+            android:gravity="center_horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/save_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/entry_date_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:id="@+id/dream_entry_text"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:fontFamily="@font/work_sans_light"
+                android:gravity="start"
+                android:hint="@string/dream_entry_hint"
+                android:inputType="textMultiLine"
+                android:overScrollMode="always"
+                android:padding="15dp"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
 
     <ImageButton
         android:id="@+id/speak_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/speak_button_icon"
+        app:layout_constraintBottom_toTopOf="@+id/save_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.891"
+        app:srcCompat="@android:drawable/ic_btn_speak_now" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:contentDescription="@string/speak_button_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/work_sans_light"
+        android:text="@string/save_button_text"
+        android:textColor="@color/colorWhiteHeader"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_btn_speak_now" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:background="@color/colorWhiteHeader"
         app:itemIconTint="@color/colorBlack"
         app:itemTextColor="@color/colorBlack"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/menu" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
