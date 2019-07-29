@@ -21,11 +21,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/playfair_display_black"
-            android:padding="12dp"
+            android:paddingLeft="12dp"
+            android:paddingBottom="6dp"
+            android:paddingTop="12dp"
             android:text="Title"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/colorBlack"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -50,7 +52,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/work_sans_light"
-            android:padding="12dp"
+            android:paddingTop="6dp"
+            android:paddingLeft="12dp"
+            android:paddingBottom="12dp"
             android:text="Date created" />
 
     </LinearLayout>

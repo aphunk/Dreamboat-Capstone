@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -69,6 +70,7 @@ public class InterpretationViewActivity extends AppCompatActivity {
         TextView titleText = findViewById(R.id.top_hit_word_textView);
         TextView meaningText = findViewById(R.id.top_hit_meaning_textView);
         final ListView addlHitsListView = findViewById(R.id.addtl_hits_listView);
+        final View additionalHitsLayout = findViewById(R.id.additional_hits_layout);
 
 
         Bundle extrasBundle = getIntent().getExtras();
@@ -79,6 +81,7 @@ public class InterpretationViewActivity extends AppCompatActivity {
         titleText.setText(term);
         meaningText.setText(meaning);
 
+        additionalHitsLayout.setVisibility(View.INVISIBLE);
         Query query = new Query(term)
                 .setAttributesToRetrieve("word", "meaning")
                 .setHitsPerPage(30);
@@ -87,16 +90,20 @@ public class InterpretationViewActivity extends AppCompatActivity {
             public void requestCompleted(JSONObject content, AlgoliaException error) {
                 try {
                     JSONArray hits = content.getJSONArray("hits");
-                    List<String> list = new ArrayList<>();
-                    for (int i=1; i<hits.length(); i++) {
-                        JSONObject jsonObject = hits.getJSONObject(i);
-                        String addlWord = jsonObject.getString("word");
-                        list.add(addlWord);
+                    if (hits.length() > 1) {
+                        List<String> list = new ArrayList<>();
+                        for (int i = 1; i < hits.length(); i++) {
+                            JSONObject jsonObject = hits.getJSONObject(i);
+                            String addlWord = jsonObject.getString("word");
+                            list.add(addlWord);
+                        }
+                        ArrayAdapter arrayAdapter =
+                                new ArrayAdapter<>(InterpretationViewActivity.this,
+                                        android.R.layout.simple_expandable_list_item_1, list);
+                        addlHitsListView.setAdapter(arrayAdapter);
+
+                        additionalHitsLayout.setVisibility(View.VISIBLE);
                     }
-                    ArrayAdapter arrayAdapter =
-                            new ArrayAdapter<String>(InterpretationViewActivity.this,
-                                    android.R.layout.simple_expandable_list_item_1, list);
-                    addlHitsListView.setAdapter(arrayAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

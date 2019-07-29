@@ -37,6 +37,7 @@ public class ViewEntryActivity extends AppCompatActivity {
     private static final String TAG = "viewEntryActivity";
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
+    private FirebaseUser currentUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference collectionReference = db.collection("Terms");
     private String title;
@@ -64,6 +65,38 @@ public class ViewEntryActivity extends AppCompatActivity {
         supportActionBar.setIcon(R.drawable.dreamboat_logo);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         supportActionBar.show();
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.nav_view);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_my_dreamboat:
+                        if (currentUser != null && firebaseAuth != null) {
+                            Intent a = new Intent(ViewEntryActivity.this, JournalListActivity.class);
+                            startActivity(a);
+                            finish();
+                        }
+                        break;
+                    case R.id.action_add:
+                        if (currentUser != null && firebaseAuth != null) {
+                            Intent b = new Intent(ViewEntryActivity.this, PostJournalActivity.class);
+                            startActivity(b);
+                        }
+                        break;
+                    case R.id.action_signout:
+                        if (currentUser != null && firebaseAuth != null) {
+                            firebaseAuth.signOut();
+
+                            Intent c = new Intent(ViewEntryActivity.this,
+                                    LoginActivity.class);
+                            startActivity(c);
+                            break;
+                        }
+                }
+                return false;
+            }
+        });
 
         editButton = findViewById(R.id.edit_button);
         TextView entryTitle = findViewById(R.id.entry_title);
@@ -122,30 +155,6 @@ public class ViewEntryActivity extends AppCompatActivity {
                 }
             });
 
-            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.nav_view);
-            navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.navigation_home:
-                            Intent a = new Intent(ViewEntryActivity.this, JournalListActivity.class);
-                            startActivity(a);
-                            break;
-                        case R.id.navigation_dashboard:
-                            Intent b = new Intent(ViewEntryActivity.this, PostJournalActivity.class);
-                            startActivity(b);
-                            break;
-                        case R.id.navigation_notifications:
-                                firebaseAuth.signOut();
-
-                                Intent c = new Intent(ViewEntryActivity.this,
-                                        LoginActivity.class);
-                                startActivity(c);
-                                break;
-                            }
-                    return false;
-                }
-            });
 
         }
 
