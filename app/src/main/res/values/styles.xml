@@ -12,6 +12,11 @@
         <item name="android:buttonCornerRadius">50dp</item>
     </style>
 
+
+    <style name="AppTheme.ActionBar.Logo" parent="AppTheme">
+        <item name="android:logo">@drawable/dreamboat_logo</item>
+        <item name="android:displayOptions">useLogo|showHome</item>
+    </style>
     <style name="hintStyle">
         <item name="android:layout_centerVertical" />
     </style>

@@ -2,7 +2,6 @@ package com.ninou.dreamboat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,16 +22,14 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import model.Journal;
 import ui.JournalRecyclerAdapter;
-import util.AppController;
 
-import static ui.JournalRecyclerAdapter.*;
+import static ui.JournalRecyclerAdapter.OnJournalListener;
 
 public class JournalListActivity extends AppCompatActivity implements OnJournalListener {
     private static final String TAG = "JournalListActivity";
@@ -51,6 +49,10 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_journal_list);
 
+        ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.setIcon(R.drawable.dreamboat_logo);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        supportActionBar.show();
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();

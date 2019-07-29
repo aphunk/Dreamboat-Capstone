@@ -43,7 +43,7 @@ public class ViewEntryActivity extends AppCompatActivity {
     private TextView entryBodyText;
 
     private Button editButton;
-    private Button interpretButton;
+
     String API_KEY = com.ninou.dreamboat.BuildConfig.ApiKey;
 
     Client client = new Client("TKKSUFNV4X", API_KEY);
@@ -59,9 +59,7 @@ public class ViewEntryActivity extends AppCompatActivity {
         editButton = findViewById(R.id.edit_button);
         TextView entryTitle = findViewById(R.id.entry_title);
         TextView entryDate = findViewById(R.id.entry_date);
-        TextView userId = findViewById(R.id.user_id_text);
         entryBodyText = findViewById(R.id.entry_body_text);
-        interpretButton = findViewById(R.id.interpret_button);
 
 
         Bundle extrasBundle = getIntent().getExtras();
@@ -94,7 +92,6 @@ public class ViewEntryActivity extends AppCompatActivity {
                             final String topHitWord = jsonObject.getString("word");
                             final String topHitMeaning = jsonObject.getString("meaning");
 
-//                            intent.putParcelableArrayListExtra("ADDL_HITS", list);
 
                             ClickableSpan clickableSpan = new ClickableSpan() {
                                 @Override
@@ -121,7 +118,6 @@ public class ViewEntryActivity extends AppCompatActivity {
         entryTitle.setText(title);
         entryBodyText.setText(entryBody);
         entryDate.setText(date);
-        userId.setText(currentUserId);
 
 
         editButton.setOnClickListener(new View.OnClickListener() {
