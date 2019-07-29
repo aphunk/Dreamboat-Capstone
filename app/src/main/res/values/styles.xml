@@ -16,6 +16,9 @@
     <style name="AppTheme.ActionBar.Logo" parent="AppTheme">
         <item name="android:logo">@drawable/dreamboat_logo</item>
         <item name="android:displayOptions">useLogo|showHome</item>
+        <item name="colorPrimary">@color/colorWhiteHeader</item>
+        <item name="actionBarSize">40dp</item>
+        <item name="actionBarStyle">@dimen/fab_margin</item>
     </style>
     <style name="hintStyle">
         <item name="android:layout_centerVertical" />
