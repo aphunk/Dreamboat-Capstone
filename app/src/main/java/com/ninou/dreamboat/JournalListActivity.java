@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -54,6 +55,41 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         supportActionBar.show();
 
+        BottomNavigationView navigation = findViewById(R.id.nav_view);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_add:
+                        //Take users to add Journal
+                            Intent a = new Intent(JournalListActivity.this,
+                                    PostJournalActivity.class);
+                            startActivity(a);
+                            finish();
+                        break;
+                    case R.id.action_signout:
+                        //sign user out
+                        if (currentUser != null && firebaseAuth != null) {
+                            firebaseAuth.signOut();
+
+                            Intent b = new Intent(JournalListActivity.this,
+                                    MainActivity.class);
+                            startActivity(b);
+                            finish();
+                        }
+                        break;
+                    case R.id.action_my_dreamboat:
+                        if (currentUser != null && firebaseAuth != null) {
+                            Intent c = new Intent(JournalListActivity.this,
+                                    JournalListActivity.class);
+                            startActivity(c);
+                            finish();;
+                        }
+                }
+                return false;
+            }
+        });
+
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
 
@@ -74,6 +110,7 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     @Override
@@ -129,7 +166,7 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
                 if (currentUser != null && firebaseAuth != null) {
                     startActivity(new Intent(JournalListActivity.this,
                             PostJournalActivity.class));
-//                    finish();
+                    finish();
                 }
                 break;
             case R.id.action_signout:
@@ -139,13 +176,13 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
 
                     startActivity(new Intent(JournalListActivity.this,
                             MainActivity.class));
-//                    finish();
+                    finish();
                 }
                 break;
             case R.id.action_my_dreamboat:
                 if (currentUser != null && firebaseAuth != null) {
                     startActivity(new Intent(JournalListActivity.this,
-                            MainActivity.class));
+                            JournalListActivity.class));
                 }
         }
         return super.onOptionsItemSelected(item);

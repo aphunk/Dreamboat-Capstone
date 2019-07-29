@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ninou.dreamboat">
 
-    <!--<uses-permission android:name="android.permission.RECORD_AUDIO" />-->
-
     <application
         android:name="util.AppController"
         android:allowBackup="true"
@@ -14,15 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity
+            android:name=".BottomNav"
+            android:label="@string/title_activity_bottom_nav"/>
         <activity android:name=".SplashActivity" />
-        <activity android:name=".InterpretationViewActivity" />
-        <activity android:name=".ViewEntryActivity" />
-        <activity android:name=".PostJournalActivity" />
-        <activity android:name=".CreateAccountActivity" />
+        <activity android:name=".InterpretationViewActivity"
+            android:theme="@style/AppTheme.ActionBar.Logo"/>
+        <activity android:name=".ViewEntryActivity"
+            android:theme="@style/AppTheme.ActionBar.Logo"/>
+        <activity android:name=".PostJournalActivity"
+            android:theme="@style/AppTheme.ActionBar.Logo"/>
+        <activity android:name=".CreateAccountActivity"
+            android:theme="@style/AppTheme.ActionBar.Logo"/>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.ActionBar.Logo" />
         <activity
             android:name=".MainActivity"
             android:label=""
@@ -33,8 +37,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".JournalListActivity"
-            android:theme="@style/AppTheme.ActionBar.Logo"/>
+        <activity
+            android:name=".JournalListActivity"
+            android:theme="@style/AppTheme.ActionBar.Logo" />
 
         <meta-data
             android:name="preloaded_fonts"

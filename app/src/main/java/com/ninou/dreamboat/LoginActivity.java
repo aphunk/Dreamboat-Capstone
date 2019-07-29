@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -52,15 +53,16 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.setIcon(R.drawable.dreamboat_logo);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        supportActionBar.show();
+
         progressBar = findViewById(R.id.login_progress);
-
-//        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
-
         firebaseAuth = getInstance();
-
         emailAddress = findViewById(R.id.email);
         password = findViewById(R.id.password);
-
         loginButton = findViewById(R.id.email_sign_in_button);
         createAcctButton = findViewById(R.id.go_to_create_account_button);
 
@@ -74,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 loginEmailPasswordUser(emailAddress.getText().toString().trim(),
                         password.getText().toString().trim());
             }

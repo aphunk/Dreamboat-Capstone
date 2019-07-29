@@ -1,12 +1,16 @@
 package com.ninou.dreamboat;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +19,7 @@ import com.algolia.search.saas.Client;
 import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -55,6 +60,11 @@ public class InterpretationViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interpretation_list);
 
+        ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.setIcon(R.drawable.dreamboat_logo);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        supportActionBar.show();
+
         ImageView mainImage = findViewById(R.id.term_imageView);
         TextView titleText = findViewById(R.id.top_hit_word_textView);
         TextView meaningText = findViewById(R.id.top_hit_meaning_textView);
@@ -94,7 +104,37 @@ public class InterpretationViewActivity extends AppCompatActivity {
         });
 
 
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.nav_view);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_my_dreamboat:
+                        if (currentUser != null && firebaseAuth != null) {
+                            Intent a = new Intent(InterpretationViewActivity.this, JournalListActivity.class);
+                            startActivity(a);
+                            finish();
+                        }
+                        break;
+                    case R.id.action_add:
+                        if (currentUser != null && firebaseAuth != null) {
+                            Intent b = new Intent(InterpretationViewActivity.this, PostJournalActivity.class);
+                            startActivity(b);
+                        }
+                        break;
+                    case R.id.action_signout:
+                        if (currentUser != null && firebaseAuth != null) {
+                            firebaseAuth.signOut();
 
+                            Intent c = new Intent(InterpretationViewActivity.this,
+                                    LoginActivity.class);
+                            startActivity(c);
+                            break;
+                        }
+                }
+                return false;
+            }
+        });
 
     }
 

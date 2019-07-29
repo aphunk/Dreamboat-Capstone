@@ -21,15 +21,21 @@
     <string name="post_name">Name</string>
     <string name="logo_description">dreamboat_logo</string>
     <string name="new_dream_header">New Dream</string>
-    <string name="menu_title">Add dream</string>
+    <string name="menu_title">New Entry</string>
     <string name="signout">Signout</string>
     <string name="no_entries_hint">Your Dreamboat is empty!</string>
     <string name="speak_button_icon">speakButton</string>
     <string name="speech_prompt">Speak to record your dream</string>
     <string name="speech_not_supported">Speech to text is not supported on your device</string>
-    <string name="my_dreamboat">Your Dreamboat</string>
+    <string name="my_dreamboat">Dreamboat</string>
     <string name="add_entry_prompt">Record your first dream</string>
     <string name="dream_title_hint">Title</string>
-    <string name="your_dreamboat">Your Dreamboat</string>
+    <string name="your_dreamboat">Dreamboat</string>
     <string name="title_activity_interpret">InterpretActivity</string>
+    <string name="title_activity_bottom_nav">BottomNav</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="new_entry_dashboard">New Entry</string>
+    <string name="dreamboat_dashboard">My Dreamboat</string>
 </resources>

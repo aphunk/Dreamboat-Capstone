@@ -17,8 +17,9 @@
         <item name="android:logo">@drawable/dreamboat_logo</item>
         <item name="android:displayOptions">useLogo|showHome</item>
         <item name="colorPrimary">@color/colorWhiteHeader</item>
-        <item name="actionBarSize">40dp</item>
-        <item name="actionBarStyle">@dimen/fab_margin</item>
+        <item name="actionBarSize">50dp</item>
+        <item name="android:defaultHeight">50dp</item>
+        <!--<item name="actionBarStyle">@dimen/logo_padding</item>-->
     </style>
     <style name="hintStyle">
         <item name="android:layout_centerVertical" />

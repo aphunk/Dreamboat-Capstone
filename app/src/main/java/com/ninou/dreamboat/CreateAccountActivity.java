@@ -1,7 +1,5 @@
 package com.ninou.dreamboat;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,6 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,7 +38,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
 
-    // connect to Firestore
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private CollectionReference collectionReference = db.collection("Users");
@@ -52,7 +53,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
-//        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
+        ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.setIcon(R.drawable.dreamboat_logo);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        supportActionBar.show();
 
         firebaseAuth = FirebaseAuth.getInstance();
 

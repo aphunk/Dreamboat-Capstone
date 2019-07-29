@@ -1,61 +1,52 @@
 package com.ninou.dreamboat;
 
-import androidx.annotation.NonNull;
-        import androidx.annotation.Nullable;
-        import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.speech.RecognizerIntent;
-        import android.text.TextUtils;
-        import android.util.Log;
-        import android.view.Menu;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.ImageButton;
-        import android.widget.ProgressBar;
+import android.content.Intent;
+import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.algolia.search.saas.AlgoliaException;
-import com.algolia.search.saas.Client;
-import com.algolia.search.saas.CompletionHandler;
-import com.algolia.search.saas.Index;
-import com.algolia.search.saas.Query;
-import com.algolia.search.saas.android.BuildConfig;
-import com.google.android.gms.tasks.OnFailureListener;
-        import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-        import com.google.firebase.auth.FirebaseUser;
-        import com.google.firebase.firestore.CollectionReference;
-        import com.google.firebase.firestore.DocumentReference;
-        import com.google.firebase.firestore.FirebaseFirestore;
-//        import com.google.firebase.storage.FirebaseStorage;
-//        import com.google.firebase.storage.StorageReference;
-//
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONObject;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-        import model.Journal;
+import model.Journal;
 import util.AppController;
 
-import static com.google.firebase.auth.FirebaseAuth.*;
+import static com.google.firebase.auth.FirebaseAuth.AuthStateListener;
+import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
 public class PostJournalActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "ALGOLIA";
     private static final int REQUEST_CODE_SPEECH_INPUT = 100;
     private Button saveButton;
-//    private Button shareButton;
-//    private Button interpretButton;
+
     private ImageButton speakButton;
     private ProgressBar progressBar;
     private EditText titleEditText;
@@ -74,7 +65,6 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
     private AuthStateListener authStateListener;
     private FirebaseUser currentUser;
 
-    //Connection to Firestore
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private CollectionReference collectionReference = db.collection("Journal");
@@ -85,6 +75,46 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_journal);
+
+        ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.setIcon(R.drawable.dreamboat_logo);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        supportActionBar.show();
+
+        BottomNavigationView navigation = findViewById(R.id.nav_view);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_my_dreamboat:
+                        if (currentUser != null && firebaseAuth != null) {
+                            Intent a = new Intent(PostJournalActivity.this, JournalListActivity.class);
+                            startActivity(a);
+                            finish();
+                        }
+                        break;
+                    case R.id.action_add:
+                        if (currentUser != null && firebaseAuth != null) {
+                            Intent b = new Intent(PostJournalActivity.this, PostJournalActivity.class);
+                            startActivity(b);
+                            finish();
+                        }
+                        break;
+                    case R.id.action_signout:
+                        if (currentUser != null && firebaseAuth != null) {
+                            firebaseAuth.signOut();
+
+                            Intent c = new Intent(PostJournalActivity.this,
+                                    LoginActivity.class);
+                            startActivity(c);
+                            finish();
+                        }
+                        break;
+
+                }
+                return false;
+            }
+        });
 
 
         firebaseAuth = getInstance();
@@ -125,6 +155,8 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
                 }
             }
         };
+
+
     }
 
 

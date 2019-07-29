@@ -5,6 +5,7 @@
 
     <item
         android:id="@+id/action_my_dreamboat"
+        android:icon="@drawable/ic_outline_waves_24px"
         android:title="@string/your_dreamboat"
         app:showAsAction="never" />
 
@@ -13,7 +14,9 @@
         android:title="@string/menu_title"
         app:showAsAction="never" />
 
-    <item android:id="@+id/action_signout"
+    <item
+        android:id="@+id/action_signout"
+        android:icon="@drawable/ic_forward_black_24dp"
         android:title="@string/signout"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 </menu>

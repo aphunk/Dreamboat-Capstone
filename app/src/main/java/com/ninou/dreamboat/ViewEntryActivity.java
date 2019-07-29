@@ -7,10 +7,13 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.algolia.search.saas.AlgoliaException;
@@ -18,6 +21,7 @@ import com.algolia.search.saas.Client;
 import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -55,6 +59,11 @@ public class ViewEntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_entry);
+
+        ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.setIcon(R.drawable.dreamboat_logo);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        supportActionBar.show();
 
         editButton = findViewById(R.id.edit_button);
         TextView entryTitle = findViewById(R.id.entry_title);
@@ -113,6 +122,31 @@ public class ViewEntryActivity extends AppCompatActivity {
                 }
             });
 
+            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.nav_view);
+            navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.navigation_home:
+                            Intent a = new Intent(ViewEntryActivity.this, JournalListActivity.class);
+                            startActivity(a);
+                            break;
+                        case R.id.navigation_dashboard:
+                            Intent b = new Intent(ViewEntryActivity.this, PostJournalActivity.class);
+                            startActivity(b);
+                            break;
+                        case R.id.navigation_notifications:
+                                firebaseAuth.signOut();
+
+                                Intent c = new Intent(ViewEntryActivity.this,
+                                        LoginActivity.class);
+                                startActivity(c);
+                                break;
+                            }
+                    return false;
+                }
+            });
+
         }
 
         entryTitle.setText(title);
@@ -133,48 +167,7 @@ public class ViewEntryActivity extends AppCompatActivity {
             }
         });
 
-//        String[] words = entryBody.split("\\W+");
-//        final SpannableString ssEntryBody = new SpannableString(entryBody);
-//
-//        for (final String word : words) {
-//            int wordLength = word.length();
-//            final int startIndex = entryBody.indexOf(word);
-//            final int endIndex = startIndex + wordLength;
-//
-//            collectionReference.whereEqualTo("word", word)
-//                    .get()
-//                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                            if (task.isSuccessful()) {
-//                                for (final QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-//                                    Log.d(TAG, document.getId() + " => " + document.getData());
-//                                    ClickableSpan clickableSpan = new ClickableSpan() {
-//                                        @Override
-//                                        public void onClick(View view) {
-//                                            Log.d(TAG, "onClick: IT WAS CLICKED!" );
-//                                            Log.d(TAG, "onClick: " + document.getString("meaning"));
-//                                            Intent intent = new Intent(ViewEntryActivity.this, InterpretationViewActivity.class);
-//                                            intent.putExtra("TERM", document.getString("word"));
-//                                            intent.putExtra("MEANING", document.getString("meaning"));
-//                                            startActivity(intent);
-//                                        }
-//                                    };
-//                                    ssEntryBody.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                                    entryBodyText.setText(ssEntryBody);
-//                                    entryBodyText.setMovementMethod(LinkMovementMethod.getInstance());
-//                                }
-//                            } else {
-//                                Log.d(TAG, "Error getting documents: ", task.getException());
-//                            }
-//                        }
-//                    });
-//
-//        }
-//        entryBodyText.setText(ssEntryBody);
-
     }
-
 
     @Override
     protected void onStart() {
