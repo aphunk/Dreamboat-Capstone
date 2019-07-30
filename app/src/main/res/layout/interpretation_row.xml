@@ -16,7 +16,7 @@
         tools:src="@drawable/placeholder" />
 
     <TextView
-        android:id="@+id/term_title_text"
+        android:id="@+id/search_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/playfair_display_black"

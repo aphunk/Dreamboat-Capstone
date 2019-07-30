@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         ActionBar supportActionBar = getSupportActionBar();
-        supportActionBar.setIcon(R.drawable.dreamboat_logo);
+        supportActionBar.setIcon(R.drawable.ic_dreamboatlogopad);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         supportActionBar.show();
 

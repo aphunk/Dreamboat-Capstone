@@ -62,7 +62,7 @@ public class ViewEntryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_entry);
 
         ActionBar supportActionBar = getSupportActionBar();
-        supportActionBar.setIcon(R.drawable.dreamboat_logo);
+        supportActionBar.setIcon(R.drawable.ic_dreamboatlogopad);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         supportActionBar.show();
 
@@ -167,12 +167,15 @@ public class ViewEntryActivity extends AppCompatActivity {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+// TODO: 2019-07-29 add Extras Receiver in Post Journal activity 
                 AppController journalApi = AppController.getInstance(); //Global API
                 journalApi.setUserId(currentUserId);
                 Intent intent = new Intent(ViewEntryActivity.this,
                         PostJournalActivity.class);
                 intent.putExtra("userId", currentUserId);
+                intent.putExtra("ENTRY_BODY", entryBody);
+                intent.putExtra("TITLE", title);
+                intent.putExtra("DATE", date);
                 startActivity(intent);
             }
         });

@@ -62,7 +62,7 @@ public class InterpretationViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_interpretation_list);
 
         ActionBar supportActionBar = getSupportActionBar();
-        supportActionBar.setIcon(R.drawable.dreamboat_logo);
+        supportActionBar.setIcon(R.drawable.ic_dreamboatlogopad);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         supportActionBar.show();
 
@@ -109,7 +109,6 @@ public class InterpretationViewActivity extends AppCompatActivity {
         Bundle extrasBundle = getIntent().getExtras();
         String term = extrasBundle.getString("WORD");
         String meaning = extrasBundle.getString("MEANING");
-//        ArrayList list = getIntent().getParcelableArrayListExtra("ADDL_HITS");
 
         titleText.setText(term);
         meaningText.setText(meaning);

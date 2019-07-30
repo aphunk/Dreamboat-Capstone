@@ -54,7 +54,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_account);
 
         ActionBar supportActionBar = getSupportActionBar();
-        supportActionBar.setIcon(R.drawable.dreamboat_logo);
+        supportActionBar.setIcon(R.drawable.ic_dreamboatlogopad);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         supportActionBar.show();
 

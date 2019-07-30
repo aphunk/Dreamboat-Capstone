@@ -51,7 +51,7 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
         setContentView(R.layout.activity_journal_list);
 
         ActionBar supportActionBar = getSupportActionBar();
-        supportActionBar.setIcon(R.drawable.dreamboat_logo);
+        supportActionBar.setIcon(R.drawable.ic_dreamboatlogopad);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         supportActionBar.show();
 
@@ -69,21 +69,23 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
                         break;
                     case R.id.action_signout:
                         //sign user out
-                        if (currentUser != null && firebaseAuth != null) {
-                            firebaseAuth.signOut();
+//                        if (currentUser != null && firebaseAuth != null) {
+//                            firebaseAuth.signOut();
 
-                            Intent b = new Intent(JournalListActivity.this,
-                                    MainActivity.class);
+//                            Intent b = new Intent(JournalListActivity.this,
+//                                    MainActivity.class);
+
+                            Intent b = new Intent(JournalListActivity.this, SearchActivity.class);
                             startActivity(b);
                             finish();
-                        }
+//                        }
                         break;
                     case R.id.action_my_dreamboat:
                         if (currentUser != null && firebaseAuth != null) {
                             Intent c = new Intent(JournalListActivity.this,
                                     JournalListActivity.class);
                             startActivity(c);
-                            finish();;
+                            finish();
                         }
                 }
                 return false;

@@ -20,14 +20,15 @@
             android:id="@+id/journal_title_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/playfair_display_black"
+            android:fontFamily="@font/work_sans_semibold"
             android:paddingLeft="12dp"
-            android:paddingBottom="6dp"
             android:paddingTop="12dp"
+            android:paddingBottom="6dp"
             android:text="Title"
+            android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="@color/colorBlack"
-            android:textSize="20sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -42,7 +43,7 @@
             android:paddingTop="6dp"
             android:paddingBottom="0dp"
             android:text="Your Dreamboat"
-            android:textColor="#657A7A7A"
+            android:textColor="#AE7A7A7A"
             android:textSize="16sp"
             android:textStyle="italic"
             android:visibility="visible" />
@@ -52,8 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/work_sans_light"
-            android:paddingTop="6dp"
             android:paddingLeft="12dp"
+            android:paddingTop="12dp"
             android:paddingBottom="12dp"
             android:text="Date created" />
 
