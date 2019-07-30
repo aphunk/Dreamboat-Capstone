@@ -95,15 +95,20 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
                             finish();
                         }
                         break;
-                    case R.id.action_signout:
-                        if (currentUser != null && firebaseAuth != null) {
-                            firebaseAuth.signOut();
-
-                            Intent c = new Intent(PostJournalActivity.this,
-                                    LoginActivity.class);
-                            startActivity(c);
-                            finish();
-                        }
+//                    case R.id.action_signout:
+//                        if (currentUser != null && firebaseAuth != null) {
+//                            firebaseAuth.signOut();
+//
+//                            Intent c = new Intent(PostJournalActivity.this,
+//                                    LoginActivity.class);
+//                            startActivity(c);
+//                            finish();
+//                        }
+//                        break;
+                    case R.id.action_search:
+                        Intent d = new Intent(PostJournalActivity.this, SearchActivity.class);
+                        startActivity(d);
+                        finish();
                         break;
 
                 }
@@ -308,16 +313,16 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
 //                    finish();
                 }
                 break;
-            case R.id.action_signout:
-                //sign user out
-                if (currentUser != null && firebaseAuth != null) {
-                    firebaseAuth.signOut();
-
-                    startActivity(new Intent(PostJournalActivity.this,
-                            MainActivity.class));
-//                    finish();
-                }
-                break;
+//            case R.id.action_signout:
+//                //sign user out
+//                if (currentUser != null && firebaseAuth != null) {
+//                    firebaseAuth.signOut();
+//
+//                    startActivity(new Intent(PostJournalActivity.this,
+//                            MainActivity.class));
+////                    finish();
+//                }
+//                break;
             case R.id.action_my_dreamboat:
                 if (currentUser != null && firebaseAuth != null) {
                     startActivity(new Intent(PostJournalActivity.this,

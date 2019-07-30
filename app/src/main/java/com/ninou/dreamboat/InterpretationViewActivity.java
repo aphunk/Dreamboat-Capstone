@@ -72,27 +72,24 @@ public class InterpretationViewActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_my_dreamboat:
-                        if (currentUser != null && firebaseAuth != null) {
                             Intent a = new Intent(InterpretationViewActivity.this, JournalListActivity.class);
                             startActivity(a);
-                            finish();
-                        }
                         break;
                     case R.id.action_add:
-                        if (currentUser != null && firebaseAuth != null) {
                             Intent b = new Intent(InterpretationViewActivity.this, PostJournalActivity.class);
                             startActivity(b);
-                        }
                         break;
-                    case R.id.action_signout:
-                        if (currentUser != null && firebaseAuth != null) {
-                            firebaseAuth.signOut();
-
-                            Intent c = new Intent(InterpretationViewActivity.this,
-                                    LoginActivity.class);
-                            startActivity(c);
-                            break;
-                        }
+//                    case R.id.action_signout:
+//                            firebaseAuth.signOut();
+//
+//                            Intent c = new Intent(InterpretationViewActivity.this,
+//                                    LoginActivity.class);
+//                            startActivity(c);
+//                            break;
+                    case R.id.action_search:
+                        Intent d = new Intent(InterpretationViewActivity.this, SearchActivity.class);
+                        startActivity(d);
+                        break;
                 }
                 return false;
             }

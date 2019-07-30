@@ -62,7 +62,7 @@ public class ViewEntryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_entry);
 
         ActionBar supportActionBar = getSupportActionBar();
-        supportActionBar.setIcon(R.drawable.ic_dreamboatlogopad);
+        supportActionBar.setIcon(R.drawable.ic_dreamboatlogopad1);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         supportActionBar.show();
 
@@ -81,12 +81,15 @@ public class ViewEntryActivity extends AppCompatActivity {
                             startActivity(b);
 
                         break;
-                    case R.id.action_signout:
-                        // TODO: 2019-07-29 Change this to use a search icon & change the id name 
-                            Intent c = new Intent(ViewEntryActivity.this,
-                                    SearchActivity.class);
-                            startActivity(c);
-                            break;
+//                    case R.id.action_signout:
+//                            Intent c = new Intent(ViewEntryActivity.this,
+//                                    SearchActivity.class);
+//                            startActivity(c);
+//                            break;
+                    case R.id.action_search:
+                        Intent d = new Intent(ViewEntryActivity.this, SearchActivity.class);
+                        startActivity(d);
+                        break;
                 }
                 return false;
             }

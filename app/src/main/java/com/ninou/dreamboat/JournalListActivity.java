@@ -51,9 +51,11 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
         setContentView(R.layout.activity_journal_list);
 
         ActionBar supportActionBar = getSupportActionBar();
-        supportActionBar.setIcon(R.drawable.ic_dreamboatlogopad);
+        supportActionBar.setIcon(R.drawable.ic_dreamboatlogopad1);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         supportActionBar.show();
+
+
 
         BottomNavigationView navigation = findViewById(R.id.nav_view);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -67,27 +69,25 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
                             startActivity(a);
                             finish();
                         break;
-                    case R.id.action_signout:
-                        // TODO: 2019-07-29 Change this to use a search icon & change the id name
-                        //sign user out
-//                        if (currentUser != null && firebaseAuth != null) {
+//                    case R.id.action_signout:
+//                        //sign user out
 //                            firebaseAuth.signOut();
-
+//
 //                            Intent b = new Intent(JournalListActivity.this,
 //                                    MainActivity.class);
-
-                            Intent b = new Intent(JournalListActivity.this, SearchActivity.class);
-                            startActivity(b);
-                            finish();
-//                        }
-                        break;
+//                        startActivity(b);
+//                            break;
                     case R.id.action_my_dreamboat:
-                        if (currentUser != null && firebaseAuth != null) {
                             Intent c = new Intent(JournalListActivity.this,
                                     JournalListActivity.class);
                             startActivity(c);
                             finish();
-                        }
+                            break;
+                    case R.id.action_search:
+                        Intent d = new Intent(JournalListActivity.this, SearchActivity.class);
+                        startActivity(d);
+                        finish();
+                        break;
                 }
                 return false;
             }
@@ -172,16 +172,16 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
                     finish();
                 }
                 break;
-            case R.id.action_signout:
-                //sign user out
-                if (currentUser != null && firebaseAuth != null) {
-                    firebaseAuth.signOut();
-
-                    startActivity(new Intent(JournalListActivity.this,
-                            MainActivity.class));
-                    finish();
-                }
-                break;
+//            case R.id.action_signout:
+//                //sign user out
+//                if (currentUser != null && firebaseAuth != null) {
+//                    firebaseAuth.signOut();
+//
+//                    startActivity(new Intent(JournalListActivity.this,
+//                            MainActivity.class));
+//                    finish();
+//                }
+//                break;
             case R.id.action_my_dreamboat:
                 if (currentUser != null && firebaseAuth != null) {
                     startActivity(new Intent(JournalListActivity.this,

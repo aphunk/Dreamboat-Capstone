@@ -12,8 +12,7 @@ public class BottomNav extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        TextView title = (TextView) findViewById(R.id.homeTitle1);
-//        title.setText("Home");
+
         BottomNavigationView navigation = findViewById(R.id.nav_view);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

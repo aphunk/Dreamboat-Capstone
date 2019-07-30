@@ -15,8 +15,15 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_signout"
-        android:icon="@drawable/ic_forward_black_24dp"
-        android:title="@string/signout"
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/search_action_text"
         app:showAsAction="never" />
+
+    <!--<item-->
+        <!--android:id="@+id/action_signout"-->
+        <!--android:icon="@drawable/ic_forward_black_24dp"-->
+        <!--android:title="@string/signout"-->
+        <!--app:showAsAction="never" />-->
+
 </menu>

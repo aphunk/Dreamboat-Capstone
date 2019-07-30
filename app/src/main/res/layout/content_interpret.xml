@@ -1,45 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".InterpretActivity"
-    tools:showIn="@layout/activity_interpret">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-        <!--<ImageView-->
-            <!--android:id="@+id/term_imageView"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="409dp"-->
-            <!--android:contentDescription="Placeholder Img"-->
-            <!--android:src="@drawable/placeholder"-->
-            <!--tools:src="@drawable/placeholder" />-->
-
-    <EditText
-        android:id="@+id/search_textView"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/playfair_display_black"
-        android:hint="Search..."
-        android:lineSpacingExtra="8sp"
-        android:padding="12dp"
-        android:scaleType="fitXY"
-        android:textColor="@color/colorBlack"
-        android:textSize="36sp"
-        android:textStyle="bold" />
-
-    <!--<ListView-->
-        <!--android:id="@+id/list_view"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="442dp" />-->
-
-    <ListView
-        android:id="@+id/search_results_listView"
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".InterpretActivity"
+    >
 
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/search_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/playfair_display_black"
+            android:hint="Search..."
+            android:lineSpacingExtra="8sp"
+            android:padding="12dp"
+            android:scaleType="fitXY"
+            android:textColor="@color/colorBlack"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <!--<ListView-->
+            <!--android:id="@+id/list_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="442dp" />-->
+
+        <ListView
+            android:id="@+id/search_results_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+    android:id="@+id/nav_view"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhiteHeader"
+    app:itemIconTint="@color/colorBlack"
+    app:itemTextColor="@color/colorBlack"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:menu="@menu/menu" />
+</androidx.constraintlayout.widget.ConstraintLayout>
