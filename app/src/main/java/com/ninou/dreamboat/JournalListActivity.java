@@ -68,6 +68,7 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
                             finish();
                         break;
                     case R.id.action_signout:
+                        // TODO: 2019-07-29 Change this to use a search icon & change the id name
                         //sign user out
 //                        if (currentUser != null && firebaseAuth != null) {
 //                            firebaseAuth.signOut();

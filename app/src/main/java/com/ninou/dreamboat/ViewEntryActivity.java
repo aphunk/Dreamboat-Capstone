@@ -72,27 +72,21 @@ public class ViewEntryActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_my_dreamboat:
-                        if (currentUser != null && firebaseAuth != null) {
                             Intent a = new Intent(ViewEntryActivity.this, JournalListActivity.class);
                             startActivity(a);
                             finish();
-                        }
                         break;
                     case R.id.action_add:
-                        if (currentUser != null && firebaseAuth != null) {
                             Intent b = new Intent(ViewEntryActivity.this, PostJournalActivity.class);
                             startActivity(b);
-                        }
+
                         break;
                     case R.id.action_signout:
-                        if (currentUser != null && firebaseAuth != null) {
-                            firebaseAuth.signOut();
-
+                        // TODO: 2019-07-29 Change this to use a search icon & change the id name 
                             Intent c = new Intent(ViewEntryActivity.this,
-                                    LoginActivity.class);
+                                    SearchActivity.class);
                             startActivity(c);
                             break;
-                        }
                 }
                 return false;
             }
