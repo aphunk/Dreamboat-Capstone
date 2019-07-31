@@ -43,9 +43,7 @@ import static com.google.firebase.auth.FirebaseAuth.getInstance;
 public class PostJournalActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "ALGOLIA";
     private static final int REQUEST_CODE_SPEECH_INPUT = 100;
-    private Button saveButton;
 
-    private ImageButton speakButton;
     private EditText titleEditText;
     private EditText entryEditText;
     private TextView dateTimeDisplay;
@@ -132,8 +130,8 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         dateTimeDisplay.setText(date);
 
 
-        saveButton = findViewById(R.id.save_button);
-        speakButton = findViewById(R.id.speak_button);
+        Button saveButton = findViewById(R.id.save_button);
+        ImageButton speakButton = findViewById(R.id.speak_button);
         saveButton.setOnClickListener(this);
         speakButton.setOnClickListener(this);
 
@@ -304,16 +302,6 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
                     startActivity(new Intent(PostJournalActivity.this,
                             PostJournalActivity.class));
 //                    finish();
-                }
-                break;
-            case R.id.action_signout:
-                //sign user out
-                if (currentUser != null && firebaseAuth != null) {
-                    firebaseAuth.signOut();
-
-                    startActivity(new Intent(PostJournalActivity.this,
-                            MainActivity.class));
-                    finish();
                 }
                 break;
             case R.id.action_my_dreamboat:

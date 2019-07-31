@@ -12,7 +12,7 @@
     <string name="man_logo">Main Logo</string>
     <string name="interpret_button_text">Interpret</string>
     <string name="dream_title_text">Dream title</string>
-    <string name="save_button_text">Save</string>
+    <string name="save_button_text">Save Entry</string>
     <string name="share_button_text">Share</string>
     <string name="start_typing_text">Start typing...</string>
     <string name="small_logo">small logo</string>
@@ -20,7 +20,7 @@
     <string name="dream_entry_hint">Last night I dreamt...</string>
     <string name="post_name">Name</string>
     <string name="logo_description">dreamboat_logo</string>
-    <string name="new_dream_header">New Dream</string>
+    <string name="new_dream_header">New Dreamboat Entry</string>
     <string name="menu_title">New Entry</string>
     <string name="signout">Signout</string>
     <string name="no_entries_hint">Your Dreamboat is empty!</string>
@@ -29,7 +29,7 @@
     <string name="speech_not_supported">Speech to text is not supported on your device</string>
     <string name="my_dreamboat">Dreamboat</string>
     <string name="add_entry_prompt">Record your first dream</string>
-    <string name="dream_title_hint">Title</string>
+    <string name="dream_title_hint">Dream Entry Title</string>
     <string name="your_dreamboat">Dreamboat</string>
     <string name="title_activity_interpret">InterpretActivity</string>
     <string name="title_activity_bottom_nav">BottomNav</string>

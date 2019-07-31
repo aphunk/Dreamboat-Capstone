@@ -69,14 +69,7 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
                             startActivity(a);
                             finish();
                         break;
-//                    case R.id.action_signout:
-//                        //sign user out
-//                            firebaseAuth.signOut();
-//
-//                            Intent b = new Intent(JournalListActivity.this,
-//                                    MainActivity.class);
-//                        startActivity(b);
-//                            break;
+
                     case R.id.action_my_dreamboat:
                             Intent c = new Intent(JournalListActivity.this,
                                     JournalListActivity.class);
@@ -143,6 +136,14 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
                         else {
                             noJournalEntry.setVisibility(View.VISIBLE);
                             noEntriesButton.setVisibility(View.VISIBLE);
+
+                            noEntriesButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    startActivity(new Intent(JournalListActivity.this, PostJournalActivity.class));
+                                    finish();
+                                }
+                            });
 
                         }
                     }

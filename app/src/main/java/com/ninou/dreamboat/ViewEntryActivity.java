@@ -31,8 +31,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import util.AppController;
-
 public class ViewEntryActivity extends AppCompatActivity {
     private static final String TAG = "viewEntryActivity";
     private FirebaseAuth firebaseAuth;
@@ -81,11 +79,6 @@ public class ViewEntryActivity extends AppCompatActivity {
                             startActivity(b);
 
                         break;
-//                    case R.id.action_signout:
-//                            Intent c = new Intent(ViewEntryActivity.this,
-//                                    SearchActivity.class);
-//                            startActivity(c);
-//                            break;
                     case R.id.action_search:
                         Intent d = new Intent(ViewEntryActivity.this, SearchActivity.class);
                         startActivity(d);
@@ -96,7 +89,7 @@ public class ViewEntryActivity extends AppCompatActivity {
         });
 
 
-        editButton = findViewById(R.id.edit_button);
+//        editButton = findViewById(R.id.edit_button);
         TextView entryTitle = findViewById(R.id.entry_title);
         TextView entryDate = findViewById(R.id.entry_date);
         entryBodyText = findViewById(R.id.entry_body_text);
@@ -161,21 +154,21 @@ public class ViewEntryActivity extends AppCompatActivity {
         entryDate.setText(date);
 
 
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-// TODO: 2019-07-29 add Extras Receiver in Post Journal activity 
-                AppController journalApi = AppController.getInstance(); //Global API
-                journalApi.setUserId(currentUserId);
-                Intent intent = new Intent(ViewEntryActivity.this,
-                        PostJournalActivity.class);
-                intent.putExtra("userId", currentUserId);
-                intent.putExtra("ENTRY_BODY", entryBody);
-                intent.putExtra("TITLE", title);
-                intent.putExtra("DATE", date);
-                startActivity(intent);
-            }
-        });
+//        editButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//// TODO: 2019-07-29 add Extras Receiver in Post Journal activity
+//                AppController journalApi = AppController.getInstance(); //Global API
+//                journalApi.setUserId(currentUserId);
+//                Intent intent = new Intent(ViewEntryActivity.this,
+//                        PostJournalActivity.class);
+//                intent.putExtra("userId", currentUserId);
+//                intent.putExtra("ENTRY_BODY", entryBody);
+//                intent.putExtra("TITLE", title);
+//                intent.putExtra("DATE", date);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 

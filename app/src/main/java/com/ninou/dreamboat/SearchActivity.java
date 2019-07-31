@@ -101,7 +101,7 @@ public class SearchActivity extends AppCompatActivity {
 //        query.setHitsPerPage(20);
 //
 //        query.setQuery(editText.getText());
-
+//
 //        index.searchAsync(query, new CompletionHandler() {
 //                    @Override
 //                    public void requestCompleted(JSONObject content, AlgoliaException error) {
@@ -151,7 +151,6 @@ public class SearchActivity extends AppCompatActivity {
                                         new AdapterView.OnItemClickListener() {
                                             @Override
                                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                                list.clear();
                                                 Intent intent = new Intent(SearchActivity.this, InterpretationViewActivity.class);
                                                 intent.putExtra("WORD", searchTerm);
                                                 intent.putExtra("MEANING", returnedMeaning);
@@ -174,5 +173,15 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 }
