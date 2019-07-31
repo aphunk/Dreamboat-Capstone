@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
     private EditText titleEditText;
     private EditText entryEditText;
     private TextView dateTimeDisplay;
+    private ProgressBar progressBar;
 
 
     private String currentUserId;
@@ -75,47 +77,6 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         supportActionBar.setIcon(R.drawable.ic_dreamboatlogopad1);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         supportActionBar.show();
-
-//
-//        BottomNavigationView navigation = findViewById(R.id.nav_view);
-//        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                switch (item.getItemId()) {
-//                    case R.id.action_my_dreamboat:
-//                        if (currentUser != null && firebaseAuth != null) {
-//                            Intent a = new Intent(PostJournalActivity.this, JournalListActivity.class);
-//                            startActivity(a);
-//                            finish();
-//                        }
-//                        break;
-//                    case R.id.action_add:
-//                        if (currentUser != null && firebaseAuth != null) {
-//                            Intent b = new Intent(PostJournalActivity.this, PostJournalActivity.class);
-//                            startActivity(b);
-//                            finish();
-//                        }
-//                        break;
-////                    case R.id.action_signout:
-////                        if (currentUser != null && firebaseAuth != null) {
-////                            firebaseAuth.signOut();
-////
-////                            Intent c = new Intent(PostJournalActivity.this,
-////                                    LoginActivity.class);
-////                            startActivity(c);
-////                            finish();
-////                        }
-////                        break;
-//                    case R.id.action_search:
-//                        Intent d = new Intent(PostJournalActivity.this, SearchActivity.class);
-//                        startActivity(d);
-//                        finish();
-//                        break;
-//
-//                }
-//                return false;
-//            }
-//        });
 
 
         firebaseAuth = getInstance();
@@ -213,7 +174,6 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         final String date = dateTimeDisplay.getText().toString();
 
 
-
         if (!TextUtils.isEmpty(title) &&
                 !TextUtils.isEmpty(entry)) {
 
@@ -227,7 +187,6 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
-
 
                             Intent intent = new Intent(PostJournalActivity.this,
                                     ViewEntryActivity.class);
@@ -304,11 +263,16 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
 //                    finish();
                 }
                 break;
+            case R.id.action_search:
+                startActivity(new Intent (PostJournalActivity.this, SearchActivity.class));
             case R.id.action_my_dreamboat:
                 if (currentUser != null && firebaseAuth != null) {
                     startActivity(new Intent(PostJournalActivity.this,
                             MainActivity.class));
                 }
+            case R.id.action_signout:
+                firebaseAuth.signOut();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

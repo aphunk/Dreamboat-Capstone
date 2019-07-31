@@ -1,19 +1,17 @@
 package com.ninou.dreamboat;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.algolia.search.saas.AlgoliaException;
 import com.algolia.search.saas.Client;
@@ -33,19 +31,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Meaning;
-import ui.InterpretationRecyclerAdapter;
-
 public class InterpretationViewActivity extends AppCompatActivity {
     private static final String TAG = "ADDITIONAL HITS =>";
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private List<Meaning> meaningList;
-    private RecyclerView recyclerView;
-    private InterpretationRecyclerAdapter interpretationRecyclerAdapter;
 
-    private Image mainImage;
+
 
 
     private CollectionReference collectionReference = db.collection("Terms");
@@ -79,13 +71,6 @@ public class InterpretationViewActivity extends AppCompatActivity {
                             Intent b = new Intent(InterpretationViewActivity.this, PostJournalActivity.class);
                             startActivity(b);
                         break;
-//                    case R.id.action_signout:
-//                            firebaseAuth.signOut();
-//
-//                            Intent c = new Intent(InterpretationViewActivity.this,
-//                                    LoginActivity.class);
-//                            startActivity(c);
-//                            break;
                     case R.id.action_search:
                         Intent d = new Intent(InterpretationViewActivity.this, SearchActivity.class);
                         startActivity(d);
@@ -96,7 +81,6 @@ public class InterpretationViewActivity extends AppCompatActivity {
         });
 
 
-        ImageView mainImage = findViewById(R.id.term_imageView);
         TextView titleText = findViewById(R.id.top_hit_word_textView);
         TextView meaningText = findViewById(R.id.top_hit_meaning_textView);
         final ListView addlHitsListView = findViewById(R.id.addtl_hits_listView);
@@ -140,6 +124,38 @@ public class InterpretationViewActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                startActivity(new Intent(InterpretationViewActivity.this,
+                        PostJournalActivity.class));
+                finish();
+
+                break;
+            case R.id.action_signout:
+                //sign user out
+                firebaseAuth.signOut();
+
+                startActivity(new Intent(InterpretationViewActivity.this,
+                        MainActivity.class));
+                finish();
+
+                break;
+            case R.id.action_my_dreamboat:
+                startActivity(new Intent(InterpretationViewActivity.this,
+                        JournalListActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     protected void onStart() {

@@ -166,28 +166,23 @@ public class JournalListActivity extends AppCompatActivity implements OnJournalL
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                //Take users to add Journal
-                if (currentUser != null && firebaseAuth != null) {
                     startActivity(new Intent(JournalListActivity.this,
                             PostJournalActivity.class));
                     finish();
-                }
+
                 break;
-//            case R.id.action_signout:
-//                //sign user out
-//                if (currentUser != null && firebaseAuth != null) {
-//                    firebaseAuth.signOut();
-//
-//                    startActivity(new Intent(JournalListActivity.this,
-//                            MainActivity.class));
-//                    finish();
-//                }
-//                break;
+            case R.id.action_signout:
+                //sign user out
+                    firebaseAuth.signOut();
+
+                    startActivity(new Intent(JournalListActivity.this,
+                            MainActivity.class));
+                    finish();
+
+                break;
             case R.id.action_my_dreamboat:
-                if (currentUser != null && firebaseAuth != null) {
                     startActivity(new Intent(JournalListActivity.this,
                             JournalListActivity.class));
-                }
         }
         return super.onOptionsItemSelected(item);
     }

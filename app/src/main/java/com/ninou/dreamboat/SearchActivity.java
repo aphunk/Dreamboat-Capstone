@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +22,7 @@ import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,7 +31,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class SearchActivity extends AppCompatActivity {
+
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    public ArrayAdapter<String> arrayAdapter;
 
     String API_KEY = com.ninou.dreamboat.BuildConfig.ApiKey;
     Client client = new Client("TKKSUFNV4X", API_KEY);
@@ -40,14 +46,15 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_interpret);
+        setContentView(R.layout.activity_search);
 
+        final ListView listView = findViewById(R.id.search_results_listView);
+        EditText editText = findViewById(R.id.search_textView);
 
-//        arrayAdapter.notifyDataSetChanged();
-//        arrayAdapter.clear();
+//        listView.setVisibility(View.INVISIBLE);
 
         ActionBar supportActionBar = getSupportActionBar();
-        supportActionBar.setIcon(R.drawable.ic_dreamboatlogopad1);
+        supportActionBar.setIcon(R.drawable.ic_dreamboatlogo);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         supportActionBar.show();
 
@@ -64,14 +71,6 @@ public class SearchActivity extends AppCompatActivity {
                         startActivity(a);
                         finish();
                         break;
-//                    case R.id.action_signout:
-//                        //sign user out
-//                            firebaseAuth.signOut();
-//
-//                            Intent b = new Intent(JournalListActivity.this,
-//                                    MainActivity.class);
-//                        startActivity(b);
-//                            break;
                     case R.id.action_my_dreamboat:
                         Intent c = new Intent(SearchActivity.this,
                                 JournalListActivity.class);
@@ -90,42 +89,36 @@ public class SearchActivity extends AppCompatActivity {
 
 
 
-        final EditText editText = findViewById(R.id.search_textView);
-        final ListView listView = findViewById(R.id.search_results_listView);
+        final Query query = new Query();
+        query.setAttributesToRetrieve("word", "meaning");
+        query.setAttributesToHighlight("word");
+        query.setHitsPerPage(20);
 
+        query.setQuery(editText.getText());
 
-
-//        final Query query = new Query();
-//        query.setAttributesToRetrieve("word", "meaning");
-//        query.setAttributesToHighlight("word");
-//        query.setHitsPerPage(20);
-//
-//        query.setQuery(editText.getText());
-//
-//        index.searchAsync(query, new CompletionHandler() {
-//                    @Override
-//                    public void requestCompleted(JSONObject content, AlgoliaException error) {
-//                        try {
-//                            JSONArray hits = content.getJSONArray("hits");
-//                            List<String> list = new ArrayList<>();
-//                            for (int i = 0; i < hits.length(); i++) {
-//                                JSONObject jsonObject = hits.getJSONObject(i);
-//                                String term = jsonObject.getString("word");
-//                                list.add(term);
-//                            }
-//                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(SearchActivity.this, android.R.layout.simple_list_item_1, list);
-//                            listView.setAdapter(arrayAdapter);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
+        index.searchAsync(query, new CompletionHandler() {
+                    @Override
+                    public void requestCompleted(JSONObject content, AlgoliaException error) {
+                        try {
+                            JSONArray hits = content.getJSONArray("hits");
+                            List<String> list = new ArrayList<>();
+                            for (int i = 0; i < hits.length(); i++) {
+                                JSONObject jsonObject = hits.getJSONObject(i);
+                                String term = jsonObject.getString("word");
+                                list.add(term);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
 
 
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -159,7 +152,7 @@ public class SearchActivity extends AppCompatActivity {
                                         }
                                 );
                             }
-                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(SearchActivity.this, android.R.layout.simple_list_item_1, list);
+                            arrayAdapter = new ArrayAdapter<>(SearchActivity.this, android.R.layout.simple_list_item_1, list);
                             arrayAdapter.addAll(list);
                             listView.setAdapter(arrayAdapter);
                         } catch (JSONException e) {
@@ -174,14 +167,61 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                startActivity(new Intent(SearchActivity.this,
+                        PostJournalActivity.class));
+                finish();
+
+                break;
+            case R.id.action_signout:
+                //sign user out
+                firebaseAuth.signOut();
+
+                startActivity(new Intent(SearchActivity.this,
+                        MainActivity.class));
+                finish();
+
+                break;
+            case R.id.action_my_dreamboat:
+                startActivity(new Intent(SearchActivity.this,
+                        JournalListActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
     protected void onRestart() {
         super.onRestart();
-
+        if (arrayAdapter != null) {
+            arrayAdapter.clear();
+            arrayAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (arrayAdapter != null) {
+            arrayAdapter.clear();
+            arrayAdapter.notifyDataSetChanged();
+        }
     }
 }

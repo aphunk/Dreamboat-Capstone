@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/transparent">
+    android:background="@android:color/white">
 
     <item
         android:id="@+id/action_my_dreamboat"
@@ -20,5 +20,10 @@
         android:title="@string/search_action_text"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_signout"
+        android:icon="@drawable/ic_forward_black_24dp"
+        android:title="@string/signout"
+        app:showAsAction="never" />
 
 </menu>

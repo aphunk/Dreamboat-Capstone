@@ -7,6 +7,7 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -171,6 +172,38 @@ public class ViewEntryActivity extends AppCompatActivity {
 //        });
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                startActivity(new Intent(ViewEntryActivity.this,
+                        PostJournalActivity.class));
+                finish();
+
+                break;
+            case R.id.action_signout:
+                //sign user out
+                firebaseAuth.signOut();
+
+                startActivity(new Intent(ViewEntryActivity.this,
+                        MainActivity.class));
+                finish();
+
+                break;
+            case R.id.action_my_dreamboat:
+                startActivity(new Intent(ViewEntryActivity.this,
+                        JournalListActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     protected void onStart() {

@@ -14,10 +14,12 @@
 
 
     <style name="AppTheme.ActionBar.Logo" parent="AppTheme">
-        <item name="android:logo">@drawable/ic_dreamboatlogopad1</item>
+        <item name="android:logo">@drawable/ic_dreamboatlogopad</item>
         <item name="android:displayOptions">useLogo|showHome</item>
         <item name="colorPrimary">@color/colorWhiteHeader</item>
-        <item name="android:defaultHeight">100dp</item>
+        <item name="android:dropDownListViewStyle">@style/Theme.AppCompat.DayNight</item>
+        <!--<item name="android:defaultHeight">100dp</item>-->
+        <item name="android:actionBarSize">65dp</item>
 
         <!--<item name="actionBarStyle">@dimen/logo_padding</item>-->
     </style>
