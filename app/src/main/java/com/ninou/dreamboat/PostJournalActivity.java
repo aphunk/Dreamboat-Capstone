@@ -13,17 +13,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -47,7 +46,6 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
     private Button saveButton;
 
     private ImageButton speakButton;
-    private ProgressBar progressBar;
     private EditText titleEditText;
     private EditText entryEditText;
     private TextView dateTimeDisplay;
@@ -75,50 +73,54 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_journal);
 
+        ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.setIcon(R.drawable.ic_dreamboatlogopad1);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        supportActionBar.show();
 
-        BottomNavigationView navigation = findViewById(R.id.nav_view);
-        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_my_dreamboat:
-                        if (currentUser != null && firebaseAuth != null) {
-                            Intent a = new Intent(PostJournalActivity.this, JournalListActivity.class);
-                            startActivity(a);
-                            finish();
-                        }
-                        break;
-                    case R.id.action_add:
-                        if (currentUser != null && firebaseAuth != null) {
-                            Intent b = new Intent(PostJournalActivity.this, PostJournalActivity.class);
-                            startActivity(b);
-                            finish();
-                        }
-                        break;
-//                    case R.id.action_signout:
-//                        if (currentUser != null && firebaseAuth != null) {
-//                            firebaseAuth.signOut();
 //
-//                            Intent c = new Intent(PostJournalActivity.this,
-//                                    LoginActivity.class);
-//                            startActivity(c);
+//        BottomNavigationView navigation = findViewById(R.id.nav_view);
+//        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.action_my_dreamboat:
+//                        if (currentUser != null && firebaseAuth != null) {
+//                            Intent a = new Intent(PostJournalActivity.this, JournalListActivity.class);
+//                            startActivity(a);
 //                            finish();
 //                        }
 //                        break;
-                    case R.id.action_search:
-                        Intent d = new Intent(PostJournalActivity.this, SearchActivity.class);
-                        startActivity(d);
-                        finish();
-                        break;
-
-                }
-                return false;
-            }
-        });
+//                    case R.id.action_add:
+//                        if (currentUser != null && firebaseAuth != null) {
+//                            Intent b = new Intent(PostJournalActivity.this, PostJournalActivity.class);
+//                            startActivity(b);
+//                            finish();
+//                        }
+//                        break;
+////                    case R.id.action_signout:
+////                        if (currentUser != null && firebaseAuth != null) {
+////                            firebaseAuth.signOut();
+////
+////                            Intent c = new Intent(PostJournalActivity.this,
+////                                    LoginActivity.class);
+////                            startActivity(c);
+////                            finish();
+////                        }
+////                        break;
+//                    case R.id.action_search:
+//                        Intent d = new Intent(PostJournalActivity.this, SearchActivity.class);
+//                        startActivity(d);
+//                        finish();
+//                        break;
+//
+//                }
+//                return false;
+//            }
+//        });
 
 
         firebaseAuth = getInstance();
-        progressBar = findViewById(R.id.save_entry_progress);
         titleEditText = findViewById(R.id.dream_title_text);
         entryEditText = findViewById(R.id.dream_entry_text);
         dateTimeDisplay = findViewById(R.id.entry_date_text);
@@ -129,12 +131,11 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         date = dateFormat.format(calendar.getTime());
         dateTimeDisplay.setText(date);
 
+
         saveButton = findViewById(R.id.save_button);
         speakButton = findViewById(R.id.speak_button);
         saveButton.setOnClickListener(this);
         speakButton.setOnClickListener(this);
-        progressBar.setVisibility(View.INVISIBLE);
-
 
 
         if (getInstance() == null) {
@@ -164,11 +165,6 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.save_button:
-                //get text & perform search
-//                String entryBodyText = entryEditText.getText().toString();
-//
-//                performSearch(entryBodyText);
-                //saveJournal
                 saveJournal();
                 break;
             case R.id.speak_button:
@@ -219,7 +215,6 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
         final String date = dateTimeDisplay.getText().toString();
 
 
-        progressBar.setVisibility(View.VISIBLE);
 
         if (!TextUtils.isEmpty(title) &&
                 !TextUtils.isEmpty(entry)) {
@@ -234,7 +229,6 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
-                            progressBar.setVisibility(View.INVISIBLE);
 
 
                             Intent intent = new Intent(PostJournalActivity.this,
@@ -257,7 +251,6 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
                     });
 
         }else {
-            progressBar.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -313,16 +306,16 @@ public class PostJournalActivity extends AppCompatActivity implements View.OnCli
 //                    finish();
                 }
                 break;
-//            case R.id.action_signout:
-//                //sign user out
-//                if (currentUser != null && firebaseAuth != null) {
-//                    firebaseAuth.signOut();
-//
-//                    startActivity(new Intent(PostJournalActivity.this,
-//                            MainActivity.class));
-////                    finish();
-//                }
-//                break;
+            case R.id.action_signout:
+                //sign user out
+                if (currentUser != null && firebaseAuth != null) {
+                    firebaseAuth.signOut();
+
+                    startActivity(new Intent(PostJournalActivity.this,
+                            MainActivity.class));
+                    finish();
+                }
+                break;
             case R.id.action_my_dreamboat:
                 if (currentUser != null && firebaseAuth != null) {
                     startActivity(new Intent(PostJournalActivity.this,
