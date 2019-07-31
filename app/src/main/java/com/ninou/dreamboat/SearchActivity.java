@@ -144,6 +144,7 @@ public class SearchActivity extends AppCompatActivity {
                                         new AdapterView.OnItemClickListener() {
                                             @Override
                                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                                                String clickedWord = adapterView.getItemIdAtPosition()
                                                 Intent intent = new Intent(SearchActivity.this, InterpretationViewActivity.class);
                                                 intent.putExtra("WORD", searchTerm);
                                                 intent.putExtra("MEANING", returnedMeaning);
@@ -153,7 +154,6 @@ public class SearchActivity extends AppCompatActivity {
                                 );
                             }
                             arrayAdapter = new ArrayAdapter<>(SearchActivity.this, android.R.layout.simple_list_item_1, list);
-                            arrayAdapter.addAll(list);
                             listView.setAdapter(arrayAdapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
